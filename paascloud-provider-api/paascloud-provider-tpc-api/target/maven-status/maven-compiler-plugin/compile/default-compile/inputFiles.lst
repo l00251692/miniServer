@@ -1,0 +1,7 @@
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\model\enums\JobTaskStatusEnum.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\model\dto\TpcMqMessageDto.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\model\dto\PcJobTask.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\exceptions\TpcBizException.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\model\dto\PcMessageJobTask.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\service\hystrix\TpcMqMessageFeignApiHystrix.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-tpc-api\src\main\java\com\paascloud\provider\service\TpcMqMessageFeignApi.java

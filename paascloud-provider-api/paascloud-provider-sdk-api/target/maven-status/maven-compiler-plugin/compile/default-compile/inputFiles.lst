@@ -1,0 +1,15 @@
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\autoconfigure\MessageAutoConfiguration.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\dto\UpdateAttachmentDto.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\mapper\MqMessageDataMapper.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\enums\DelayLevelEnum.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\aspect\MqProducerStoreAspect.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\domain\MqMessageData.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\service\MqMessageService.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\enums\MqOrderTypeEnum.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\service\impl\MqMessageServiceImpl.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\annotation\MqProducerStore.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\enums\MqMessageTypeEnum.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\annotation\MqConsumerStore.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\model\enums\MqSendTypeEnum.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\aspect\MqConsumerStoreAspect.java
+G:\paascloud-master\paascloud-provider-api\paascloud-provider-sdk-api\src\main\java\com\paascloud\provider\autoconfigure\MessageBeanConfiguration.java
