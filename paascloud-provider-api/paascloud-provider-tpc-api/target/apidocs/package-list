@@ -1,5 +1,0 @@
-com.paascloud.provider.exceptions
-com.paascloud.provider.model.dto
-com.paascloud.provider.model.enums
-com.paascloud.provider.service
-com.paascloud.provider.service.hystrix

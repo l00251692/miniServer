@@ -11,9 +11,9 @@
 
 package com.paascloud.provider.web.frontend;
 
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.demo.trade.config.Configs;
+//import com.alipay.api.AlipayApiException;
+//import com.alipay.api.internal.util.AlipaySignature;
+//import com.alipay.demo.trade.config.Configs;
 import com.google.common.collect.Maps;
 import com.paascloud.base.dto.LoginAuthDto;
 import com.paascloud.core.support.BaseController;
@@ -66,6 +66,7 @@ public class PtcPayController extends BaseController {
 	 *
 	 * @return the object
 	 */
+	/*
 	@PostMapping("/alipayCallback")
 	@ApiOperation(httpMethod = "POST", value = "支付宝回调信息")
 	public Object alipayCallback(HttpServletRequest request) {
@@ -105,5 +106,6 @@ public class PtcPayController extends BaseController {
 		}
 		return PtcApiConstant.AlipayCallback.RESPONSE_FAILED;
 	}
+	*/
 
 }
