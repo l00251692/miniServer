@@ -11,7 +11,6 @@
 
 package com.paascloud.security.app.social;
 
-
 import com.paascloud.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -20,20 +19,21 @@ import org.springframework.stereotype.Component;
 
 /**
  * The type App social authentication filter post processor.
+ * 
  * @author paascloud
  */
 @Component
-public class AppSocialAuthenticationFilterPostProcessor implements SocialAuthenticationFilterPostProcessor{
+public class AppSocialAuthenticationFilterPostProcessor implements SocialAuthenticationFilterPostProcessor {
 
-	private final AuthenticationSuccessHandler pcAuthenticationSuccessHandler;
+    private final AuthenticationSuccessHandler pcAuthenticationSuccessHandler;
 
-	@Autowired
-	public AppSocialAuthenticationFilterPostProcessor(AuthenticationSuccessHandler pcAuthenticationSuccessHandler) {
-		this.pcAuthenticationSuccessHandler = pcAuthenticationSuccessHandler;
-	}
+    @Autowired
+    public AppSocialAuthenticationFilterPostProcessor(AuthenticationSuccessHandler pcAuthenticationSuccessHandler) {
+        this.pcAuthenticationSuccessHandler = pcAuthenticationSuccessHandler;
+    }
 
-	@Override
-	public void process(final SocialAuthenticationFilter socialAuthenticationFilter) {
-		socialAuthenticationFilter.setAuthenticationSuccessHandler(pcAuthenticationSuccessHandler);
-	}
+    @Override
+    public void process(final SocialAuthenticationFilter socialAuthenticationFilter) {
+        socialAuthenticationFilter.setAuthenticationSuccessHandler(pcAuthenticationSuccessHandler);
+    }
 }
