@@ -32,15 +32,4 @@ public class DatabaseProperties {
 	
 	private DatasourceAttributes[] druid = {};
 	
-	@Data
-	public class DatasourceAttributes {
-		private String name;
-		private String host;
-		private String port;
-		private String username;
-		private String password;
-		private boolean enable;
-	}
-
-	
 }
