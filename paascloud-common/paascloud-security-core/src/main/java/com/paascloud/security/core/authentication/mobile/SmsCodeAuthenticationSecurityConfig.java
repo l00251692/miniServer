@@ -21,39 +21,41 @@ import java.util.UUID;
  * @author paascloud.net @gmail.com
  */
 @Component
-public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-	@Autowired
-	private AuthenticationSuccessHandler pcAuthenticationSuccessHandler;
-	@Autowired
-	private AuthenticationFailureHandler pcAuthenticationFailureHandler;
-	@Autowired
-	private UserDetailsService userDetailsService;
-	@Autowired
-	private PersistentTokenRepository persistentTokenRepository;
+public class SmsCodeAuthenticationSecurityConfig
+        extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+    @Autowired
+    private AuthenticationSuccessHandler pcAuthenticationSuccessHandler;
+    @Autowired
+    private AuthenticationFailureHandler pcAuthenticationFailureHandler;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private PersistentTokenRepository persistentTokenRepository;
 
-	/**
-	 * Configure.
-	 *
-	 * @param http the http
-	 */
-	@Override
-	public void configure(HttpSecurity http) {
+    /**
+     * Configure.
+     *
+     * @param http the http
+     */
+    @Override
+    public void configure(HttpSecurity http) {
 
-		SmsCodeAuthenticationFilter smsCodeAuthenticationFilter = new SmsCodeAuthenticationFilter();
-		smsCodeAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
-		smsCodeAuthenticationFilter.setAuthenticationSuccessHandler(pcAuthenticationSuccessHandler);
-		smsCodeAuthenticationFilter.setAuthenticationFailureHandler(pcAuthenticationFailureHandler);
-		String key = UUID.randomUUID().toString();
-		smsCodeAuthenticationFilter.setRememberMeServices(new PersistentTokenBasedRememberMeServices(key, userDetailsService, persistentTokenRepository));
+        SmsCodeAuthenticationFilter smsCodeAuthenticationFilter = new SmsCodeAuthenticationFilter();
+        smsCodeAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
+        smsCodeAuthenticationFilter.setAuthenticationSuccessHandler(pcAuthenticationSuccessHandler);
+        smsCodeAuthenticationFilter.setAuthenticationFailureHandler(pcAuthenticationFailureHandler);
+        String key = UUID.randomUUID().toString();
+        smsCodeAuthenticationFilter.setRememberMeServices(
+                new PersistentTokenBasedRememberMeServices(key, userDetailsService, persistentTokenRepository));
 
-		SmsCodeAuthenticationProvider smsCodeAuthenticationProvider = new SmsCodeAuthenticationProvider();
-		smsCodeAuthenticationProvider.setUserDetailsService(userDetailsService);
+        SmsCodeAuthenticationProvider smsCodeAuthenticationProvider = new SmsCodeAuthenticationProvider();
+        smsCodeAuthenticationProvider.setUserDetailsService(userDetailsService);
 
-		http.authenticationProvider(smsCodeAuthenticationProvider)
-				.addFilterAfter(smsCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(smsCodeAuthenticationProvider).addFilterAfter(smsCodeAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class);
 
 //		
 
-	}
+    }
 
 }

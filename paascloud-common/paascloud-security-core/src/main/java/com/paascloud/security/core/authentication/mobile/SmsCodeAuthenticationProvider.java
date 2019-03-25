@@ -16,63 +16,63 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
-	private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
-	/**
-	 * Authenticate authentication.
-	 *
-	 * @param authentication the authentication
-	 *
-	 * @return the authentication
-	 *
-	 * @throws AuthenticationException the authentication exception
-	 */
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    /**
+     * Authenticate authentication.
+     *
+     * @param authentication the authentication
+     *
+     * @return the authentication
+     *
+     * @throws AuthenticationException the authentication exception
+     */
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		SmsCodeAuthenticationToken authenticationToken = (SmsCodeAuthenticationToken) authentication;
+        SmsCodeAuthenticationToken authenticationToken = (SmsCodeAuthenticationToken) authentication;
 
-		UserDetails user = userDetailsService.loadUserByUsername((String) authenticationToken.getPrincipal());
+        UserDetails user = userDetailsService.loadUserByUsername((String) authenticationToken.getPrincipal());
 
-		if (user == null) {
-			throw new InternalAuthenticationServiceException("无法获取用户信息");
-		}
+        if (user == null) {
+            throw new InternalAuthenticationServiceException("无法获取用户信息");
+        }
 
-		SmsCodeAuthenticationToken authenticationResult = new SmsCodeAuthenticationToken(user, user.getAuthorities());
+        SmsCodeAuthenticationToken authenticationResult = new SmsCodeAuthenticationToken(user, user.getAuthorities());
 
-		authenticationResult.setDetails(authenticationToken.getDetails());
+        authenticationResult.setDetails(authenticationToken.getDetails());
 
-		return authenticationResult;
-	}
+        return authenticationResult;
+    }
 
-	/**
-	 * Supports boolean.
-	 *
-	 * @param authentication the authentication
-	 *
-	 * @return the boolean
-	 */
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return SmsCodeAuthenticationToken.class.isAssignableFrom(authentication);
-	}
+    /**
+     * Supports boolean.
+     *
+     * @param authentication the authentication
+     *
+     * @return the boolean
+     */
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return SmsCodeAuthenticationToken.class.isAssignableFrom(authentication);
+    }
 
-	/**
-	 * Gets user details service.
-	 *
-	 * @return the user details service
-	 */
-	public UserDetailsService getUserDetailsService() {
-		return userDetailsService;
-	}
+    /**
+     * Gets user details service.
+     *
+     * @return the user details service
+     */
+    public UserDetailsService getUserDetailsService() {
+        return userDetailsService;
+    }
 
-	/**
-	 * Sets user details service.
-	 *
-	 * @param userDetailsService the user details service
-	 */
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
+    /**
+     * Sets user details service.
+     *
+     * @param userDetailsService the user details service
+     */
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
 }

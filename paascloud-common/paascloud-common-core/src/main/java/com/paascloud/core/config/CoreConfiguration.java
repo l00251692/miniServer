@@ -28,22 +28,21 @@ import org.springframework.web.servlet.HandlerInterceptor;
  */
 @Configuration
 public class CoreConfiguration {
-	@LoadBalanced
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+    @LoadBalanced
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
-	@Bean
-	public SqlLogInterceptor sqlLogInterceptor() {
-		return new SqlLogInterceptor();
-	}
+    @Bean
+    public SqlLogInterceptor sqlLogInterceptor() {
+        return new SqlLogInterceptor();
+    }
 
-
-	@Bean
-	@ConditionalOnMissingBean(HandlerInterceptor.class)
-	@ConditionalOnProperty(prefix = "paascloud.token.interceptor", name = "enable", havingValue = "true")
-	public TokenInterceptor tokenInterceptor() {
-		return new TokenInterceptor();
-	}
+    @Bean
+    @ConditionalOnMissingBean(HandlerInterceptor.class)
+    @ConditionalOnProperty(prefix = "paascloud.token.interceptor", name = "enable", havingValue = "true")
+    public TokenInterceptor tokenInterceptor() {
+        return new TokenInterceptor();
+    }
 }
