@@ -1,6 +1,8 @@
 package com.paascloud.provider.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.paascloud.ThreadLocalMap;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.provider.service.UacUserService;
 import com.paascloud.security.core.SecurityUser;
@@ -78,6 +80,14 @@ public class PcAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 
 		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 		SecurityUser principal = (SecurityUser) authentication.getPrincipal();
+<<<<<<< Updated upstream
+=======
+		Object appIdObj = request.getSession().getAttribute(GlobalConstant.Sys.APP_ID);
+		if (null != appIdObj) {
+		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, (String) appIdObj);
+		}
+		//DataSourceHolder.setDataSource((String) appIdObj);
+>>>>>>> Stashed changes
 		uacUserService.handlerLoginData(token, principal, request);
 
 		log.info("用户【 {} 】记录登录日志", principal.getUsername());

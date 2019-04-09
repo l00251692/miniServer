@@ -95,6 +95,17 @@ public class TokenInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		String uri = request.getRequestURI();
+		String appId = request.getHeader("appId");
+		if (null != appId) {
+		    request.getSession().setAttribute(GlobalConstant.Sys.APP_ID, appId);
+		}
+		
+		Object appIdFromSession = request.getSession().getAttribute(GlobalConstant.Sys.APP_ID);
+		if (null != appIdFromSession) {
+		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, (String) appIdFromSession);
+		}
+		
+		
 		log.info("<== preHandle - 权限拦截器.  url={}", uri);
 		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
 			log.info("<== preHandle - 配置URL不走认证.  url={}", uri);

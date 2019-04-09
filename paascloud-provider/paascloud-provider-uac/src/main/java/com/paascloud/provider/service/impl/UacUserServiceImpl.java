@@ -531,6 +531,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		uacUser.setLastOperatorId(id);
 		uacUser.setUserName(registerDto.getLoginName());
 		uacUser.setLastOperator(registerDto.getLoginName());
+		uacUser.setAppId(registerDto.getAppId());
 
 		// 发送激活邮件
 		String activeToken = PubUtils.uuid() + super.generateId();
@@ -827,8 +828,13 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		String accessToken = token.getValue();
 		String refreshToken = token.getRefreshToken().getValue();
 		uacUserTokenService.saveUserToken(accessToken, refreshToken, loginAuthDto, request);
+		
+		String appId = (String) ThreadLocalMap.get(GlobalConstant.Sys.APP_ID);
 		// 记录最后登录信息
-		taskExecutor.execute(() -> this.updateUser(uacUser));
+		taskExecutor.execute(() -> {
+		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, appId);
+		    this.updateUser(uacUser);
+		});
 		// 记录操作日志
 
 		UacLog log = new UacLog();
@@ -842,7 +848,10 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		log.setLogType(LogTypeEnum.LOGIN_LOG.getType());
 		log.setLogName(LogTypeEnum.LOGIN_LOG.getName());
 
-		taskExecutor.execute(() -> uacLogService.saveLog(log, loginAuthDto));
+		taskExecutor.execute(() -> {
+		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, appId);
+		    uacLogService.saveLog(log, loginAuthDto);
+		});
 	}
 
 	@Override

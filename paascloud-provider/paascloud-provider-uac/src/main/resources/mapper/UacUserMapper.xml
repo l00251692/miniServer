@@ -28,6 +28,7 @@
 		<result column="last_operator" jdbcType="VARCHAR" property="lastOperator" />
 		<result column="last_operator_id" jdbcType="BIGINT" property="lastOperatorId" />
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="app_id" jdbcType="VARCHAR" property="appId" />
 	</resultMap>
 	<sql id="Base_OrderBy_Condition">
 		<if test="orderBy != null and orderBy !=''">
@@ -59,7 +60,8 @@
 		u.last_operator as lastOperator,
 		u.last_operator_id as lastOperatorId,
 		u.update_time as updateTime,
-		u.last_login_location as lastLoginLocation
+		u.last_login_location as lastLoginLocation,
+		u.app_id as appId
 	</sql>
 	<sql id="Base_Set_Condition">
 		<set>
@@ -135,6 +137,9 @@
 			<if test="updateTime != null">
 				update_time = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
+			<if test="appId != null">
+                app_id = #{appId,jdbcType=VARCHAR},
+            </if>
 		</set>
 	</sql>
 	<sql id="Base_Where_Condition">
@@ -214,6 +219,9 @@
 		<if test="updateTime != null">
 			AND ${alias}.update_time = #{updateTime,jdbcType=TIMESTAMP}
 		</if>
+		<if test="appId != null">
+            AND ${alias}.app_id = #{appId,jdbcType=VARCHAR}
+        </if>
 	</sql>
 	<update id="updateUacUser" parameterType="uacUser">
 		update pc_uac_user

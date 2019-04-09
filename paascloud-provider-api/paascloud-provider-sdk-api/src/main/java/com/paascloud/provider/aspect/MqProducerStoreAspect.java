@@ -103,7 +103,7 @@ public class MqProducerStoreAspect {
 			mqMessageService.directSendMessage(domain);
 		} else {
 			final MqMessageData finalDomain = domain;
-			taskExecutor.execute(() -> mqMessageService.confirmAndSendMessage(finalDomain.getMessageKey()));
+			mqMessageService.confirmAndSendMessage(finalDomain.getMessageKey());
 		}
 		return result;
 	}
