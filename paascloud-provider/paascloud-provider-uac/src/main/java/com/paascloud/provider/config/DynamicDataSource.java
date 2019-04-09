@@ -8,7 +8,6 @@ import com.paascloud.config.properties.PaascloudProperties;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.AbstractDataSource;
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -86,9 +85,9 @@ public class DynamicDataSource extends AbstractDataSource {
 		    currentName = (String) ThreadLocalMap.get(GlobalConstant.Sys.APP_ID);
 		}
 		
-		if (null == currentName) {
-		    currentName = "exampleId1234";
-		}
+//		if (null == currentName) {
+//		    currentName = "exampleId1234";
+//		}
 		
 		DataSource currentDataSource = dataSourceMap.get(currentName);
 		if(currentDataSource == null) {

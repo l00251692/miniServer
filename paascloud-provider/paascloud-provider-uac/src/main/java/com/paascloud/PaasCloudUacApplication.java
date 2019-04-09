@@ -46,7 +46,7 @@ public class PaasCloudUacApplication {
 		SpringApplication.run(PaasCloudUacApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public SpringLiquibase springLiquibase(DataSource dataSource) {
 
 		SpringLiquibase springLiquibase = new SpringLiquibase();
@@ -55,7 +55,7 @@ public class PaasCloudUacApplication {
 		springLiquibase.setChangeLog("classpath:/liquibase/index.xml");
 
 		return springLiquibase;
-	}
+	}*/
 
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
