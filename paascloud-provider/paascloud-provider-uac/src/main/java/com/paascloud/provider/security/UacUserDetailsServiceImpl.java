@@ -1,6 +1,6 @@
 package com.paascloud.provider.security;
 
-import com.paascloud.provider.config.DataSourceHolder;
+import com.paascloud.core.config.DataSourceHolder;
 import com.paascloud.provider.model.domain.UacUser;
 import com.paascloud.provider.service.UacUserService;
 import com.paascloud.security.core.SecurityUser;

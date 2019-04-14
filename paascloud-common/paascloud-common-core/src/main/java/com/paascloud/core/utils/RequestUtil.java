@@ -150,4 +150,37 @@ public class RequestUtil {
 		}
 		return new String[]{token.substring(0, delim), token.substring(delim + 1)};
 	}
+	
+	public static String getAppId(String path) {
+	    if (StringUtils.isEmpty(path)) {
+	        return null;
+	    }
+	    
+        int appIdIndex = path.lastIndexOf("/appId");
+        String appId = null;
+        if (appIdIndex > -1) {
+            appId = path.substring(appIdIndex + 6);
+        }
+        return appId;
+	}
+
+    /**
+     * @param targetPath
+     * @return
+     */
+    public static String handleTargePath(String targetPath) {
+        String newPath = targetPath;
+        if (targetPath.startsWith("/auth/code/image")) {
+            newPath = "/auth/code/image";
+        } else if (targetPath.startsWith("/oauth/token")) {
+            newPath = "/oauth/token";
+        } else if (targetPath.startsWith("/oauth/authorize")) {
+            newPath = "/oauth/authorize";
+        } else if (targetPath.startsWith("/oauth/token_key")) {
+            newPath = "/oauth/token_key";
+        } else if (targetPath.startsWith("/oauth/token_key")) {
+            newPath = "/oauth/token_key";
+        }
+        return newPath;
+    }
 }

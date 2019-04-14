@@ -17,12 +17,20 @@ import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.dto.LoginAuthDto;
 import com.paascloud.base.enums.ErrorCodeEnum;
 import com.paascloud.base.exception.BusinessException;
+import com.paascloud.core.config.DataSourceHolder;
 import com.paascloud.core.generator.IncrementIdGenerator;
 import com.paascloud.core.generator.UniqueIdGenerator;
+import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.wrapper.WrapMapper;
 import com.paascloud.wrapper.Wrapper;
+
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The class Base controller.
@@ -30,9 +38,12 @@ import org.slf4j.LoggerFactory;
  * @author paascloud.net@gmail.com
  */
 public class BaseController {
+    
+    @Autowired
+    HttpServletRequest request;
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
 	/**
 	 * Gets login auth dto.
 	 *
@@ -99,5 +110,13 @@ public class BaseController {
 		return UniqueIdGenerator.getInstance(IncrementIdGenerator.getServiceId()).nextId();
 	}
 
+	protected String getAppId() {
+	    String appId = RequestUtil.getAppId(request.getRequestURI());
+	    if (null == appId) {
+	        appId = request.getHeader("appId");
+	    }
+	    DataSourceHolder.setDataSource(appId);
+	    return appId;
+	}
 }
   

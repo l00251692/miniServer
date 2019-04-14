@@ -5,6 +5,7 @@ import com.paascloud.ThreadLocalMap;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.config.properties.DatasourceAttributes;
 import com.paascloud.config.properties.PaascloudProperties;
+import com.paascloud.core.config.DataSourceHolder;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.AbstractDataSource;

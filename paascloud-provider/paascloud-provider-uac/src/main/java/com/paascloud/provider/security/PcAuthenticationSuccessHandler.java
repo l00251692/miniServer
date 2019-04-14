@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paascloud.ThreadLocalMap;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.core.utils.RequestUtil;
-import com.paascloud.provider.config.DataSourceHolder;
 import com.paascloud.provider.service.UacUserService;
 import com.paascloud.security.core.SecurityUser;
 import com.paascloud.wrapper.WrapMapper;

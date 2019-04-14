@@ -1,4 +1,4 @@
-package com.paascloud.provider.config;
+package com.paascloud.core.config;
 
 
 public class DataSourceHolder {

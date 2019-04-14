@@ -78,9 +78,9 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping(value = "/checkEmailActive/{email:.+}")
+	@PostMapping(value = "/checkEmailActive/{email:.+}/{appId}")
 	@ApiOperation(httpMethod = "POST", value = "校验邮箱")
-	public Wrapper<Boolean> checkEmailActive(@PathVariable("email") String email) {
+	public Wrapper<Boolean> checkEmailActive(@PathVariable("email") String email, @PathVariable("appId") String appId) {
 		UacUser uacUser = new UacUser();
 		uacUser.setStatus(UacUserStatusEnum.ENABLE.getKey());
 		uacUser.setEmail(email);
@@ -182,9 +182,10 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register/{appId}")
 	@ApiOperation(httpMethod = "POST", value = "注册用户")
 	public Wrapper registerUser(UserRegisterDto user) {
+	    user.setAppId(getAppId());
 		uacUserService.register(user);
 		return WrapMapper.ok();
 	}
