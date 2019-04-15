@@ -148,5 +148,6 @@ public class UacUser extends BaseEntity {
 	/**
 	 * 小程序id
 	 */
+	@Column(name = "app_id")
 	private String appId;
 }

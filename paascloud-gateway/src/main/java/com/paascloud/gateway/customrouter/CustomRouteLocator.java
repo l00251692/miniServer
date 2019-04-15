@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -16,6 +18,7 @@ import org.springframework.cloud.netflix.zuul.filters.SimpleRouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties.ZuulRoute;
 
+import com.netflix.zuul.context.RequestContext;
 import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.gateway.fallback.UacFallbackProvider;
 
@@ -82,6 +85,10 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         
         targetPath = RequestUtil.handleTargePath(targetPath);
         String appId = RequestUtil.getAppId(targetPath);
+        HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+        if (null == appId && null != request) {
+            appId = request.getHeader("appId");
+        }
         String location = route.getLocation();
         if (null != appId) {
             location += "-" + appId;

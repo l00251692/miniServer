@@ -67,6 +67,7 @@ public class AuthRestController extends BaseController {
 		UacUser uacUser = new UacUser();
 		uacUser.setStatus(UacUserStatusEnum.ENABLE.getKey());
 		uacUser.setMobileNo(mobileNo);
+		uacUser.setAppId(getAppId());
 		int count = uacUserService.selectCount(uacUser);
 		return WrapMapper.ok(count > 0);
 	}
@@ -78,12 +79,13 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping(value = "/checkEmailActive/{email:.+}/{appId}")
+	@PostMapping(value = "/checkEmailActive/{email:.+}")
 	@ApiOperation(httpMethod = "POST", value = "校验邮箱")
-	public Wrapper<Boolean> checkEmailActive(@PathVariable("email") String email, @PathVariable("appId") String appId) {
+	public Wrapper<Boolean> checkEmailActive(@PathVariable("email") String email) {
 		UacUser uacUser = new UacUser();
 		uacUser.setStatus(UacUserStatusEnum.ENABLE.getKey());
 		uacUser.setEmail(email);
+		uacUser.setAppId(getAppId());
 		int count = uacUserService.selectCount(uacUser);
 		return WrapMapper.ok(count > 0);
 	}
@@ -182,7 +184,7 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping(value = "/register/{appId}")
+	@PostMapping(value = "/register")
 	@ApiOperation(httpMethod = "POST", value = "注册用户")
 	public Wrapper registerUser(UserRegisterDto user) {
 	    user.setAppId(getAppId());
