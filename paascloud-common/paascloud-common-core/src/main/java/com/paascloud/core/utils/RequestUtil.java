@@ -178,9 +178,7 @@ public class RequestUtil {
             newPath = "/oauth/authorize";
         } else if (targetPath.startsWith("/oauth/token_key")) {
             newPath = "/oauth/token_key";
-        } else if (targetPath.startsWith("/oauth/token_key")) {
-            newPath = "/oauth/token_key";
-        }
+        } 
         return newPath;
     }
 }
