@@ -11,7 +11,9 @@
 
 package com.paascloud.provider.web.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.dto.CheckValidDto;
 import com.paascloud.core.annotation.OperationLogDto;
 import com.paascloud.core.support.BaseController;
@@ -31,6 +33,8 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +74,34 @@ public class AuthRestController extends BaseController {
 		uacUser.setAppId(getAppId());
 		int count = uacUserService.selectCount(uacUser);
 		return WrapMapper.ok(count > 0);
+	}
+	
+	/**
+	 * 校验手机号码.
+	 *
+	 * @param mobileNo the mobile no
+	 *
+	 * @return the wrapper
+	 */
+	@PostMapping(value = "/wx/login")
+	@ApiOperation(httpMethod = "POST", value = "微信小程序登录")
+	public Wrapper<HashMap<Object, Object>> wxLogin(@RequestParam("username") String username) {
+		HashMap<Object, Object> result = new  HashMap<>();
+		
+		logger.info("wxLogin username=" + username);
+		JSONObject obj = new JSONObject();
+		
+		String appid = getAppId();
+		
+		obj.put("userinfo", "userinfo");
+		obj.put("token", "token");
+		obj.put("errno", "0");
+		
+		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
+		result.put(GlobalConstant.DATA, obj);
+		//result.put(GlobalConstant.MESSAGE, obj);
+		
+		return WrapMapper.ok(result);
 	}
 
 	/**

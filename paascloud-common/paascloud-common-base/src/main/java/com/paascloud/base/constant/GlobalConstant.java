@@ -22,6 +22,12 @@ public class GlobalConstant {
 	 */
 	public static final long FILE_MAX_SIZE = 5 * 1024 * 1024;
 	public static final String UNKNOWN = "unknown";
+	
+	public static final String STATUS = "status";
+	public static final int SUCCESS = 0;
+	public static final int FAILEURE = -1;
+	public static final String DATA = "data";
+	public static final String MESSAGE = "message";
 
 	public static final String X_FORWARDED_FOR = "X-Forwarded-For";
 	public static final String X_REAL_IP = "X-Real-IP";
