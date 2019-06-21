@@ -23,6 +23,8 @@ import java.util.WeakHashMap;
 public class DynamicDataSource extends AbstractDataSource {
     
 	private Map<String, DataSource> dataSourceMap = new WeakHashMap<String, DataSource>();
+	
+	private String defaultDataSourceName;
 
 	
 	public void setDsProperties(PaascloudProperties paascloudProperties) {
@@ -30,6 +32,7 @@ public class DynamicDataSource extends AbstractDataSource {
         log.info("DynamicDataSource: paascloudProperties is starting");
         
         DatasourceAttributes druid[] = paascloudProperties.getDatabase().getDruid();
+        defaultDataSourceName = paascloudProperties.getDatabase().getDefaultName4Uac();
            
         for (DatasourceAttributes iterator : druid) { 
         	
@@ -86,9 +89,9 @@ public class DynamicDataSource extends AbstractDataSource {
 		    currentName = (String) ThreadLocalMap.get(GlobalConstant.Sys.APP_ID);
 		}
 		
-//		if (null == currentName) {
-//		    currentName = "exampleId1234";
-//		}
+		if (null == currentName) {
+		    currentName = defaultDataSourceName;
+		}
 		
 		DataSource currentDataSource = dataSourceMap.get(currentName);
 		if(currentDataSource == null) {

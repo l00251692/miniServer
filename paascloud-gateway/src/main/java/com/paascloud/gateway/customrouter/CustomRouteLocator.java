@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -90,7 +91,7 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
             appId = request.getHeader("appId");
         }
         String location = route.getLocation();
-        if (null != appId) {
+        if (null != appId && StringUtils.isNotEmpty(request.getHeader("customRouter"))) {
             location += "-" + appId;
         }
         return new Route(route.getId(), targetPath, location, prefix,
