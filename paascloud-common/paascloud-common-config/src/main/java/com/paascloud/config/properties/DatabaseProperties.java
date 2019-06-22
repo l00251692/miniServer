@@ -32,4 +32,12 @@ public class DatabaseProperties {
 	
 	private DatasourceAttributes[] druid = {};
 	
+	private String defaultName4Uac;
+	
+	private String defaultName4Mdc;
+	
+	private String defaultName4Omc;
+	
+	private String defaultName4Opc;
+	
 }
