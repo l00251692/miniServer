@@ -1,0 +1,185 @@
+0.在git的配置中心定义了公共的配置，application-dev.yaml
+	rabbitMq：
+	redis:
+	feign:配置服务与url绑定实现类似本地调用其他微服务
+	ribbon:负载均衡
+	hystrix:熔断
+1.编译passcloud-eureka 并运行，http://localhost:8761/ 登录，密码为root/root,项目中文件配置的。
+		@EnableEurekaServer            -------------注册中心
+		@SpringBootApplication
+2.安装rabbitmq,https://www.cnblogs.com/ericli-ericli/p/5902270.html,rabbitmq-server.bat 启动rabbitMQ服务
+3.启动redis，确保服务启动  root/root
+	E:\Program Files\Redis      redis-server.exe redis.windows.conf
+	redis-server --service-start //启动服务
+    redis-server --service-stop //停止服务
+	
+4.启动rocketMQ：
+	1）bin’下，然后执行‘start mqnamesrv.cmd’
+	2）bin’下，然后执行‘start mqbroker.cmd -n 127.0.0.1:9876 autoCreateTopicEnable=true’
+3.编译paascloud-discovery，然后运行,发现discovery服务在eureka中有实例。
+		@SpringBootApplication
+		@EnableConfigServer:              -------------git uri
+		@EnableDiscoveryClient:           -------------registe to eureka
+	http://localhost:8080/application-dev.yml可以查看对应的配置文件
+4.启动zookeeper。注意如果有jetty会报8080端口占用错误，zoo.cfg文件中增加配置admin.serverPort=2182
+5.编译passcloud-zipkin并启动。   ------链路追踪  日志采集，通过rabbitMq收集信息
+		http://www.itmuch.com/spring-cloud/edgware-new-sleuth-zipkin-mq/
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableZipkinServer               ------------- Zipkin Server
+6.编译并运行paascloud-provider-uac.jar. 编译执行测试时出错配置跳过先编出包来。是auth2认证服务中心
+		@EnableHystrix
+		@EnableFeignClients            -------服务消费者
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableTransactionManagement   -------事物处理
+	
+	集成liquiBase 支持数据库数据的更改记录
+	provider/web为提供的前台交互接口
+	
+	PcAuthorizationServerConfig 类为@EnableAuthorizationServer
+	mdc omc opc tpc security-app 为@EnableResourceServer
+	
+7.编译并启动paascloud-gateway-1.0.jar
+		@SpringBootApplication
+		@EnableDiscoveryClient
+		@EnableZuulProxy：             ---------zuul配置路由
+		@EnableOAuth2Sso
+		@EnableHystrix	               ---------熔断器
+		@EnableSwaggerButler：         ---------API文档生成
+
+
+8.下载https://github.com/paascloud/paascloud-login-web
+9.安装前端项目
+	1）cmd到目录下npm install
+	2) npm run dev
+10.访问http://dev-login.paascloud.net:80或http://127.0.0.1:80（本地改了host文件做了域名映射）
+
+补充：passcloud-monitor: 服务监控
+		@SpringBootApplication
+		@EnableDiscoveryClient
+		@EnableTurbine      -----------断路器数据整合
+		@EnableHystrixDashboard
+		@EnableCircuitBreaker
+		@EnableAdminServer
+	
+	passcloud-provider-tpc:             任务服务中心
+		@EnableRetry
+		@EnableCaching
+		@EnableHystrix
+		@EnableFeignClients
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableTransactionManagement
+		
+	passcloud-provider-omc:	            订单服务中心
+		@EnableCaching
+		@EnableHystrix
+		@EnableFeignClients
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableTransactionManagement
+	
+	passcloud-provider-opc:             对接服务中心
+		@EnableRetry
+		@EnableCaching
+		@EnableHystrix
+		@EnableSwagger2
+		@EnableFeignClients
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableTransactionManagement
+	
+	passcloud-provider-mdc:               数据服务中心
+		@EnableCaching
+		@EnableHystrix
+		@EnableFeignClients
+		@EnableDiscoveryClient
+		@SpringBootApplication
+		@EnableTransactionManagement
+	
+	
+	passcloud-provider-tpc:
+		
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@	
+	
+	
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\eureka\paascloud-eureka\1.0  java -jar paascloud-eureka-1.0.jar
+	http://localhost:8761/ 登录，密码为root/root
+
+E:\Program Files\RabbitMQ Server\rabbitmq_server-3.6.5\sbin     rabbitmq-server.bat
+
+E:\Program Files\Redis      redis-server.exe redis.windows.conf
+	redis-server --service-start //启动服务 这样启动起来没有设置好密码
+    redis-server --service-stop //停止服务
+
+E:\rocketmq-all-4.4.0-bin-release\bin
+	start mqnamesrv.cmd
+	start mqbroker.cmd -n 127.0.0.1:9876 autoCreateTopicEnable=true
+	
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\discovery\paascloud-discovery\1.5.13.RELEASE java -jar paascloud-discovery-1.5.13.RELEASE.jar
+
+E:\zookeeper-3.5.4-beta\bin    zkServer.cmd
+
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\zipkin\paascloud-zipkin\1.0   java -jar  paascloud-zipkin-1.0.jar
+     
+	 
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\provider\paascloud-provider-uac\1.0  java -jar paascloud-provider-uac-1.0.jar
+
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\gateway\paascloud-gateway\1.0   java -jar paascloud-gateway-1.0.jar
+
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\monitor\paascloud-monitor\1.0   java -jar paascloud-monitor-1.0.jar
+	http://localhost:8010   admin/admin 账户名和密码登录
+	
+G:\paascloud-login-web  npm run dev 
+
+
+
+*****************************************************************
+1.启动时出现醉倒64KEY的数据库错误，将表中的索引删除而不是删除表记录
+
+	
+package com.paascloud.core.config里配置了Redis和ZooKeeper等
+
+鉴权认证：公共流程
+A.security-app    安全资源管理配置，包括第三方认证
+	PcResourceServerConfig 资源服务器配置，定义了AuthenticationSuccessHandler，AuthenticationFailureHandler，FormAuthenticationConfig加入到访问控制策略等
+		PersistentTokenRepository------记住我功能还要研究研究
+		TokenStoreConfig   ----现在配置为jwt
+		TokenJwtEnhancer 在Token基础上增加了loginName和时间戳
+B.security-core 
+	用于sercurity-app调用这里面的配置http请求
+	FormAuthenticationConfig        "/auth/form"--登录配置，登录在这里配置，通过Uac重写AuthenticationSuccessHandler在UAC详细处理
+	ValidateCodeController  创建验证码
+C. security-feign 读取uac中配置的oauth2 client，每个服务都依赖这个包
+	OAuth2FeignAutoConfiguration 注入配置
+	OAuth2FeignRequestInterceptor 将Token添加到Header中，每个请求header中增加“bearer ” + token信息
+
+Uac鉴权认证中心：
+1.UacWebMvcConfig 在启动中配置TokenInterceptor做url过滤："/auth";"/oauth";"/error";"/api";开始url不需要进行鉴权处理，直接进行REST处理
+	配置了NoNeedAccessAuthentication注解也不需要进行鉴权处理
+	其他进行鉴权处理：调用redisTemplate根据token获得user信息（用户登录成功后会存到Redis,处理见下面）
+2.PcAuthorizationServerConfig 配置OAUTH认证中心，RestClientDetailsServiceImpl，UacUserDetailsServiceImpl继承实现相关配置应用
+3.PcPermissionAuthorizeConfigProvider 通过AuthorizeConfigProvider向系统中添加授权配置
+4.PcAuthenticationSuccessHandler 真正的登录成功的处理类onAuthenticationSuccess， createAccessToken 生成SecurityUser，保存Token到数据库和Redis
+
+1.网关鉴权处理
+0.采用CorsFilter进行跨域资源访问控制，并且关闭了csrf
+1.Zuul过滤器：AuthHeaderFilter 对请求进行过滤（pre类型在请求被路由之前）RnewFilter在路由和error之后被调用（“post")类型。
+2.读取authofation header后addZuulRequestHeader（header中有“bearer” 字符串则添加Authorization header）传递给后续微服务（/auth等服务不添加因为后面的微服务不需鉴权）
+
+2.扔给uac服务处理（/uac/auth/form）
+uac根据url确认是登录处理，根据之前的配置，处理成功后pcAuthenticationSuccessHandler，失败pcAuthenticationFailureHandler
+
+
+	
+	登录用户名和密码：admin/admin 123456?
+	appid怎么加载前端
+	
+	
+	com.paascloud.gateway.customrouter.CustomRouteLocator.getRoute(ZuulRoute, String)
+    调试
+	
+	直接 BaseController.getAppId()
+
