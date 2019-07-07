@@ -194,8 +194,7 @@ public class AuthRestController extends BaseController {
 					logger.error("[login fail]userId=" + userInfoJSON.get("openId"));
 				}
 				
-				obj.put("userinfo", userInfo);
-				obj.put("errno", "0");
+				obj.put("userInfo", userInfo);
 				
 				result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
 				result.put(GlobalConstant.DATA, obj);
