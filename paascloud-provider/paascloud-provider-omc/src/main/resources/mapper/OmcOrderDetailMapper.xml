@@ -6,7 +6,7 @@
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="version" property="version" jdbcType="INTEGER" />
 		<result column="detail_no" property="detailNo" jdbcType="VARCHAR" />
-		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
 		<result column="product_id" property="productId" jdbcType="BIGINT" />
 		<result column="product_name" property="productName" jdbcType="VARCHAR" />
@@ -62,7 +62,7 @@
 			(#{item.id,jdbcType=BIGINT},
 			#{item.version,jdbcType=INTEGER},
 			#{item.detailNo,jdbcType=VARCHAR},
-			#{item.userId,jdbcType=BIGINT},
+			#{item.userId,jdbcType=VARCHAR},
 			#{item.orderNo,jdbcType=VARCHAR},
 			#{item.productId,jdbcType=BIGINT},
 			#{item.productName,jdbcType=VARCHAR},

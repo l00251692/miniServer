@@ -49,7 +49,7 @@ public interface OmcCartFeignApi {
 	 * @return the wrapper
 	 */
 	@PostMapping(value = "/api/cart/addProduct")
-	Wrapper addProduct(@RequestParam("userId") Long userId, @RequestParam("productId") Long productId, @RequestParam("count") Integer count);
+	Wrapper addProduct(@RequestParam("userId") String userId, @RequestParam("productId") Long productId, @RequestParam("count") Integer count);
 
 	/**
 	 * 更新商品信息.
@@ -61,7 +61,7 @@ public interface OmcCartFeignApi {
 	 * @return the wrapper
 	 */
 	@PostMapping(value = "/api/cart/updateProduct")
-	Wrapper updateProduct(@RequestParam("userId") Long userId, @RequestParam("productId") Long productId, @RequestParam("count") Integer count);
+	Wrapper updateProduct(@RequestParam("userId") String userId, @RequestParam("productId") Long productId, @RequestParam("count") Integer count);
 
 	/**
 	 * 删除商品信息.
@@ -72,7 +72,7 @@ public interface OmcCartFeignApi {
 	 * @return the wrapper
 	 */
 	@PostMapping(value = "/api/cart/deleteProduct")
-	Wrapper deleteProduct(@RequestParam("userId") Long userId, @RequestParam("productIds") String productIds);
+	Wrapper deleteProduct(@RequestParam("userId") String userId, @RequestParam("productIds") String productIds);
 
 	/**
 	 * 选中和反选商品.
@@ -84,6 +84,6 @@ public interface OmcCartFeignApi {
 	 * @return the wrapper
 	 */
 	@PostMapping(value = "/api/cart/selectOrUnSelect")
-	Wrapper selectOrUnSelect(@RequestParam(name = "userId") Long userId, @RequestParam(name = "productId", required = false) Long productId, @RequestParam(name = "checked") Integer checked);
+	Wrapper selectOrUnSelect(@RequestParam(name = "userId") String userId, @RequestParam(name = "productId", required = false) Long productId, @RequestParam(name = "checked") Integer checked);
 }
 

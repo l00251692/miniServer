@@ -60,13 +60,13 @@ public class UacMenuServiceImpl extends BaseService<UacMenu> implements UacMenuS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<MenuVo> getMenuVoList(Long userId, Long applicationId) {
+	public List<MenuVo> getMenuVoList(String userId, Long applicationId) {
 		// 1.查询该用户下所有的菜单列表
 		List<MenuVo> menuVoList = Lists.newArrayList();
 		List<UacMenu> menuList;
 		Set<UacMenu> menuSet = Sets.newHashSet();
 		// 如果是admin则返回所有的菜单
-		if (userId == 1L) {
+		if (userId == "1L") {
 			// 1.1 查询该用户下所有的菜单列表
 			UacMenu uacMenuQuery = new UacMenu();
 			uacMenuQuery.setStatus(UacMenuStatusEnum.ENABLE.getType());

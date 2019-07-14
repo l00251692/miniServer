@@ -11,10 +11,14 @@
 
 package com.paascloud.provider.web.frontend;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.dto.BaseQuery;
 import com.paascloud.base.dto.LoginAuthDto;
+import com.paascloud.core.config.DataSourceHolder;
 import com.paascloud.core.support.BaseController;
+import com.paascloud.provider.model.domain.OmcOrderSummary;
 import com.paascloud.provider.model.dto.OrderPageQuery;
 import com.paascloud.provider.model.vo.OrderProductVo;
 import com.paascloud.provider.model.vo.OrderVo;
@@ -26,6 +30,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 import javax.annotation.Resource;
 
@@ -116,7 +122,7 @@ public class OmcOrderController extends BaseController {
 	public Wrapper queryUserOrderDetailList(@PathVariable String orderNo) {
 		logger.info("queryUserOrderDetailList - 查询用户订单明细. orderNo={}", orderNo);
 
-		Long userId = getLoginAuthDto().getUserId();
+		String userId = getLoginAuthDto().getUserId();
 		logger.info("操作人信息. userId={}", userId);
 
 		OrderVo orderVo = omcOrderService.getOrderDetail(userId, orderNo);
@@ -144,7 +150,7 @@ public class OmcOrderController extends BaseController {
 	public Wrapper queryUserOrderListWithPage(@RequestBody BaseQuery baseQuery) {
 		logger.info("queryUserOrderListWithPage - 查询用户订单集合. baseQuery={}", baseQuery);
 
-		Long userId = getLoginAuthDto().getUserId();
+		String userId = getLoginAuthDto().getUserId();
 		logger.info("操作人信息. userId={}", userId);
 
 		PageInfo pageInfo = omcOrderService.queryUserOrderListWithPage(userId, baseQuery);
@@ -171,6 +177,36 @@ public class OmcOrderController extends BaseController {
 	public Wrapper<Boolean> queryOrderPayStatus(@PathVariable String orderNo) {
 		logger.info("queryOrderPayStatus - 查询订单状态. orderNo={}", orderNo);
 		boolean result = omcOrderService.queryOrderPayStatus(getLoginAuthDto().getUserId(), orderNo);
+		return WrapMapper.ok(result);
+	}
+	
+	/**
+	 * 查询订单概况.
+	 *
+	 * @param orderNo the order no
+	 *
+	 * @return the wrapper
+	 */
+	@PostMapping("wx/summary")
+	@ApiOperation(httpMethod = "POST", value = "查询订单概况")
+	public Wrapper queryUserOrderSummary(@PathVariable String userId) {
+		logger.info("queryUserOrderSummary . userId={}", userId);
+		HashMap<Object, Object> result = new  HashMap<>();
+		JSONObject summary = new JSONObject(); 
+		
+		DataSourceHolder.setDataSource(getAppId());
+
+		OmcOrderSummary orderSummary = omcOrderService.getOrderSummary(userId);
+		
+		summary.put("unpaid", orderSummary.getUnpaid());
+		summary.put("unship", orderSummary.getUnship());
+		summary.put("unrecv", orderSummary.getUnrecv());
+		summary.put("uncomment", orderSummary.getUncomment());
+		summary.put("total", orderSummary.getTotal());
+		
+		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
+		result.put(GlobalConstant.DATA, summary);
+		
 		return WrapMapper.ok(result);
 	}
 

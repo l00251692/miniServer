@@ -44,7 +44,7 @@ public class OmcOrderDetailQueryFeignClient extends BaseController implements Om
 
 	@Override
 	@ApiOperation(httpMethod = "POST", value = "获取用户订单详情")
-	public Wrapper<List<OrderDetailDto>> getListByOrderNoUserId(@PathVariable("orderNo") String orderNo, @PathVariable("userId") Long userId) {
+	public Wrapper<List<OrderDetailDto>> getListByOrderNoUserId(@PathVariable("orderNo") String orderNo, @PathVariable("userId") String userId) {
 		logger.info("getListByOrderNoUserId - 获取用户订单详情. orderNo={}, userId={}", orderNo, userId);
 		List<OmcOrderDetail> list = omcOrderDetailService.getListByOrderNoUserId(orderNo, userId);
 

@@ -85,7 +85,7 @@ public interface UacActionService extends IService<UacAction> {
 	 *
 	 * @return the own auth list
 	 */
-	List<MenuVo> getOwnAuthList(Long userId);
+	List<MenuVo> getOwnAuthList(String userId);
 
 	/**
 	 * Gets checked menu list.
@@ -103,7 +103,7 @@ public interface UacActionService extends IService<UacAction> {
 	 *
 	 * @return the own uac action list
 	 */
-	List<UacAction> getOwnActionListByUserId(Long userId);
+	List<UacAction> getOwnActionListByUserId(String userId);
 
 	/**
 	 * 根据角色ID查询权限列表.

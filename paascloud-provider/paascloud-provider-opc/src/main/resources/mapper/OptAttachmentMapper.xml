@@ -14,7 +14,7 @@
 		<result column="format" property="format" jdbcType="VARCHAR" />
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
-		<result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+		<result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
 		<result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
 		<result column="last_operator" property="lastOperator"
 			jdbcType="VARCHAR" />

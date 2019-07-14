@@ -158,7 +158,7 @@ public class OptAttachmentServiceImpl extends BaseService<OptAttachment> impleme
 		String bucketName = optUploadFileReqDto.getBucketName();
 		OptUploadFileByteInfoReqDto uploadFileByteInfoReqDto = optUploadFileReqDto.getUploadFileByteInfoReqDto();
 		LoginAuthDto authResDto = new LoginAuthDto();
-		authResDto.setUserId(optUploadFileReqDto.getUserId());
+		authResDto.setUserId(optUploadFileReqDto.getUserId().toString());
 		authResDto.setUserName(optUploadFileReqDto.getUserName());
 
 		if (PublicUtil.isEmpty(filePath)) {

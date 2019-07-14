@@ -8,7 +8,7 @@
 		<result column="pid" jdbcType="BIGINT" property="pid" />
 		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
 		<result column="user_name" jdbcType="VARCHAR" property="userName" />
-		<result column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
 		<result column="os" property="os" jdbcType="VARCHAR" />
 		<result column="browser" property="browser" jdbcType="VARCHAR" />
 		<result column="login_ip" jdbcType="VARCHAR" property="loginIp" />

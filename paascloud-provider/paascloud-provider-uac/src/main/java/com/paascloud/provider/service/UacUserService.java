@@ -74,7 +74,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the user perms
 	 */
-	List<String> getUserPerms(Long userId);
+	List<String> getUserPerms(String userId);
 
 	/**
 	 * 更新用户信息
@@ -101,7 +101,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the int
 	 */
-	int deleteUserById(Long userId);
+	int deleteUserById(String userId);
 
 	/**
 	 * 根据用户ID查询用户信息.
@@ -110,7 +110,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findUserInfoByUserId(Long userId);
+	UacUser findUserInfoByUserId(String userId);
 
 	/**
 	 * 保存用户.
@@ -127,7 +127,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the list
 	 */
-	List<UacLog> queryUserLogListWithUserId(Long userId);
+	List<UacLog> queryUserLogListWithUserId(String userId);
 
 	/**
 	 * 根据用户ID修改用户状态.
@@ -173,7 +173,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser queryByUserId(Long userId);
+	UacUser queryByUserId(String userId);
 
 	/**
 	 * 用户修改密码
@@ -262,7 +262,7 @@ public interface UacUserService extends IService<UacUser> {
 	 * @param userId       the user id
 	 * @param loginAuthDto the login auth dto
 	 */
-	void resetLoginPwd(Long userId, LoginAuthDto loginAuthDto);
+	void resetLoginPwd(String userId, LoginAuthDto loginAuthDto);
 
 	/**
 	 * 重置登录密码.
@@ -278,7 +278,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the user bind role dto
 	 */
-	UserBindRoleVo getUserBindRoleDto(Long userId);
+	UserBindRoleVo getUserBindRoleDto(String userId);
 
 	/**
 	 * 激活用户.
@@ -294,7 +294,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the collection
 	 */
-	Collection<GrantedAuthority> loadUserAuthorities(Long userId);
+	Collection<GrantedAuthority> loadUserAuthorities(String userId);
 
 	/**
 	 * Handler login data.

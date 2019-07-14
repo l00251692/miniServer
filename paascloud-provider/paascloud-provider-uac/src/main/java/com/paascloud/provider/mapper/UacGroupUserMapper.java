@@ -36,7 +36,7 @@ public interface UacGroupUserMapper extends MyMapper<UacGroupUser> {
 	 *
 	 * @return the uac group user
 	 */
-	UacGroupUser getByUserId(Long userId);
+	UacGroupUser getByUserId(String userId);
 
 	/**
 	 * Update by user id int.
@@ -54,7 +54,7 @@ public interface UacGroupUserMapper extends MyMapper<UacGroupUser> {
 	 *
 	 * @return the list
 	 */
-	List<UacGroup> selectGroupListByUserId(Long userId);
+	List<UacGroup> selectGroupListByUserId(String userId);
 
 	/**
 	 * List by group id list.

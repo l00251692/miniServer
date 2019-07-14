@@ -41,7 +41,7 @@ public class MallCartQueryFeignClient extends BaseController implements OmcCartQ
 
 	@Override
 	@ApiOperation(httpMethod = "POST", value = "获取购物车信息")
-	public Wrapper<CartVo> getCartVo(@RequestParam("userId") Long userId) {
+	public Wrapper<CartVo> getCartVo(@RequestParam("userId") String userId) {
 		logger.info("getCartVo - 获取购物车信息. userId={}", userId);
 		CartVo cartVo = omcCartService.getCarVo(userId);
 		return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, cartVo);

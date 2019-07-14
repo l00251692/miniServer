@@ -210,7 +210,7 @@ public class UacGroupServiceImpl extends BaseService<UacGroup> implements UacGro
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<MenuVo> getGroupTreeListByUserId(Long userId) {
+	public List<MenuVo> getGroupTreeListByUserId(String userId) {
 		UacGroupUser groupUser = uacGroupUserMapper.getByUserId(userId);
 		Long groupId = groupUser.getGroupId();
 		//查询当前登陆人所在的组织信息
@@ -241,9 +241,9 @@ public class UacGroupServiceImpl extends BaseService<UacGroup> implements UacGro
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public GroupBindUserDto getGroupBindUserDto(Long groupId, Long currentUserId) {
+	public GroupBindUserDto getGroupBindUserDto(Long groupId, String currentUserId) {
 		GroupBindUserDto groupBindUserDto = new GroupBindUserDto();
-		Set<Long> alreadyBindUserIdSet = Sets.newHashSet();
+		Set<String> alreadyBindUserIdSet = Sets.newHashSet();
 		UacGroup uacGroup = uacGroupMapper.selectByPrimaryKey(groupId);
 		if (PublicUtil.isEmpty(uacGroup)) {
 			logger.error("找不到uacGroup={}, 的组织", uacGroup);
@@ -281,8 +281,8 @@ public class UacGroupServiceImpl extends BaseService<UacGroup> implements UacGro
 		}
 
 		Long groupId = groupBindUserReqDto.getGroupId();
-		Long loginUserId = authResDto.getUserId();
-		List<Long> userIdList = groupBindUserReqDto.getUserIdList();
+		String loginUserId = authResDto.getUserId();
+		List<String> userIdList = groupBindUserReqDto.getUserIdList();
 
 		if (null == groupId) {
 			throw new IllegalArgumentException("組織ID不能为空");
@@ -301,8 +301,8 @@ public class UacGroupServiceImpl extends BaseService<UacGroup> implements UacGro
 		}
 
 		// 查询超级管理员用户Id集合
-		List<Long> superUserList = uacRoleUserMapper.listSuperUser(GlobalConstant.Sys.SUPER_MANAGER_ROLE_ID);
-		List<Long> unionList = Collections3.intersection(userIdList, superUserList);
+		List<String> superUserList = uacRoleUserMapper.listSuperUser(GlobalConstant.Sys.SUPER_MANAGER_ROLE_ID);
+		List<String> unionList = Collections3.intersection(userIdList, superUserList);
 		if (PublicUtil.isNotEmpty(userIdList) && PublicUtil.isNotEmpty(unionList)) {
 			logger.error("不能操作超级管理员用户 超级用户={}", unionList);
 			throw new UacBizException(ErrorCodeEnum.UAC10011023);
@@ -322,7 +322,7 @@ public class UacGroupServiceImpl extends BaseService<UacGroup> implements UacGro
 		}
 
 		// 绑定所选用户
-		for (Long userId : userIdList) {
+		for (String userId : userIdList) {
 			UacUser uacUser = uacUserService.queryByUserId(userId);
 			if (PublicUtil.isEmpty(uacUser)) {
 				logger.error("找不到绑定的用户 userId={}", userId);

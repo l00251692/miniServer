@@ -54,13 +54,13 @@ public class OmcShippingServiceImpl extends BaseService<OmcShipping> implements 
 	}
 
 	@Override
-	public int deleteShipping(Long userId, Integer shippingId) {
+	public int deleteShipping(String userId, Integer shippingId) {
 
 		return omcShippingMapper.deleteByShippingIdUserId(userId, shippingId);
 	}
 
 	@Override
-	public OmcShipping selectByShippingIdUserId(Long userId, Long shippingId) {
+	public OmcShipping selectByShippingIdUserId(String userId, Long shippingId) {
 		return omcShippingMapper.selectByShippingIdUserId(userId, shippingId);
 	}
 
@@ -85,16 +85,16 @@ public class OmcShippingServiceImpl extends BaseService<OmcShipping> implements 
 	}
 
 	@Override
-	public PageInfo queryListWithPageByUserId(Long userId, int pageNum, int pageSize) {
+	public PageInfo queryListWithPageByUserId(String userId, int pageNum, int pageSize) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 		PageHelper.startPage(pageNum, pageSize);
 		//TODO 写死 不维护收人列表
-		List<OmcShipping> omcShippingList = this.selectByUserId(1L);
+		List<OmcShipping> omcShippingList = this.selectByUserId("1L");
 		return new PageInfo<>(omcShippingList);
 	}
 
 	@Override
-	public List<OmcShipping> selectByUserId(Long userId) {
+	public List<OmcShipping> selectByUserId(String userId) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 		return omcShippingMapper.selectByUserId(userId);
 	}
@@ -102,7 +102,7 @@ public class OmcShippingServiceImpl extends BaseService<OmcShipping> implements 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int setDefaultAddress(LoginAuthDto loginAuthDto, Long addressId) {
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		Preconditions.checkArgument(addressId != null, "地址ID不能为空");
 
 		// 1. 查找当前默认地址

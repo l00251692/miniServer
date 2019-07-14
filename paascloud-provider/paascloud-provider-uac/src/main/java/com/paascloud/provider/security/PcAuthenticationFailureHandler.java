@@ -38,7 +38,7 @@ public class PcAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 	                                    AuthenticationException exception) throws IOException, ServletException {
 
-		logger.info("登录失败");
+		logger.info("Login Fail");
 
 		// 记录失败次数 和原因 ip等信息 5次登录失败,锁定用户, 不允许在此登录
 

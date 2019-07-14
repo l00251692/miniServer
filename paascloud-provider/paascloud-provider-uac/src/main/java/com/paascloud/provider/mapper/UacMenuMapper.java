@@ -37,7 +37,7 @@ public interface UacMenuMapper extends MyMapper<UacMenu> {
 	 *
 	 * @return the list
 	 */
-	List<MenuVo> findMenuVoListByUserId(Long userId);
+	List<MenuVo> findMenuVoListByUserId(String userId);
 
 	/**
 	 * Find menu code list by user id list.
@@ -46,7 +46,7 @@ public interface UacMenuMapper extends MyMapper<UacMenu> {
 	 *
 	 * @return the list
 	 */
-	List<String> findMenuCodeListByUserId(Long userId);
+	List<String> findMenuCodeListByUserId(String userId);
 
 	/**
 	 * Select menu list list.

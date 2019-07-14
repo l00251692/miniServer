@@ -33,5 +33,5 @@ public class GroupBindUserReqDto implements Serializable {
 	private Long groupId;
 
 	@ApiModelProperty(value = "用户id")
-	private List<Long> userIdList;
+	private List<String> userIdList;
 }

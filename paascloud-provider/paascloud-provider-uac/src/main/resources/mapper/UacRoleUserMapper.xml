@@ -4,7 +4,7 @@
 	<resultMap id="BaseResultMap"
 		type="com.paascloud.provider.model.domain.UacRoleUser">
 		<id column="role_id" jdbcType="BIGINT" property="roleId" />
-		<id column="user_id" jdbcType="BIGINT" property="userId" />
+		<id column="user_id" jdbcType="VARCHAR" property="userId" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		role_id, user_id

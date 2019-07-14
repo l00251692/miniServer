@@ -13,6 +13,7 @@ package com.paascloud.provider.mapper;
 
 import com.paascloud.core.mybatis.MyMapper;
 import com.paascloud.provider.model.domain.OmcOrder;
+import com.paascloud.provider.model.domain.OmcOrderSummary;
 import com.paascloud.provider.model.dto.OrderPageQuery;
 import com.paascloud.provider.model.vo.OrderDocVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -37,7 +38,7 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 *
 	 * @return the omc order
 	 */
-	OmcOrder selectByUserIdAndOrderNo(@Param("userId") Long userId, @Param("orderNo") String orderNo);
+	OmcOrder selectByUserIdAndOrderNo(@Param("userId") String userId, @Param("orderNo") String orderNo);
 
 	/**
 	 * Select by order no omc order.
@@ -55,7 +56,7 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 *
 	 * @return the list
 	 */
-	List<OmcOrder> selectByUserId(Long userId);
+	List<OmcOrder> selectByUserId(String userId);
 
 	/**
 	 * Select all order list.
@@ -72,4 +73,6 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 * @return the list
 	 */
 	List<OrderDocVo> queryOrderListWithPage(OrderPageQuery orderPageQuery);
+	
+	OmcOrderSummary getOrderSummary(String userId);
 }

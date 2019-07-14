@@ -59,7 +59,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	private OpcOssService opcOssService;
 
 	@Override
-	public CartVo getCarVo(Long userId) {
+	public CartVo getCarVo(String userId) {
 		logger.info("getCarVo -  获取购物车列表 -- userId={}", userId);
 		CartVo cartVo = new CartVo();
 		List<OmcCart> cartList = this.selectCartListByUserId(userId);
@@ -121,7 +121,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public List<OmcCart> selectCartListByUserId(Long userId) {
+	public List<OmcCart> selectCartListByUserId(String userId) {
 		logger.info("selectCartListByUserId - 查询购物车记录 userId={}", userId);
 
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
@@ -137,7 +137,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 
 		LoginAuthDto loginUser = new LoginAuthDto();
 		loginUser.setLoginName(GlobalConstant.Sys.SUPER_MANAGER_LOGIN_NAME);
-		loginUser.setUserId(1L);
+		loginUser.setUserId("1L");
 		for (CartProductVo cartProductVo : cartProductVoList) {
 			Integer quantity = cartProductVo.getQuantity();
 			Integer productChecked = cartProductVo.getChecked();
@@ -166,7 +166,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 		logger.info("saveCart - 保存购物车记录 omcCart={}, userId={}", omcCart, authDto.getUserId());
 
 		Long productId = omcCart.getProductId();
-		Long userId = authDto.getUserId();
+		String userId = authDto.getUserId();
 		Preconditions.checkArgument(productId != null, "货品ID不能为空");
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 
@@ -190,7 +190,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public int saveCart(Long userId, Long productId, int count) {
+	public int saveCart(String userId, Long productId, int count) {
 		logger.info("saveCart - 保存购物车记录 userId={}, productId={}, count={}", userId, productId, count);
 
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
@@ -215,7 +215,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public OmcCart getCartByUserIdAndProductId(Long userId, Long productId) {
+	public OmcCart getCartByUserIdAndProductId(String userId, Long productId) {
 		logger.info("getCartByUserIdAndProductId - 查询购物车记录 userId={}, productId={}", userId, productId);
 
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
@@ -225,7 +225,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public int deleteProduct(Long userId, String productIds) {
+	public int deleteProduct(String userId, String productIds) {
 		logger.info("deleteProduct - 删除购物车记录 userId={}, productIds={}", userId, productIds);
 		Preconditions.checkArgument(StringUtils.isNotEmpty(productIds), ErrorCodeEnum.MDC10021021.msg());
 		List<String> productList = Splitter.on(",").splitToList(productIds);
@@ -236,7 +236,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public int selectOrUnSelect(Long userId, Long productId, int checked) {
+	public int selectOrUnSelect(String userId, Long productId, int checked) {
 		logger.info("selectOrUnSelect - 选中购物车记录 userId={}, productId={}, checked={}", userId, productId, checked);
 
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
@@ -245,7 +245,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public int updateCart(Long userId, Long productId, int count) {
+	public int updateCart(String userId, Long productId, int count) {
 		logger.info("updateCart - 更新货品数量 userId={}, productId={}, count={}", userId, productId, count);
 
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
@@ -270,7 +270,7 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 	}
 
 	@Override
-	public OrderProductVo getOrderCartProduct(Long userId) {
+	public OrderProductVo getOrderCartProduct(String userId) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 
 		OrderProductVo orderProductVo = new OrderProductVo();
@@ -297,14 +297,14 @@ public class OmcCartServiceImpl extends BaseService<OmcCart> implements OmcCartS
 		return orderProductVo;
 	}
 
-	private boolean getAllCheckedStatus(Long userId) {
+	private boolean getAllCheckedStatus(String userId) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 		return omcCartMapper.selectUnCheckedCartProductCountByUserId(userId) == 0;
 
 	}
 
 	@Override
-	public List<OmcOrderDetail> getCartOrderItem(Long userId, List<OmcCart> cartList) {
+	public List<OmcOrderDetail> getCartOrderItem(String userId, List<OmcCart> cartList) {
 		List<OmcOrderDetail> orderItemList = Lists.newArrayList();
 		if (CollectionUtils.isEmpty(cartList)) {
 			throw new OmcBizException(ErrorCodeEnum.OMC10031001, userId);

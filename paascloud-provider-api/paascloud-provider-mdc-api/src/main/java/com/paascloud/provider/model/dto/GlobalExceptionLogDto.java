@@ -72,7 +72,7 @@ public class GlobalExceptionLogDto {
 	/**
 	 * 创建人ID
 	 */
-	private Long creatorId;
+	private String creatorId;
 
 	/**
 	 * 创建时间
@@ -110,7 +110,7 @@ public class GlobalExceptionLogDto {
 		}
 
 		if (loginAuthDto == null) {
-			loginAuthDto = new LoginAuthDto(-1L, "SYSTEM_TASK", "系统任务");
+			loginAuthDto = new LoginAuthDto("-1L", "SYSTEM_TASK", "系统任务");
 		}
 		this.creatorId = loginAuthDto.getUserId();
 		this.creator = loginAuthDto.getUserName();

@@ -41,7 +41,7 @@ public class OmcOrder extends BaseEntity {
 	 * 用户id
 	 */
 	@Column(name = "user_id")
-	private Long userId;
+	private String userId;
 
 	@Column(name = "shipping_id")
 	private Long shippingId;

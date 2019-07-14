@@ -34,7 +34,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the car vo
 	 */
-	CartVo getCarVo(Long userId);
+	CartVo getCarVo(String userId);
 
 	/**
 	 * Select cart list by user id list.
@@ -43,7 +43,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the list
 	 */
-	List<OmcCart> selectCartListByUserId(Long userId);
+	List<OmcCart> selectCartListByUserId(String userId);
 
 	/**
 	 * 更新购物车.
@@ -71,7 +71,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int saveCart(Long userId, Long productId, int count);
+	int saveCart(String userId, Long productId, int count);
 
 	/**
 	 * Gets cart by user id and product id.
@@ -81,7 +81,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the cart by user id and product id
 	 */
-	OmcCart getCartByUserIdAndProductId(Long userId, Long productId);
+	OmcCart getCartByUserIdAndProductId(String userId, Long productId);
 
 	/**
 	 * 删除购物车商品信息.
@@ -91,7 +91,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int deleteProduct(Long userId, String productIds);
+	int deleteProduct(String userId, String productIds);
 
 	/**
 	 * 选中或者反选商品信息.
@@ -102,7 +102,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int selectOrUnSelect(Long userId, Long productId, int checked);
+	int selectOrUnSelect(String userId, Long productId, int checked);
 
 	/**
 	 * 更新购物车信息.
@@ -113,7 +113,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int updateCart(Long userId, Long productId, int count);
+	int updateCart(String userId, Long productId, int count);
 
 	/**
 	 * 获取购物车商品数量.
@@ -122,7 +122,7 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the or cart product
 	 */
-	OrderProductVo getOrderCartProduct(Long userId);
+	OrderProductVo getOrderCartProduct(String userId);
 
 	/**
 	 * Gets cart order item.
@@ -132,5 +132,5 @@ public interface OmcCartService extends IService<OmcCart> {
 	 *
 	 * @return the cart order item
 	 */
-	List<OmcOrderDetail> getCartOrderItem(Long userId, List<OmcCart> cartList);
+	List<OmcOrderDetail> getCartOrderItem(String userId, List<OmcCart> cartList);
 }

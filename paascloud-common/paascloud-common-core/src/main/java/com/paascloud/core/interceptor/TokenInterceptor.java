@@ -52,6 +52,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 	private static final String AUTH_PATH2 = "/oauth";
 	private static final String AUTH_PATH3 = "/error";
 	private static final String AUTH_PATH4 = "/api";
+	private static final String AUTH_PATH5 = "/wx";
 
 	/**
 	 * After completion.
@@ -106,15 +107,16 @@ public class TokenInterceptor implements HandlerInterceptor {
 		}
 		
 		
-		log.info("<== preHandle - 权限拦截器.  url={}", uri);
-		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) || uri.contains(AUTH_PATH4)) {
-			log.info("<== preHandle - 配置URL不走认证.  url={}", uri);
+		log.info("<== preHandle - authoration.  url={}", uri);
+		if (uri.contains(AUTH_PATH1) || uri.contains(AUTH_PATH2) || uri.contains(AUTH_PATH3) 
+				|| uri.contains(AUTH_PATH4) || uri.contains(AUTH_PATH5)) {
+			log.info("<== preHandle - config URL no need auth.  url={}", uri);
 			return true;
 		}
-		log.info("<== preHandle - 调试模式不走认证.  OPTIONS={}", request.getMethod().toUpperCase());
+		log.info("<== preHandle - debug mode no need auth.  OPTIONS={}", request.getMethod().toUpperCase());
 
 		if (OPTIONS.equalsIgnoreCase(request.getMethod())) {
-			log.info("<== preHandle - 调试模式不走认证.  url={}", uri);
+			log.info("<== preHandle - debug mode no need auth.  url={}", uri);
 			return true;
 		}
 

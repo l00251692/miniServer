@@ -32,5 +32,5 @@ public class RoleBindUserReqDto implements Serializable {
 	private Long roleId;
 
 	@ApiModelProperty(value = "需要绑定的用户ID集合")
-	private List<Long> userIdList;
+	private List<String> userIdList;
 }

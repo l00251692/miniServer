@@ -70,7 +70,7 @@ public class UacGroupBindUserController extends BaseController {
 	public Wrapper<GroupBindUserDto> getGroupBindUserPageInfo(@ApiParam(name = "groupId", value = "组织id") @PathVariable Long groupId) {
 		logger.info("查询组织绑定用户页面数据 groupId={}", groupId);
 		LoginAuthDto loginAuthDto = super.getLoginAuthDto();
-		Long currentUserId = loginAuthDto.getUserId();
+		String currentUserId = loginAuthDto.getUserId();
 		GroupBindUserDto bindUserDto = uacGroupService.getGroupBindUserDto(groupId, currentUserId);
 		return WrapMapper.ok(bindUserDto);
 	}

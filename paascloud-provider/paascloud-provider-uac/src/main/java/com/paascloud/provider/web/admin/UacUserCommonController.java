@@ -64,9 +64,9 @@ public class UacUserCommonController extends BaseController {
 		logger.info("根据userId查询用户详细信息");
 		UserVo userVo = new UserVo();
 		UacUser uacUser = uacUserService.findByLoginName(loginName);
-		uacUser = uacUserService.findUserInfoByUserId(uacUser.getId());
+		uacUser = uacUserService.findUserInfoByUserId(uacUser.getId().toString());
 		List<UacRole> roleList = uacRoleService.findAllRoleInfoByUserId(uacUser.getId());
-		List<MenuVo> authTree = uacRoleService.getOwnAuthTree(uacUser.getId());
+		List<MenuVo> authTree = uacRoleService.getOwnAuthTree(uacUser.getId().toString());
 		BeanUtils.copyProperties(uacUser, userVo);
 		if (PublicUtil.isNotEmpty(roleList)) {
 			userVo.setRoles(new HashSet<>(roleList));

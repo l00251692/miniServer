@@ -132,6 +132,8 @@ C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\gateway\paascloud-gate
 C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\monitor\paascloud-monitor\1.0   java -jar paascloud-monitor-1.0.jar
 	http://localhost:8010   admin/admin 账户名和密码登录
 	
+C:\Users\Administrator\.m2\repository\com\liuzm\paascloud\provider\paascloud-provider-omc\1.0  java -jar paascloud-provider-omc-1.0.jar
+	
 G:\paascloud-login-web  npm run dev 
 
 

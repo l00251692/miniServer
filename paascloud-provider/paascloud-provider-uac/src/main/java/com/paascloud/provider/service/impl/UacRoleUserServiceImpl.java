@@ -29,7 +29,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 	private UacRoleUserMapper uacRoleUserMapper;
 
 	@Override
-	public int deleteByUserId(Long userId) {
+	public int deleteByUserId(String userId) {
 		if (null == userId) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}
@@ -41,7 +41,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<UacRoleUser> queryByUserId(Long userId) {
+	public List<UacRoleUser> queryByUserId(String userId) {
 		if (null == userId) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}
@@ -51,7 +51,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UacRoleUser getByUserIdAndRoleId(Long userId, Long roleId) {
+	public UacRoleUser getByUserIdAndRoleId(String userId, Long roleId) {
 
 		if (null == userId) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
@@ -65,7 +65,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 	}
 
 	@Override
-	public int saveRoleUser(Long userId, Long roleId) {
+	public int saveRoleUser(String userId, Long roleId) {
 		if (userId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}
@@ -99,7 +99,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<Long> listSuperUser(Long superManagerRoleId) {
+	public List<String> listSuperUser(Long superManagerRoleId) {
 		if (superManagerRoleId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10012001);
 		}
@@ -120,7 +120,7 @@ public class UacRoleUserServiceImpl extends BaseService<UacRoleUser> implements 
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<UacRoleUser> listByUserId(Long userId) {
+	public List<UacRoleUser> listByUserId(String userId) {
 		if (userId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}

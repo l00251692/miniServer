@@ -48,7 +48,7 @@ public class OmcOrderQueryFeignClient extends BaseController implements OmcOrder
 
 	@Override
 	@ApiOperation(httpMethod = "POST", value = "根据订单号查询用户订单信息")
-	public Wrapper<OrderDto> queryByUserIdAndOrderNo(@PathVariable("userId") Long userId, @PathVariable("orderNo") String orderNo) {
+	public Wrapper<OrderDto> queryByUserIdAndOrderNo(@PathVariable("userId") String userId, @PathVariable("orderNo") String orderNo) {
 		logger.info("selectByUserIdAndOrderNo - 根据订单号查询用户订单信息. userId={}, orderNo={}", userId, orderNo);
 		OrderDto orderDto = omcOrderService.queryOrderDtoByUserIdAndOrderNo(userId, orderNo);
 		return WrapMapper.ok(orderDto);

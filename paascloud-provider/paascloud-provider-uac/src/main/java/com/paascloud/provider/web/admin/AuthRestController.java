@@ -93,18 +93,16 @@ public class AuthRestController extends BaseController {
 	 */
 	@PostMapping(value = "/wx/login")
 	@ApiOperation(httpMethod = "POST", value = "微信小程序登录")
-	public Wrapper<HashMap<Object, Object>> wxLogin(@RequestParam String wx_code,@RequestParam String encryptedData,@RequestParam String iv) {
+	public Wrapper<HashMap<Object, Object>> wxLogin(@RequestParam String wxCode, @RequestParam String encryptedData, @RequestParam String iv) {
 		HashMap<Object, Object> result = new  HashMap<>();
 		
 		JSONObject obj = new JSONObject();
 		
 		//登录凭证不能为空 
-		if (wx_code == null || wx_code.length() == 0) 
+		if (wxCode == null || wxCode.length() == 0) 
 		{ 
-			obj.put("message", "授权凭证错误");
-			
 			result.put(GlobalConstant.STATUS, GlobalConstant.FAILEURE);
-			result.put(GlobalConstant.MESSAGE, obj);
+			result.put(GlobalConstant.MESSAGE, "授权凭证错误");
 			return WrapMapper.ok(result);
 		} 
 
@@ -117,7 +115,7 @@ public class AuthRestController extends BaseController {
 	
 		//////////////// 1、向微信服务器 使用登录凭证 code 获取 session_key 和 openid //////////////// 
 		//请求参数 
-		String params = "appid=" + wxAppid + "&secret=" + wxSecret + "&js_code=" + wx_code + "&grant_type=" + grant_type; 
+		String params = "appid=" + wxAppid + "&secret=" + wxSecret + "&js_code=" + wxCode + "&grant_type=" + grant_type; 
 		//发送请求 
 		String sr = HttpRequest.sendGet("https://api.weixin.qq.com/sns/jscode2session", params); 
 		//解析相应内容（转换成json对象） 
@@ -154,8 +152,8 @@ public class AuthRestController extends BaseController {
 				userInfo.put("province", userInfoJSON.get("province")); 
 				userInfo.put("country", userInfoJSON.get("country")); 
 				userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl")); 
-				userInfo.put("user_id", userInfoJSON.get("openId")); 
-				userInfo.put("user_token", userInfoJSON.get("unionId"));
+				userInfo.put("userId", userInfoJSON.get("openId")); 
+				userInfo.put("userToken", userInfoJSON.get("unionId"));
 				
 				try {
 					DataSourceHolder.setDataSource(wxAppid);
@@ -207,10 +205,9 @@ public class AuthRestController extends BaseController {
 			e.printStackTrace();
 			logger.error("[login fail]" + e.getMessage()); 
 		}
-		
-		obj.put("message", "内部异常处理错误");		
+				
 		result.put(GlobalConstant.STATUS, GlobalConstant.FAILEURE);
-		result.put(GlobalConstant.MESSAGE, obj);
+		result.put(GlobalConstant.MESSAGE, "内部异常处理错误");
 		return WrapMapper.ok(result);			
 	}
 

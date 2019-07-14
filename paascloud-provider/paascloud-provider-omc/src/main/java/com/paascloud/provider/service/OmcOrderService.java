@@ -16,6 +16,7 @@ import com.paascloud.base.dto.BaseQuery;
 import com.paascloud.base.dto.LoginAuthDto;
 import com.paascloud.core.support.IService;
 import com.paascloud.provider.model.domain.OmcOrder;
+import com.paascloud.provider.model.domain.OmcOrderSummary;
 import com.paascloud.provider.model.dto.OrderDto;
 import com.paascloud.provider.model.dto.OrderPageQuery;
 import com.paascloud.provider.model.vo.OrderVo;
@@ -55,7 +56,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the page info
 	 */
-	PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery);
+	PageInfo queryUserOrderListWithPage(String userId, BaseQuery baseQuery);
 
 	/**
 	 * 查询订单状态.
@@ -65,7 +66,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the boolean
 	 */
-	boolean queryOrderPayStatus(Long userId, String orderNo);
+	boolean queryOrderPayStatus(String userId, String orderNo);
 
 	/**
 	 * Query by order no omc order.
@@ -84,7 +85,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the omc order
 	 */
-	OmcOrder queryByUserIdAndOrderNo(Long userId, String orderNo);
+	OmcOrder queryByUserIdAndOrderNo(String userId, String orderNo);
 
 	/**
 	 * 根据订单号查询订单信息.
@@ -103,7 +104,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the order dto
 	 */
-	OrderDto queryOrderDtoByUserIdAndOrderNo(Long userId, String orderNo);
+	OrderDto queryOrderDtoByUserIdAndOrderNo(String userId, String orderNo);
 
 	/**
 	 * 查询用户订单详情.
@@ -113,7 +114,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the order detail
 	 */
-	OrderVo getOrderDetail(Long userId, String orderNo);
+	OrderVo getOrderDetail(String userId, String orderNo);
 
 	/**
 	 * 查询订单详情.
@@ -132,4 +133,6 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 * @return the page info
 	 */
 	PageInfo queryOrderListWithPage(OrderPageQuery orderPageQuery);
+	
+	OmcOrderSummary getOrderSummary(String userId);
 }

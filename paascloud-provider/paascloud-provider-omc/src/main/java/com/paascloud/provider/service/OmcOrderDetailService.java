@@ -30,7 +30,7 @@ public interface OmcOrderDetailService extends IService<OmcOrderDetail> {
 	 *
 	 * @return the list by order no user id
 	 */
-	List<OmcOrderDetail> getListByOrderNoUserId(String orderNo, Long userId);
+	List<OmcOrderDetail> getListByOrderNoUserId(String orderNo, String userId);
 
 	/**
 	 * Gets list by order no.

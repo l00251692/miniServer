@@ -35,5 +35,5 @@ public class UacRoleUser implements Serializable {
 
 	@Id
 	@Column(name = "user_id")
-	private Long userId;
+	private String userId;
 }

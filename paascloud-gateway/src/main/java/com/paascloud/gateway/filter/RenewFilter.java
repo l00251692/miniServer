@@ -76,7 +76,7 @@ public class RenewFilter extends ZuulFilter {
 	 */
 	@Override
 	public Object run() {
-		log.info("RenewFilter - token续租...");
+		log.info("RenewFilter - token xuzu...");
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		try {
 			doSomething(requestContext);

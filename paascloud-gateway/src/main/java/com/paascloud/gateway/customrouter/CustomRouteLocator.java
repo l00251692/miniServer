@@ -63,6 +63,7 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         if (log.isDebugEnabled()) {
             log.debug("route matched=" + route);
         }
+        log.info("route matched=" + route +",path=" + path);
         String targetPath = path;
         String prefix = this.properties.getPrefix();
         if(prefix.endsWith("/")) {

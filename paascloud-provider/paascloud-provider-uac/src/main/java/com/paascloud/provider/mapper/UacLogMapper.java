@@ -35,7 +35,7 @@ public interface UacLogMapper extends MyMapper<UacLog> {
 	 *
 	 * @return the list
 	 */
-	List<UacLog> selectUserLogListByUserId(@Param("userId") Long userId);
+	List<UacLog> selectUserLogListByUserId(@Param("userId") String userId);
 
 	/**
 	 * Query log list with page list.

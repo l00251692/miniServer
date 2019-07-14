@@ -102,7 +102,7 @@ public interface UacRoleService extends IService<UacRole> {
 	 *
 	 * @return the role bind user dto by role id
 	 */
-	RoleBindUserDto getRoleBindUserDto(Long roleId, Long currentUserId);
+	RoleBindUserDto getRoleBindUserDto(Long roleId, String currentUserId);
 
 	/**
 	 * 角色绑定用户.
@@ -144,7 +144,7 @@ public interface UacRoleService extends IService<UacRole> {
 	 *
 	 * @return the own auth tree by role id
 	 */
-	List<MenuVo> getOwnAuthTree(Long userId);
+	List<MenuVo> getOwnAuthTree(String userId);
 
 	/**
 	 * Bind menu.

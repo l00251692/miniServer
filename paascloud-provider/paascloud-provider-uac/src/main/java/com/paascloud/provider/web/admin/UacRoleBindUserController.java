@@ -69,7 +69,7 @@ public class UacRoleBindUserController extends BaseController {
 	public Wrapper<RoleBindUserDto> getBindUser(@ApiParam(name = "roleId", value = "角色id") @PathVariable Long roleId) {
 		logger.info("获取角色绑定用户页面数据. roleId={}", roleId);
 		LoginAuthDto loginAuthDto = super.getLoginAuthDto();
-		Long currentUserId = loginAuthDto.getUserId();
+		String currentUserId = loginAuthDto.getUserId();
 		RoleBindUserDto bindUserDto = uacRoleService.getRoleBindUserDto(roleId, currentUserId);
 		return WrapMapper.ok(bindUserDto);
 	}

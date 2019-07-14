@@ -45,7 +45,7 @@ public interface UacActionMapper extends MyMapper<UacAction> {
 	 *
 	 * @return the list
 	 */
-	List<String> findActionCodeListByUserId(Long userId);
+	List<String> findActionCodeListByUserId(String userId);
 
 	/**
 	 * Batch delete by id list int.
@@ -90,7 +90,7 @@ public interface UacActionMapper extends MyMapper<UacAction> {
 	 *
 	 * @return the own auth list
 	 */
-	List<MenuVo> getOwnAuthList(@Param("userId") Long userId);
+	List<MenuVo> getOwnAuthList(@Param("userId") String userId);
 
 	/**
 	 * Gets checked menu list.
@@ -108,7 +108,7 @@ public interface UacActionMapper extends MyMapper<UacAction> {
 	 *
 	 * @return the own uac action list by user id
 	 */
-	List<UacAction> getOwnUacActionListByUserId(Long userId);
+	List<UacAction> getOwnUacActionListByUserId(String userId);
 
 	/**
 	 * 根据角色ID查询权限列表.

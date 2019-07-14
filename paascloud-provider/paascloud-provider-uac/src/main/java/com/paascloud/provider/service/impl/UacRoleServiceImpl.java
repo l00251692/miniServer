@@ -159,9 +159,9 @@ public class UacRoleServiceImpl extends BaseService<UacRole> implements UacRoleS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public RoleBindUserDto getRoleBindUserDto(Long roleId, Long currentUserId) {
+	public RoleBindUserDto getRoleBindUserDto(Long roleId, String currentUserId) {
 		RoleBindUserDto roleBindUserDto = new RoleBindUserDto();
-		Set<Long> alreadyBindUserIdSet = Sets.newHashSet();
+		Set<String> alreadyBindUserIdSet = Sets.newHashSet();
 		UacRole uacRole = uacRoleMapper.selectByPrimaryKey(roleId);
 		if (PublicUtil.isEmpty(uacRole)) {
 			logger.error("找不到roleId={}, 的角色", roleId);
@@ -193,8 +193,8 @@ public class UacRoleServiceImpl extends BaseService<UacRole> implements UacRoleS
 		}
 
 		Long roleId = roleBindUserReqDto.getRoleId();
-		Long loginUserId = authResDto.getUserId();
-		List<Long> userIdList = roleBindUserReqDto.getUserIdList();
+		String loginUserId = authResDto.getUserId();
+		List<String> userIdList = roleBindUserReqDto.getUserIdList();
 
 		if (null == roleId) {
 			throw new IllegalArgumentException(ErrorCodeEnum.UAC10012001.msg());
@@ -213,8 +213,8 @@ public class UacRoleServiceImpl extends BaseService<UacRole> implements UacRoleS
 		}
 
 		// 查询超级管理员用户Id集合
-		List<Long> superUserList = uacRoleUserService.listSuperUser(GlobalConstant.Sys.SUPER_MANAGER_ROLE_ID);
-		List<Long> unionList = Collections3.intersection(userIdList, superUserList);
+		List<String> superUserList = uacRoleUserService.listSuperUser(GlobalConstant.Sys.SUPER_MANAGER_ROLE_ID);
+		List<String> unionList = Collections3.intersection(userIdList, superUserList);
 		if (PublicUtil.isNotEmpty(userIdList) && PublicUtil.isNotEmpty(unionList)) {
 			logger.error("不能操作超级管理员用户 超级用户={}", unionList);
 			throw new UacBizException(ErrorCodeEnum.UAC10011023);
@@ -234,7 +234,7 @@ public class UacRoleServiceImpl extends BaseService<UacRole> implements UacRoleS
 		}
 
 		// 绑定所选用户
-		for (Long userId : userIdList) {
+		for (String userId : userIdList) {
 			UacUser uacUser = uacUserService.queryByUserId(userId);
 			if (PublicUtil.isEmpty(uacUser)) {
 				logger.error("找不到绑定的用户 userId={}", userId);
@@ -331,7 +331,7 @@ public class UacRoleServiceImpl extends BaseService<UacRole> implements UacRoleS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<MenuVo> getOwnAuthTree(Long userId) {
+	public List<MenuVo> getOwnAuthTree(String userId) {
 		if (userId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}

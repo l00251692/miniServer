@@ -37,6 +37,7 @@ public class AuthHeaderFilter extends ZuulFilter {
 	private static final String BEARER_TOKEN_TYPE = "bearer ";
 	private static final String OPTIONS = "OPTIONS";
 	private static final String AUTH_PATH = "/auth";
+	private static final String WEIXIN_PATH = "/wx";
 	private static final String LOGOUT_URI = "/oauth/token";
 	private static final String ALIPAY_CALL_URI = "/pay/alipayCallback";
 
@@ -78,7 +79,7 @@ public class AuthHeaderFilter extends ZuulFilter {
 	 */
 	@Override
 	public Object run() {
-		log.info("AuthHeaderFilter - 开始鉴权...");
+		log.info("AuthHeaderFilter - begin identifying...");
 		RequestContext requestContext = RequestContext.getCurrentContext();
 		try {
 			doSomething(requestContext);
@@ -93,13 +94,14 @@ public class AuthHeaderFilter extends ZuulFilter {
 		HttpServletRequest request = requestContext.getRequest();
 		String requestURI = request.getRequestURI();
 
-		if (OPTIONS.equalsIgnoreCase(request.getMethod()) || !requestURI.contains(AUTH_PATH) || !requestURI.contains(LOGOUT_URI) || !requestURI.contains(ALIPAY_CALL_URI)) {
+		if (OPTIONS.equalsIgnoreCase(request.getMethod()) || !requestURI.contains(AUTH_PATH) || !requestURI.contains(LOGOUT_URI) 
+				|| !requestURI.contains(ALIPAY_CALL_URI) || !requestURI.contains(WEIXIN_PATH)) {
 			return;
 		}
 		String authHeader = RequestUtil.getAuthHeader(request);
 
 		if (PublicUtil.isEmpty(authHeader)) {
-			throw new ZuulException("刷新页面重试", 403, "check token fail");
+			throw new ZuulException("Refresh page again", 403, "check token fail");
 		}
 
 		if (authHeader.startsWith(BEARER_TOKEN_TYPE)) {

@@ -6,7 +6,7 @@
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="version" property="version" jdbcType="INTEGER" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="shipping_id" property="shippingId" jdbcType="BIGINT" />
 		<result column="payment" property="payment" jdbcType="DECIMAL" />
 		<result column="payment_type" property="paymentType" jdbcType="INTEGER" />
@@ -25,6 +25,17 @@
 			jdbcType="BIGINT" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+	
+	<resultMap id="SummaryMap" type="com.paascloud.provider.model.domain.OmcOrderSummary">
+		<id column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="cancel" property="cancel" jdbcType="INTEGER" />
+		<result column="unpaid" property="unpaid" jdbcType="INTEGER" />
+		<result column="unship" property="unship" jdbcType="DECIMAL" />
+		<result column="unrecv" property="unrecv" jdbcType="INTEGER" />
+		<result column="uncomment" property="uncomment" jdbcType="INTEGER" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+	</resultMap>
+	
 
 	<sql id="Base_Column_List">
 		${alias}.id,
@@ -106,4 +117,18 @@
 		</if>
 		ORDER BY update_time desc
 	</select>
+	
+	<select id="getOrderSummary" resultMap="SummaryMap">
+		SELECT
+		user_id as user_id,
+		count(if(status = 0, TRUE, NULL)) AS cancel,
+		count(if(status = 10, TRUE, NULL)) AS unpaid,
+		count(if(status = 20, TRUE, NULL)) AS unship,
+		count(if(status = 30, TRUE, NULL)) AS unrecv,
+		count(if(status = 40, TRUE, NULL)) AS uncomment,
+		count(*) AS total
+		from pc_omc_order 
+		where user_id = #{userId}
+	</select>
+	
 </mapper>

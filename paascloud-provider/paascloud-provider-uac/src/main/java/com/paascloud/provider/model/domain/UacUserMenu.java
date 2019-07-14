@@ -16,7 +16,7 @@ public class UacUserMenu extends BaseEntity {
 	/**
 	 * pc_uac_user_menu.user_id;用户id
 	 */
-	private Long userId;
+	private String userId;
 
 	/**
 	 * pc_uac_user_menu.menu_id;菜单id

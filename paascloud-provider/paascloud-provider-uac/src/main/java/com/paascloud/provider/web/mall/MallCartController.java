@@ -79,7 +79,7 @@ public class MallCartController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "购物车添加商品")
 	public Wrapper addProduct(@PathVariable Long productId, @PathVariable Integer count) {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.addProduct(userId, productId, count);
 	}
 
@@ -96,7 +96,7 @@ public class MallCartController extends BaseController {
 	@PostMapping("updateProduct/{productId}/{count}")
 	public Wrapper updateProduct(@PathVariable Long productId, @PathVariable Integer count) {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.updateProduct(userId, productId, count);
 	}
 
@@ -111,7 +111,7 @@ public class MallCartController extends BaseController {
 	@PostMapping("deleteProduct/{productIds}")
 	public Wrapper deleteProduct(@PathVariable String productIds) {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.deleteProduct(userId, productIds);
 	}
 
@@ -125,7 +125,7 @@ public class MallCartController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "购物车全选商品")
 	public Wrapper selectAll() {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.selectOrUnSelect(userId, null, OmcApiConstant.Cart.CHECKED);
 	}
 
@@ -138,7 +138,7 @@ public class MallCartController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "购物车反选全部商品")
 	public Wrapper unSelectAll() {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.selectOrUnSelect(userId, null, OmcApiConstant.Cart.UN_CHECKED);
 	}
 
@@ -154,7 +154,7 @@ public class MallCartController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "选中商品")
 	public Wrapper select(@PathVariable Long productId) {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.selectOrUnSelect(userId, productId, OmcApiConstant.Cart.CHECKED);
 	}
 
@@ -169,7 +169,7 @@ public class MallCartController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "反选商品")
 	public Wrapper unSelect(@PathVariable Long productId) {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		return mallCartFeignApi.selectOrUnSelect(userId, productId, OmcApiConstant.Cart.UN_CHECKED);
 	}
 }

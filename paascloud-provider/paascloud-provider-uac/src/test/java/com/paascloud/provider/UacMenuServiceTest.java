@@ -13,7 +13,7 @@ public class UacMenuServiceTest extends PaasCloudUacApplicationTests {
 
 	@Test
 	public void findMenuListByUserIdTest() {
-		List<MenuVo> menuVoListByUserId = uacMenuService.getMenuVoList(1L, 1L);
+		List<MenuVo> menuVoListByUserId = uacMenuService.getMenuVoList("1L", 1L);
 		logger.info("findByLoginNameTest = {}", menuVoListByUserId);
 	}
 }

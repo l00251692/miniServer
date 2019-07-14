@@ -68,7 +68,7 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 	@Override
 	public void saveUserToken(String accessToken, String refreshToken, LoginAuthDto loginAuthDto, HttpServletRequest request) {
 		// 获取登录时间
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 		UacUser uacUser = uacUserService.selectByKey(userId);
 		final UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 		//获取客户端操作系统
@@ -95,7 +95,7 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 		uacUserToken.setRefreshToken(refreshToken);
 		uacUserToken.setRefreshTokenValidity(refreshTokenValiditySeconds);
 		uacUserToken.setStatus(UacUserTokenStatusEnum.ON_LINE.getStatus());
-		uacUserToken.setUserId(userId);
+		//uacUserToken.setUserId(userId);
 		uacUserToken.setUserName(loginAuthDto.getUserName());
 		uacUserToken.setUpdateInfo(loginAuthDto);
 		uacUserToken.setGroupId(loginAuthDto.getGroupId());
@@ -172,7 +172,7 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 		tokenDto.setStatus(UacUserTokenStatusEnum.ON_REFRESH.getStatus());
 		UacUser uacUser = uacUserService.findUserInfoByLoginName(loginName);
 
-		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getGroupId(), uacUser.getGroupName());
+		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId().toString(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getGroupId(), uacUser.getGroupName());
 		this.updateUacUserToken(tokenDto, loginAuthDto);
 		// 创建刷新token
 		this.saveUserToken(accessTokenNew, refreshTokenNew, loginAuthDto, request);

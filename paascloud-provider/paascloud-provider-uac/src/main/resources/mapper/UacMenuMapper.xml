@@ -16,7 +16,7 @@
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="application_id" jdbcType="BIGINT" property="applicationId" />
 		<result column="creator" jdbcType="VARCHAR" property="creator" />
-		<result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+		<result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
 		<result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
 		<result column="last_operator" jdbcType="VARCHAR" property="lastOperator" />
 		<result column="last_operator_id" jdbcType="BIGINT" property="lastOperatorId" />
@@ -93,7 +93,7 @@
 			AND creator = #{creator,jdbcType=VARCHAR}
 		</if>
 		<if test="creatorId != null and creatorId !=''">
-			AND creator_id = #{creatorId,jdbcType=BIGINT}
+			AND creator_id = #{creatorId,jdbcType=VARCHAR}
 		</if>
 		<if test="createdTime != null">
 			AND created_time = #{createdTime,jdbcType=TIMESTAMP}
@@ -150,7 +150,7 @@
 				creator = #{creator,jdbcType=VARCHAR},
 			</if>
 			<if test="creatorId != null">
-				creator_id = #{creatorId,jdbcType=BIGINT},
+				creator_id = #{creatorId,jdbcType=VARCHAR},
 			</if>
 			<if test="createdTime != null">
 				created_time = #{createdTime,jdbcType=TIMESTAMP},

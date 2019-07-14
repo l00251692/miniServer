@@ -50,7 +50,7 @@ public class PcAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 	                                    Authentication authentication) throws IOException, ServletException {
 
-		logger.info("登录成功");
+		logger.info("Login Success");
 
 		String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 

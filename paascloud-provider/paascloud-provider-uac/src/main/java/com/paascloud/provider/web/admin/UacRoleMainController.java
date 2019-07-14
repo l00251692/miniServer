@@ -121,7 +121,7 @@ public class UacRoleMainController extends BaseController {
 		}
 
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		Long userId = loginAuthDto.getUserId();
+		String userId = loginAuthDto.getUserId();
 
 		UacRoleUser ru = uacRoleUserService.getByUserIdAndRoleId(userId, roleId);
 
