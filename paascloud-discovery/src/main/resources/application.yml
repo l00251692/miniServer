@@ -3,12 +3,7 @@ server:
 
 spring:
   profiles:
-    active: native
-  cloud:
-    config:
-      server:
-        native:
-          searchLocations: C:/workspace/xiaochengxu/cloud/config
+    active: dev
   application:
     name: @pom.artifactId@
   rabbitmq:
