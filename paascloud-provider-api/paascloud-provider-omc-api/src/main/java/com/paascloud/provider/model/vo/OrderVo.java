@@ -29,6 +29,9 @@ import java.util.List;
 public class OrderVo implements Serializable {
 
 	private static final long serialVersionUID = 5829292780030349525L;
+	
+	private Integer id;
+	
 	private String orderNo;
 
 	private BigDecimal payment;
@@ -59,6 +62,14 @@ public class OrderVo implements Serializable {
 	private Date createTime;
 
 	private String creator;
+	
+	private Date receiveTime;
+	
+	private BigDecimal adjustAmount;
+	
+	private Integer orderType;
+	
+	private Integer sourceType;
 
 	/**
 	 * 订单的明细

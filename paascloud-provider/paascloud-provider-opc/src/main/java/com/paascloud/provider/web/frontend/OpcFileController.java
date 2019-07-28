@@ -22,6 +22,7 @@ import com.paascloud.provider.model.dto.oss.OptUploadFileReqDto;
 import com.paascloud.provider.model.dto.oss.OptUploadFileRespDto;
 import com.paascloud.provider.service.OpcAttachmentService;
 import com.paascloud.provider.service.OpcOssService;
+import com.paascloud.provider.utils.CheckFileUtil.FileTypeEnum;
 import com.paascloud.wrapper.WrapMapper;
 import com.paascloud.wrapper.Wrapper;
 import io.swagger.annotations.Api;
@@ -53,6 +54,8 @@ public class OpcFileController extends BaseController {
 	private OpcAttachmentService optAttachmentService;
 	@Resource
 	private OpcOssService opcOssService;
+	
+	private static final String OPEN_IMG_BUCKET = "open-img-bucket";
 
 	/**
 	 * 上传文件.
@@ -113,6 +116,27 @@ public class OpcFileController extends BaseController {
 		map.put("data", imgUrlList.toArray());
 		return map;
 	}
+	
+	@PostMapping(consumes = "multipart/form-data", value = "/uploadSingleImg")
+    @ApiOperation(httpMethod = "POST", value = "上传文件")
+    public Wrapper<OptUploadFileRespDto> uploadSingleImg(HttpServletRequest request, OptUploadFileReqDto optUploadFileReqDto) {
+        StringBuilder temp = new StringBuilder();
+        logger.info("uploadFile - 上传文件. optUploadFileReqDto={}", optUploadFileReqDto);
+        //Preconditions.checkArgument(StringUtils.isNotEmpty(optUploadFileReqDto.getFileType()), "文件类型为空");
+        //Preconditions.checkArgument(StringUtils.isNotEmpty(optUploadFileReqDto.getBucketName()), "存储地址为空");
+        if (StringUtils.isEmpty(optUploadFileReqDto.getFileType())) {
+            optUploadFileReqDto.setFileType(FileTypeEnum.PICTURE.getType());
+            
+        }
+        if (StringUtils.isEmpty(optUploadFileReqDto.getBucketName())) {
+            optUploadFileReqDto.setBucketName(OPEN_IMG_BUCKET);
+        }
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        OptUploadFileRespDto optUploadFileRespDto = optAttachmentService.uploadSingleFile(multipartRequest, optUploadFileReqDto, getLoginAuthDto(), true);
+        
+        return WrapMapper.ok(optUploadFileRespDto);
+    }
 
 	/**
 	 * 根据ID查询附件信息.

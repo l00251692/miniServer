@@ -40,8 +40,8 @@ public class MdcProduct extends BaseEntity {
 	/**
 	 * 商品编码
 	 */
-	@Column(name = "product_code")
-	private String productCode;
+	@Column(name = "product_sn")
+	private String productSn;
 
 	@Column(name = "category_id")
 	private Long categoryId;
@@ -81,5 +81,37 @@ public class MdcProduct extends BaseEntity {
 	/**
 	 * 商品详情
 	 */
-	private String detail;
+	private String description;
+	
+	@Column(name = "original_price")
+    private BigDecimal originalPrice;
+    
+    private String unit;
+    
+    private BigDecimal weight;
+    
+    private Integer sort;
+    
+    @Column(name = "publish_status")
+    private Integer publishStatus;
+    
+    @Column(name = "new_status")
+    private Integer newStatus;
+    
+    @Column(name = "recommend_status")
+    private Integer recommendStatus;
+    
+    @Column(name = "detail_title")
+    private String detailTitle;
+    
+    @Column(name = "detail_desc")
+    private String detailDesc;
+    
+    @Column(name = "service_guarantee")
+    private String serviceGuarantee;
+    
+    private String note;
+    
+    @Column(name = "preview_status")
+    private Integer previewStatus;
 }

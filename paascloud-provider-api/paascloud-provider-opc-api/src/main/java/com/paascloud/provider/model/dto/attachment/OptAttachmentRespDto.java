@@ -35,5 +35,7 @@ public class OptAttachmentRespDto implements Serializable {
 	 * 文件服务器根目录
 	 */
 	private String bucketName;
+	
+	private String imgOpenUrl;
 
 }

@@ -31,7 +31,7 @@ public class ProductDetailVo implements Serializable {
 	private String subtitle;
 	private String mainImage;
 	private String subImages;
-	private String detail;
+	private String description;
 	private BigDecimal price;
 	private Integer stock;
 	private Integer status;

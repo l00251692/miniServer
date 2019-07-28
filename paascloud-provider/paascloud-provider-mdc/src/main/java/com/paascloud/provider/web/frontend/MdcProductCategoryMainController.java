@@ -11,10 +11,15 @@
 
 package com.paascloud.provider.web.frontend;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.paascloud.base.dto.BaseQuery;
 import com.paascloud.base.dto.LoginAuthDto;
 import com.paascloud.base.dto.UpdateStatusDto;
+import com.paascloud.base.enums.ErrorCodeEnum;
 import com.paascloud.core.annotation.LogAnnotation;
 import com.paascloud.core.support.BaseController;
+import com.paascloud.provider.exceptions.MdcBizException;
 import com.paascloud.provider.model.domain.MdcProductCategory;
 import com.paascloud.provider.model.dto.MdcEditCategoryDto;
 import com.paascloud.provider.model.vo.MdcCategoryVo;
@@ -70,7 +75,47 @@ public class MdcProductCategoryMainController extends BaseController {
 		MdcCategoryVo mdcCategoryVo = mdcProductCategoryService.getMdcCategoryVoById(id);
 		return WrapMapper.ok(mdcCategoryVo);
 	}
+	
+	/**
+           * 根据ID获取商品分类信息.
+     *
+     * @param id the id
+     *
+     * @return the wrapper
+     */
+    @PostMapping(value = "/{id}")
+    @ApiOperation(httpMethod = "POST", value = "根据ID获取商品分类信息")
+    public Wrapper<MdcProductCategory> queryCategoryById(@ApiParam(name = "id", value = "商品分类id") @PathVariable Long id) {
+        logger.info("根据Id查询商品分类信息, categoryId={}", id);
+        MdcProductCategory mdcProductCategory = mdcProductCategoryService.getMdcProductCategoryById(id);
+        return WrapMapper.ok(mdcProductCategory);
+    }
+    
+    @PostMapping(value = "/update/{id}")
+    @ApiOperation(httpMethod = "POST", value = "根据ID获取商品分类信息")
+    public Wrapper updateCategoryById(@ApiParam(name = "id", value = "商品分类id") @PathVariable Long id,
+            @RequestBody MdcEditCategoryDto mdcCategoryAddDto) {
+        logger.info("根据Id查询商品分类信息, categoryId={}", id);
+        MdcProductCategory mdcCategory = new MdcProductCategory();
+        LoginAuthDto loginAuthDto = getLoginAuthDto();
+        BeanUtils.copyProperties(mdcCategoryAddDto, mdcCategory);
+        mdcCategory.setId(id);
+        
+        mdcProductCategoryService.saveMdcCategory(mdcCategory, loginAuthDto);
+        return WrapMapper.ok();
+    }
 
+    @PostMapping(value = "/create")
+    @ApiOperation(httpMethod = "POST", value = "根据ID获取商品分类信息")
+    public Wrapper createCategory(@RequestBody MdcEditCategoryDto mdcCategoryAddDto) {
+        MdcProductCategory mdcCategory = new MdcProductCategory();
+        LoginAuthDto loginAuthDto = getLoginAuthDto();
+        BeanUtils.copyProperties(mdcCategoryAddDto, mdcCategory);
+        mdcCategory.setId(null);
+        
+        mdcProductCategoryService.saveMdcCategory(mdcCategory, loginAuthDto);
+        return WrapMapper.ok();
+    }
 
 	/**
 	 * 根据id修改商品分类的禁用状态
@@ -119,4 +164,61 @@ public class MdcProductCategoryMainController extends BaseController {
 		int result = mdcProductCategoryService.deleteByKey(id);
 		return super.handleResult(result);
 	}
+	
+	@PostMapping(value = "/queryProductCategoryListByPid/{pid}")
+    @ApiOperation(httpMethod = "POST", value = "根据pid查询商品分类集合")
+	public Wrapper<PageInfo<MdcProductCategory>> queryProductCategoryListByPid(@ApiParam(name = "pid", value = "商品分类父id") @PathVariable Long pid,
+	        @RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+	    MdcProductCategory query = new MdcProductCategory();
+	    query.setPid(pid == null ? 0L : pid);
+	    query.setPageNum(pageNum);
+	    query.setPageSize(pageSize);
+	    PageHelper.startPage(query.getPageNum(), query.getPageSize());
+	    query.setOrderBy("update_time desc");
+        
+	    List<MdcProductCategory> categoryVoList = mdcProductCategoryService.getProductCategoryListWithPage(query);
+	    return WrapMapper.ok(new PageInfo<>(categoryVoList));
+	}
+	
+	/**
+           * 根据id修改商品分类的禁用状态
+     *
+     * @return the wrapper
+     */
+    @PostMapping(value = "/modifyNavStatus")
+    @ApiOperation(httpMethod = "POST", value = "")
+    @LogAnnotation
+    public Wrapper updateMdcCategoryNavStatus(@RequestParam String ids, @RequestParam Integer navStatus) {
+        LoginAuthDto loginAuthDto = getLoginAuthDto();
+        MdcProductCategory update = new MdcProductCategory();
+        for (String id : ids.split(",")) {
+            update.setId(Long.valueOf(id));
+            update.setNavStatus(navStatus);
+            update.setUpdateInfo(loginAuthDto);
+            mdcProductCategoryService.updateMdcCategoryById(update, loginAuthDto);
+        }
+        
+        return WrapMapper.ok();
+    }
+    
+    /**
+     * 根据id修改商品分类的禁用状态
+    *
+    * @return the wrapper
+    */
+    @PostMapping(value = "/modifyShowStatus")
+    @ApiOperation(httpMethod = "POST", value = "")
+    @LogAnnotation
+    public Wrapper updateMdcCategoryShowStatus(@RequestParam String ids, @RequestParam Integer showStatus) {
+      LoginAuthDto loginAuthDto = getLoginAuthDto();
+      MdcProductCategory update = new MdcProductCategory();
+      for (String id : ids.split(",")) {
+          update.setId(Long.valueOf(id));
+          update.setShowStatus(showStatus);
+          update.setUpdateInfo(loginAuthDto);
+          mdcProductCategoryService.updateMdcCategoryById(update, loginAuthDto);
+      }
+      
+      return WrapMapper.ok();
+    }
 }

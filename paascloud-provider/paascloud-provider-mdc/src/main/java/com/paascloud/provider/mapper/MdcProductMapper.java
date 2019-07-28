@@ -13,6 +13,7 @@ package com.paascloud.provider.mapper;
 
 import com.paascloud.core.mybatis.MyMapper;
 import com.paascloud.provider.model.domain.MdcProduct;
+import com.paascloud.provider.model.dto.MdcBatchEditProductDto;
 import com.paascloud.provider.model.dto.ProductDto;
 import com.paascloud.provider.model.vo.ProductVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -59,4 +60,9 @@ public interface MdcProductMapper extends MyMapper<MdcProduct> {
 	 * @return the list
 	 */
 	List<ProductVo> queryProductListWithPage(MdcProduct mdcProduct);
+
+    /**
+     * @param mdcBatchEditProductDto
+     */
+    int batchUpdateProduct(MdcBatchEditProductDto mdcBatchEditProductDto);
 }

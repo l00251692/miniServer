@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Column;
+
 /**
  * The class Mdc edit category dto.
  *
@@ -42,13 +44,15 @@ public class MdcEditProductDto implements Serializable {
 	 * 商品编码
 	 */
 	@NotBlank(message = "商品编码不能为空")
-	private String productCode;
+	private String productSn;
 
 	/**
 	 * 品类Id集合
 	 */
 	@NotBlank(message = "品类不能为空")
 	private List<Long> categoryIdList;
+	
+	private Long categoryId;
 
 	/**
 	 * 商品副标题
@@ -88,4 +92,39 @@ public class MdcEditProductDto implements Serializable {
 	 * 商品详情
 	 */
 	private String detail;
+	
+    /**
+     * 图片地址,json格式,扩展用
+     */
+    @Column(name = "sub_images")
+    private String subImages;
+
+    /**
+     * 商品详情
+     */
+    private String description;
+    
+    private BigDecimal originalPrice;
+    
+    private String unit;
+    
+    private BigDecimal weight;
+    
+    private Integer sort;
+    
+    private Integer publishStatus;
+    
+    private Integer newStatus;
+    
+    private Integer recommendStatus;
+    
+    private String detailTitle;
+    
+    private String detailDesc;
+    
+    private String serviceGuarantee;
+    
+    private String note;
+    
+    private Integer previewStatus;
 }

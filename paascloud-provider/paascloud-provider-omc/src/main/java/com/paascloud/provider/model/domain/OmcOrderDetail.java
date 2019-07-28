@@ -73,4 +73,7 @@ public class OmcOrderDetail extends BaseEntity {
 	 */
 	@Column(name = "total_price")
 	private BigDecimal totalPrice;
+	
+	@Column(name = "product_sn")
+	private String productSn;
 }

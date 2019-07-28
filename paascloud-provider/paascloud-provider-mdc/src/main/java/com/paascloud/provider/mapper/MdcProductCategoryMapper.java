@@ -43,4 +43,10 @@ public interface MdcProductCategoryMapper extends MyMapper<MdcProductCategory> {
 	 * @return the list
 	 */
 	List<MdcCategoryVo> listCategoryVo();
+
+    /**
+     * @param mdcProductCategory
+     * @return
+     */
+    List<MdcProductCategory> queryProductCategoryListWithPage(MdcProductCategory mdcProductCategory);
 }

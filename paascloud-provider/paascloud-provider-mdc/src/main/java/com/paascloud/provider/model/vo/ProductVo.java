@@ -36,9 +36,10 @@ public class ProductVo extends BaseVo {
 	private String name;
 
 	/**
-	 * 商品编码
+	 * 商品货号
 	 */
-	private String productCode;
+	@Column(name = "product_sn")
+	private String productSn;
 
 	/**
 	 * 商品副标题
@@ -73,17 +74,65 @@ public class ProductVo extends BaseVo {
 	private String subImages;
 
 	/**
-	 * 商品详情
+	 * 商品介绍
 	 */
-	private String detail;
+	private String description;
 
 	/**
 	 * 分类ID
 	 */
 	private List<Long> categoryIdList;
+	
+	/**
+	 * 
+	 */
+	@Column(name = "category_id")
+	private Long categoryId;
+	
+	/**
+	 * 
+	 */
+	private String categoryCode;
 
 	/**
 	 * 图片集合
 	 */
 	private List<ElementImgUrlDto> imgUrlList;
+	
+	/**
+	 * 
+	 */
+	@Column(name = "original_price")
+	private BigDecimal originalPrice;
+	
+	private String unit;
+	
+	private BigDecimal weight;
+	
+	private Integer sort;
+	
+	private String pic;
+	
+	@Column(name = "publish_status")
+	private Integer publishStatus;
+	
+	@Column(name = "new_status")
+	private Integer newStatus;
+	
+	@Column(name = "recommend_status")
+	private Integer recommendStatus;
+	
+	@Column(name = "detail_title")
+	private String detailTitle;
+	
+	@Column(name = "detail_desc")
+	private String detailDesc;
+	
+	@Column(name = "service_guarantee")
+	private String serviceGuarantee;
+	
+	private String note;
+	
+	@Column(name = "preview_status")
+	private Integer previewStatus;
 }

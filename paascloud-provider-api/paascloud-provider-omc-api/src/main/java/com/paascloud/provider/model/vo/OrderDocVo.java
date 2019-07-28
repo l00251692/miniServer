@@ -28,6 +28,7 @@ import java.util.Date;
 public class OrderDocVo extends BaseVo {
 
 	private static final long serialVersionUID = 4282588127249930700L;
+	
 	/**
 	 * 订单号
 	 */
@@ -72,4 +73,12 @@ public class OrderDocVo extends BaseVo {
 	 * 交易关闭时间
 	 */
 	private Date closeTime;
+	
+	private Date receiveTime;
+    
+    private BigDecimal adjustAmount;
+    
+    private Integer orderType;
+    
+    private Integer sourceType;
 }

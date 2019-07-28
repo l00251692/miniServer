@@ -289,6 +289,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 		orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
 		orderItemVo.setQuantity(orderItem.getQuantity());
 		orderItemVo.setTotalPrice(orderItem.getTotalPrice());
+		orderItemVo.setProductSn(orderItem.getProductSn());
 
 		orderItemVo.setCreateTime(orderItem.getCreatedTime());
 		return orderItemVo;
@@ -360,4 +361,13 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	public OmcOrderSummary getOrderSummary(String userId){
 		return omcOrderMapper.getOrderSummary(userId);
 	}
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.OmcOrderService#getOrderByOrderNo(java.lang.String)
+     */
+    @Override
+    public OrderVo getOrderByOrderNo(String orderNo) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

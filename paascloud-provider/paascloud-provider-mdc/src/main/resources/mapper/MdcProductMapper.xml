@@ -20,8 +20,20 @@
 			jdbcType="BIGINT" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="sub_images" property="subImages" jdbcType="LONGVARCHAR" />
-		<result column="detail" property="detail" jdbcType="LONGVARCHAR" />
-		<result column="product_code" property="productCode" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="LONGVARCHAR" />
+		<result column="product_sn" property="productSn" jdbcType="VARCHAR" />
+		<result column="original_price" property="originalPrice" jdbcType="DECIMAL" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="weight" property="weight" jdbcType="DECIMAL" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="publish_status" property="publishStatus" jdbcType="INTEGER" />
+		<result column="new_status" property="newStatus" jdbcType="INTEGER" />
+		<result column="recommend_status" property="recommendStatus" jdbcType="INTEGER" />
+		<result column="detail_title" property="detailTitle" jdbcType="VARCHAR" />
+		<result column="detail_desc" property="detailDesc" jdbcType="VARCHAR" />
+		<result column="service_guarantee" property="serviceGuarantee" jdbcType="VARCHAR" />
+		<result column="note" property="note" jdbcType="LONGVARCHAR" />
+		<result column="preview_status" property="previewStatus" jdbcType="INTEGER" />
 	</resultMap>
 	<sql id="Base_OrderBy_Condition">
 		<if test="orderBy != null and orderBy !=''">
@@ -31,7 +43,7 @@
 	<sql id="Base_Column_List">
 		id,
 		version,
-		product_code,
+		product_sn,
 		category_id,
 		name,
 		subtitle,
@@ -44,7 +56,19 @@
 		created_time,
 		last_operator,
 		last_operator_id,
-		update_time
+		update_time,
+		original_price,
+		unit,
+		weight,
+		sort,
+		publish_status,
+		new_status,
+		recommend_status,
+		detail_title,
+		detail_desc,
+		service_guarantee,
+		note,
+		preview_status
 	</sql>
 	<update id="updateProductStockById" parameterType="com.paascloud.provider.model.dto.ProductDto">
 		UPDATE
@@ -82,6 +106,41 @@
 		<if test="status != null">
 			and status = #{status}
 		</if>
+		<if test="productSn != null and productSn!= '' ">
+            and product_sn = #{productSn}
+        </if>
+        <if test="categoryId != null">
+            and category_id = #{categoryId}
+        </if>
+        <if test="publishStatus != null">
+            and publish_status = #{publishStatus}
+        </if>
 		<include refid="Base_OrderBy_Condition"></include>
 	</select>
+	
+	<update id="batchUpdateProduct" parameterType="com.paascloud.provider.model.dto.MdcBatchEditProductDto">
+        UPDATE
+        pc_mdc_product
+        SET 
+        <if test="newStatus != null">
+            new_status = #{newStatus},
+        </if>
+        <if test="publishStatus != null">
+            publish_status = #{publishStatus},
+        </if>
+        <if test="recommendStatus != null">
+            recommend_status = #{recommendStatus},
+        </if>
+        <if test="previewStatus != null">
+            preview_status = #{previewStatus},
+        </if>
+        update_time = now(),
+        last_operator = #{lastOperator},
+        last_operator_id = #{lastOperatorId}
+        WHERE id in 
+        <foreach item="item" index="index" open="(" separator=","
+                close=")" collection="idList">
+                #{item}
+            </foreach>
+    </update>
 </mapper>

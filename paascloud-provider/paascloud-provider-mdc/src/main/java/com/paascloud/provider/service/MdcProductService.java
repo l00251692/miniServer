@@ -14,6 +14,7 @@ package com.paascloud.provider.service;
 import com.paascloud.base.dto.LoginAuthDto;
 import com.paascloud.core.support.IService;
 import com.paascloud.provider.model.domain.MdcProduct;
+import com.paascloud.provider.model.dto.MdcBatchEditProductDto;
 import com.paascloud.provider.model.dto.MdcEditProductDto;
 import com.paascloud.provider.model.dto.ProductDto;
 import com.paascloud.provider.model.vo.ProductDetailVo;
@@ -98,4 +99,10 @@ public interface MdcProductService extends IService<MdcProduct> {
 	 * @return the main image
 	 */
 	String getMainImage(Long productId);
+
+    /**
+     * @param mdcBatchEditProductDto
+     * @param loginAuthDto
+     */
+    int batchUpdate(MdcBatchEditProductDto mdcBatchEditProductDto, LoginAuthDto loginAuthDto);
 }

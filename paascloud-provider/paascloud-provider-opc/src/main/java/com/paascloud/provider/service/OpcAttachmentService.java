@@ -41,6 +41,7 @@ public interface OpcAttachmentService extends IService<OptAttachment> {
 	 */
 	List<OptUploadFileRespDto> uploadFile(MultipartHttpServletRequest multipartRequest, OptUploadFileReqDto optUploadFileReqDto, LoginAuthDto loginAuthDto, boolean storeDbFlag);
 
+	OptUploadFileRespDto uploadSingleFile(MultipartHttpServletRequest multipartRequest, OptUploadFileReqDto optUploadFileReqDto, LoginAuthDto loginAuthDto, boolean storeDbFlag);
 	/**
 	 * 根据ID查询附件信息.
 	 *

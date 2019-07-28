@@ -66,5 +66,38 @@ public class MdcProductCategory extends BaseEntity {
 	 */
 	@Column(name = "sort_order")
 	private Integer sortOrder;
+	
+	/**
+	  * 级别，当pid=0时，为一级级别
+	 */
+	private Integer level;
 
+	
+	/**
+	  * 是否显示在导航栏 0-不显示在导航栏，1-显示
+	 */
+	@Column(name = "nav_status")
+	private Integer navStatus;
+	
+	/**
+           * 是否显示 0-不显示，1-显示
+     */
+	@Column(name = "show_status")
+    private Integer showStatus;
+    
+    /**
+           * 关键词
+     */
+    private String keywords;
+    
+    /**
+           * 分类描述
+     */
+    private String description;
+    
+    /**
+         * 数量单位
+    */
+    @Column(name = "product_unit")
+    private String productUnit;
 }

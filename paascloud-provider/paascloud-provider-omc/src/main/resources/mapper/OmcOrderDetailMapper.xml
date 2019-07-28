@@ -24,12 +24,13 @@
 		<result column="last_operator_id" property="lastOperatorId"
 			jdbcType="BIGINT" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="product_sn" property="ProductSn" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, version, detail_no, user_id, order_no, product_id, product_name,
 		product_image, current_unit_price, quantity, total_price, creator,
 		creator_id, created_time,
-		last_operator, last_operator_id, update_time
+		last_operator, last_operator_id, update_time, product_sn
 	</sql>
 
 	<select id="getListByOrderNoUserId" parameterType="map"
@@ -55,7 +56,7 @@
 		(id, version, detail_no, user_id, order_no, product_id, product_name,
 		product_image, current_unit_price, quantity, total_price, creator,
 		creator_id, created_time,
-		last_operator, last_operator_id, update_time)
+		last_operator, last_operator_id, update_time, product_sn)
 		values
 		<foreach collection="orderDetailList" index="index" item="item"
 			separator=",">
@@ -75,7 +76,8 @@
 			#{item.createdTime,jdbcType=TIMESTAMP},
 			#{item.lastOperator,jdbcType=VARCHAR},
 			#{item.lastOperatorId,jdbcType=BIGINT},
-			#{item.updateTime,jdbcType=TIMESTAMP})
+			#{item.updateTime,jdbcType=TIMESTAMP}),
+			#{item.productSn,jdbcType=VARCHAR}
 		</foreach>
 	</insert>
 </mapper>

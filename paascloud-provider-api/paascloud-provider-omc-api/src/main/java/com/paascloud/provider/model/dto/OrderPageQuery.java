@@ -11,6 +11,8 @@
 
 package com.paascloud.provider.model.dto;
 
+import java.util.Date;
+
 import com.paascloud.base.dto.BaseQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,4 +36,12 @@ public class OrderPageQuery extends BaseQuery {
 	 * 订单号
 	 */
 	private String orderNo;
+	
+	private Integer orderType;
+	
+	private Integer sourceType;
+	
+	private String receiverKeyword;
+	
+	private Date createTime;
 }

@@ -31,6 +31,7 @@ import com.paascloud.provider.model.constant.MallConstant;
 import com.paascloud.provider.model.domain.MdcProduct;
 import com.paascloud.provider.model.domain.MdcProductCategory;
 import com.paascloud.provider.model.domain.MqMessageData;
+import com.paascloud.provider.model.dto.MdcBatchEditProductDto;
 import com.paascloud.provider.model.dto.MdcEditProductDto;
 import com.paascloud.provider.model.dto.ProductDto;
 import com.paascloud.provider.model.dto.UpdateAttachmentDto;
@@ -104,12 +105,9 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 
 	@Override
 	public void saveProduct(final MdcEditProductDto mdcEditProductDto, final LoginAuthDto loginAuthDto) {
-		String productCode = mdcEditProductDto.getProductCode();
+		String productSn = mdcEditProductDto.getProductSn();
 		MdcProduct product = new MdcProduct();
 		BeanUtils.copyProperties(mdcEditProductDto, product);
-		List<Long> categoryIdList = mdcEditProductDto.getCategoryIdList();
-		Long categoryId = categoryIdList.get(categoryIdList.size() - 1);
-		product.setCategoryId(categoryId);
 		List<Long> attachmentIdList = mdcEditProductDto.getAttachmentIdList();
 		product.setUpdateInfo(loginAuthDto);
 		if (PublicUtil.isNotEmpty(attachmentIdList)) {
@@ -118,17 +116,17 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 		}
 		MqMessageData mqMessageData;
 		if (product.isNew()) {
-			productCode = String.valueOf(generateId());
+			productSn = String.valueOf(generateId());
 		} else {
-			Preconditions.checkArgument(StringUtils.isNotEmpty(productCode), ErrorCodeEnum.MDC10021024.msg());
+			Preconditions.checkArgument(StringUtils.isNotEmpty(productSn), ErrorCodeEnum.MDC10021024.msg());
 		}
-		product.setProductCode(productCode);
-		UpdateAttachmentDto updateAttachmentDto = new UpdateAttachmentDto(productCode, attachmentIdList, loginAuthDto);
+		product.setProductSn(productSn);
+		UpdateAttachmentDto updateAttachmentDto = new UpdateAttachmentDto(productSn, attachmentIdList, loginAuthDto);
 
 		String body = JSON.toJSONString(updateAttachmentDto);
 		String topic = AliyunMqTopicConstants.MqTagEnum.UPDATE_ATTACHMENT.getTopic();
 		String tag = AliyunMqTopicConstants.MqTagEnum.UPDATE_ATTACHMENT.getTag();
-		String key = RedisKeyUtil.createMqKey(topic, tag, product.getProductCode(), body);
+		String key = RedisKeyUtil.createMqKey(topic, tag, product.getProductSn(), body);
 
 		if (product.isNew() && PublicUtil.isNotEmpty(attachmentIdList)) {
 			product.setId(generateId());
@@ -147,10 +145,10 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 	public void deleteProductById(final Long id) {
 		MdcProduct product = mdcProductMapper.selectByPrimaryKey(id);
 		if (product != null) {
-			String body = product.getProductCode();
+			String body = product.getProductSn();
 			String topic = AliyunMqTopicConstants.MqTagEnum.DELETE_ATTACHMENT.getTopic();
 			String tag = AliyunMqTopicConstants.MqTagEnum.DELETE_ATTACHMENT.getTag();
-			String key = RedisKeyUtil.createMqKey(topic, tag, product.getProductCode(), body);
+			String key = RedisKeyUtil.createMqKey(topic, tag, product.getProductSn(), body);
 			MqMessageData mqMessageData = new MqMessageData(body, topic, tag, key);
 			mdcProductManager.deleteProduct(mqMessageData, id);
 		}
@@ -166,7 +164,7 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 		Collections.reverse(categoryIdList);
 		productVo.setCategoryIdList(categoryIdList);
 		// 获取图片集合
-		final OptBatchGetUrlRequest request = new OptBatchGetUrlRequest(mdcProduct.getProductCode());
+		final OptBatchGetUrlRequest request = new OptBatchGetUrlRequest(mdcProduct.getProductSn());
 		request.setEncrypt(true);
 		List<ElementImgUrlDto> imgUrlList = opcRpcService.listFileUrl(request);
 		productVo.setImgUrlList(imgUrlList);
@@ -226,7 +224,7 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 		productDetailVo.setSubtitle(product.getSubtitle());
 		productDetailVo.setPrice(product.getPrice());
 
-		productDetailVo.setDetail(product.getDetail());
+		productDetailVo.setDescription(product.getDescription());
 		productDetailVo.setName(product.getName());
 		productDetailVo.setStatus(product.getStatus());
 		productDetailVo.setStock(product.getStock());
@@ -243,4 +241,13 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 
 		return productDetailVo;
 	}
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.MdcProductService#batchUpdate(com.paascloud.provider.model.dto.MdcBatchEditProductDto, com.paascloud.base.dto.LoginAuthDto)
+     */
+    @Override
+    public int batchUpdate(MdcBatchEditProductDto mdcBatchEditProductDto, LoginAuthDto loginAuthDto) {
+        mdcBatchEditProductDto.setUpdateInfo(loginAuthDto);
+        return mdcProductMapper.batchUpdateProduct(mdcBatchEditProductDto);
+    }
 }

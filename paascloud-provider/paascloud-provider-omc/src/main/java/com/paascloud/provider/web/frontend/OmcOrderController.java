@@ -109,6 +109,15 @@ public class OmcOrderController extends BaseController {
 		int result = omcOrderService.cancelOrderDoc(loginAuthDto, orderNo);
 		return handleResult(result);
 	}
+	
+	@PostMapping("queryOrder/{orderNo}")
+    @ApiOperation(httpMethod = "POST", value = "查询订单")
+    public Wrapper queryOrder(@PathVariable String orderNo) {
+        logger.info("queryOrder - 查询订单. orderNo={}", orderNo);
+
+        OrderVo orderVo = omcOrderService.getOrderByOrderNo(orderNo);
+        return WrapMapper.ok(orderVo);
+    }
 
 	/**
 	 * 查询订单详情.

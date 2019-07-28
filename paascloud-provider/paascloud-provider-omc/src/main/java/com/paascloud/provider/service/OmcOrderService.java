@@ -135,4 +135,10 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	PageInfo queryOrderListWithPage(OrderPageQuery orderPageQuery);
 	
 	OmcOrderSummary getOrderSummary(String userId);
+
+    /**
+     * @param orderNo
+     * @return
+     */
+    OrderVo getOrderByOrderNo(String orderNo);
 }

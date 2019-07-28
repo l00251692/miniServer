@@ -24,6 +24,11 @@
 		<result column="last_operator_id" property="lastOperatorId"
 			jdbcType="BIGINT" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="source_type" property="sourceType" jdbcType="INTEGER" />
+		<result column="order_type" property="orderType" jdbcType="INTEGER" />
+		<result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
+        <result column="adjust_amount" property="adjustAmount" jdbcType="DECIMAL" />
+		
 	</resultMap>
 	
 	<resultMap id="SummaryMap" type="com.paascloud.provider.model.domain.OmcOrderSummary">
@@ -56,7 +61,10 @@
 		${alias}.created_time,
 		${alias}.last_operator,
 		${alias}.last_operator_id,
-		${alias}.update_time
+		${alias}.update_time,
+		${alias}.source_type,
+		${alias}.receive_time,
+		${alias}.adjust_amount
 	</sql>
 
 	<select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap"
@@ -115,6 +123,19 @@
 		<if test="orderNo != null and orderNo != ''">
 			and oder.order_no = #{orderNo}
 		</if>
+		<if test="orderType !=null" >
+		    and oder.order_type = #{orderType}
+		</if>
+		<if test="sourceType !=null" >
+            and oder.source_type = #{sourceType}
+        </if>
+        <if test="createTime !=null" >
+            and oder.created_time = #{createTime}
+        </if>
+        <if test="receiverKeyword != null and receiverKeyword != ''">
+            and (shipping.receiver_name = #{receiverKeyword} or shipping.receiver_mobile_no = #{receiverKeyword})
+        </if>
+		
 		ORDER BY update_time desc
 	</select>
 	

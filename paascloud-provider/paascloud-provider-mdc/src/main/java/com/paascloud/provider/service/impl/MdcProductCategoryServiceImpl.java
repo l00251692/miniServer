@@ -140,7 +140,8 @@ public class MdcProductCategoryServiceImpl extends BaseService<MdcProductCategor
 		Long pid = mdcCategory.getPid();
 		mdcCategory.setUpdateInfo(loginAuthDto);
 		MdcProductCategory parentMenu = mapper.selectByPrimaryKey(pid);
-		if (PublicUtil.isEmpty(parentMenu)) {
+		// :TODO
+		if (!"0".equals(pid.toString()) && PublicUtil.isEmpty(parentMenu)) {
 			throw new MdcBizException(ErrorCodeEnum.MDC10023002, pid);
 		}
 		if (mdcCategory.isNew()) {
@@ -254,4 +255,43 @@ public class MdcProductCategoryServiceImpl extends BaseService<MdcProductCategor
 		}
 		return mdcCategoryList;
 	}
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.MdcProductCategoryService#getProductCategoryListWithPage(com.paascloud.provider.model.domain.MdcProductCategory)
+     */
+    @Override
+    public List<MdcProductCategory> getProductCategoryListWithPage(MdcProductCategory mdcProductCategory) {
+        return mdcProductCategoryMapper.queryProductCategoryListWithPage(mdcProductCategory);
+    }
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.MdcProductCategoryService#updateMdcCategoryById(com.paascloud.provider.model.domain.MdcProductCategory, com.paascloud.base.dto.LoginAuthDto)
+     */
+    @Override
+    public void updateMdcCategoryById(MdcProductCategory update, LoginAuthDto loginAuthDto) {
+        MdcProductCategory mdcCategory = new MdcProductCategory();
+        mdcCategory.setId(update.getId());
+        mdcCategory = mapper.selectOne(mdcCategory);
+        update.setUpdateInfo(loginAuthDto);
+        update.setVersion(mdcCategory.getVersion() + 1);
+        int result = mapper.updateByPrimaryKeySelective(update);
+        if (result < 1) {
+            throw new MdcBizException(ErrorCodeEnum.MDC10023003, update.getId());
+        }
+        
+    }
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.MdcProductCategoryService#getMdcProductCategoryById(java.lang.Long)
+     */
+    @Override
+    public MdcProductCategory getMdcProductCategoryById(Long categoryId) {
+        MdcProductCategory category = mdcProductCategoryMapper.selectByPrimaryKey(categoryId);
+
+        if (category == null) {
+            logger.error("找不到数据字典信息id={}", categoryId);
+            throw new MdcBizException(ErrorCodeEnum.MDC10023001, categoryId);
+        }
+        return category;
+    }
 }

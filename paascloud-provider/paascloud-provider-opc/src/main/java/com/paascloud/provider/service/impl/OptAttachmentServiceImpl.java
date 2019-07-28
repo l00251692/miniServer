@@ -308,4 +308,42 @@ public class OptAttachmentServiceImpl extends BaseService<OptAttachment> impleme
 		optAttachment.setUpdateInfo(loginAuthDto);
 		optAttachmentMapper.insertSelective(optAttachment);
 	}
+
+    /* (non-Javadoc)
+     * @see com.paascloud.provider.service.OpcAttachmentService#uploadSingleFile(org.springframework.web.multipart.MultipartHttpServletRequest, com.paascloud.provider.model.dto.oss.OptUploadFileReqDto, com.paascloud.base.dto.LoginAuthDto, boolean)
+     */
+    @Override
+    public OptUploadFileRespDto uploadSingleFile(MultipartHttpServletRequest multipartRequest,
+            OptUploadFileReqDto optUploadFileReqDto, LoginAuthDto loginAuthDto, boolean storeDbFlag) {
+        String fileType = optUploadFileReqDto.getFileType();
+        String filePath = optUploadFileReqDto.getFilePath();
+        String bucketName = optUploadFileReqDto.getBucketName();
+        if (PublicUtil.isEmpty(filePath)) {
+            filePath = GlobalConstant.Sys.DEFAULT_FILE_PATH;
+        }
+        OptUploadFileRespDto fileInfo = null;
+        
+        try {
+            MultipartFile file = multipartRequest.getFile("file");
+
+            String fileName = file.getOriginalFilename();
+            if (PublicUtil.isEmpty(fileName)) {
+                return fileInfo;
+            }
+            Preconditions.checkArgument(file.getSize() <= GlobalConstant.FILE_MAX_SIZE, "上传文件不能大于5M");
+            InputStream inputStream = file.getInputStream();
+
+            String inputStreamFileType = FileTypeUtil.getType(inputStream);
+            CheckFileUtil.checkFileType(fileType, inputStreamFileType);
+            
+            if (storeDbFlag) {
+                fileInfo = this.uploadFile(file.getBytes(), fileName, fileType, filePath, bucketName, loginAuthDto);
+            } else {
+                fileInfo = optOssService.uploadFile(file.getBytes(), fileName, filePath, bucketName);
+            }
+        } catch (IOException e) {
+            logger.error("上传文件失败={}", e.getMessage(), e);
+        }
+        return fileInfo;
+    }
 }

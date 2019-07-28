@@ -103,4 +103,22 @@ public interface MdcProductCategoryService extends IService<MdcProductCategory> 
 	 * @return the boolean
 	 */
 	boolean checkCategoryHasChildCategory(Long id);
+
+    /**
+     * @param query
+     * @return
+     */
+    List<MdcProductCategory> getProductCategoryListWithPage(MdcProductCategory mdcProductCategory);
+
+    /**
+     * @param update
+     * @param loginAuthDto
+     */
+    void updateMdcCategoryById(MdcProductCategory update, LoginAuthDto loginAuthDto);
+
+    /**
+     * @param categoryId
+     * @return
+     */
+    MdcProductCategory getMdcProductCategoryById(Long categoryId);
 }

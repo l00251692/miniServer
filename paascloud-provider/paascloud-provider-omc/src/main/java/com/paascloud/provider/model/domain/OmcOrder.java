@@ -90,4 +90,10 @@ public class OmcOrder extends BaseEntity {
 	 */
 	@Column(name = "close_time")
 	private Date closeTime;
+	
+	/**
+           *业务来源
+     */
+    @Column(name = "source_type")
+	private Integer sourceType;
 }
