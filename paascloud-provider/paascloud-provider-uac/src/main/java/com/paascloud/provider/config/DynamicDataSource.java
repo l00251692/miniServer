@@ -1,7 +1,7 @@
 package com.paascloud.provider.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.paascloud.ThreadLocalMap;
+import com.paascloud.DataSourceContextHolder;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.config.properties.DatasourceAttributes;
 import com.paascloud.config.properties.PaascloudProperties;
@@ -86,7 +86,7 @@ public class DynamicDataSource extends AbstractDataSource {
 	public Connection getConnection() throws SQLException {
 		String currentName = DataSourceHolder.getDataSource();
 		if (null == currentName) {
-		    currentName = (String) ThreadLocalMap.get(GlobalConstant.Sys.APP_ID);
+		    currentName = (String) DataSourceContextHolder.get(GlobalConstant.Sys.APP_ID);
 		}
 		
 		if (null == currentName) {

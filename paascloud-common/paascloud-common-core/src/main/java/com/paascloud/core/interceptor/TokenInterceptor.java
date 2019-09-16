@@ -11,6 +11,7 @@
 
 package com.paascloud.core.interceptor;
 
+import com.paascloud.DataSourceContextHolder;
 import com.paascloud.RedisKeyUtil;
 import com.paascloud.ThreadLocalMap;
 import com.paascloud.annotation.NoNeedAccessAuthentication;
@@ -103,7 +104,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 		
 		Object appIdFromSession = request.getSession().getAttribute(GlobalConstant.Sys.APP_ID);
 		if (null != appIdFromSession) {
-		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, (String) appIdFromSession);
+		    DataSourceContextHolder.put(GlobalConstant.Sys.APP_ID, (String) appIdFromSession);
 		}
 		
 		

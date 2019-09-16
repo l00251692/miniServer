@@ -829,10 +829,8 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		String refreshToken = token.getRefreshToken().getValue();
 		uacUserTokenService.saveUserToken(accessToken, refreshToken, loginAuthDto, request);
 		
-		String appId = (String) ThreadLocalMap.get(GlobalConstant.Sys.APP_ID);
 		// 记录最后登录信息
 		taskExecutor.execute(() -> {
-		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, appId);
 		    this.updateUser(uacUser);
 		});
 		// 记录操作日志
@@ -849,7 +847,6 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		log.setLogName(LogTypeEnum.LOGIN_LOG.getName());
 
 		taskExecutor.execute(() -> {
-		    ThreadLocalMap.put(GlobalConstant.Sys.APP_ID, appId);
 		    uacLogService.saveLog(log, loginAuthDto);
 		});
 	}
