@@ -3,6 +3,7 @@
  */
 package com.paascloud;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
@@ -15,12 +16,12 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DataSourceContextHolder {
-
+public class DataSourceMapHolder {
+    
     /**
      * The constant threadContext.
      */
-    private final static ThreadLocal<Map<String, Object>> THREAD_CONTEXT = new TransmittableThreadLocal<Map<String, Object>>();
+    private final static ThreadLocal<Map<String, Object>> THREAD_CONTEXT = new MapThreadLocal();
 
     /**
      * Put.
@@ -52,6 +53,26 @@ public class DataSourceContextHolder {
      */
     public static Object get(String key) {
         return getContextMap().get(key);
+    }
+    
+    private static class MapThreadLocal extends TransmittableThreadLocal<Map<String, Object>> {
+        /**
+         * Initial value map.
+         *
+         * @return the map
+         */
+        @Override
+        protected Map<String, Object> initialValue() {
+            return new HashMap<String, Object>(8) {
+
+                private static final long serialVersionUID = -3637958959138295593L;
+
+                @Override
+                public Object put(String key, Object value) {
+                    return super.put(key, value);
+                }
+            };
+        }
     }
 
     /**
