@@ -35,20 +35,24 @@ public class LoginAuthDto implements Serializable {
 	private Long groupId;
 	@ApiModelProperty(value = "组织名称")
 	private String groupName;
+	@ApiModelProperty(value = "appID")
+    private String appId;
 
 	public LoginAuthDto() {
 	}
 
-	public LoginAuthDto(String userId, String loginName, String userName) {
+	public LoginAuthDto(String userId, String loginName, String userName, String appId) {
 		this.userId = userId;
 		this.loginName = loginName;
 		this.userName = userName;
+		this.appId = appId;
 	}
 
-	public LoginAuthDto(String userId, String loginName, String userName, Long groupId, String groupName) {
+	public LoginAuthDto(String userId, String loginName, String userName, String appId, Long groupId, String groupName) {
 		this.userId = userId;
 		this.loginName = loginName;
 		this.userName = userName;
+		this.appId = appId;
 		this.groupId = groupId;
 		this.groupName = groupName;
 	}

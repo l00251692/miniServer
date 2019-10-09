@@ -82,6 +82,6 @@ public interface UacUserTokenService extends IService<UacUserToken> {
 	 *
 	 * @return the int
 	 */
-	int batchUpdateTokenOffLine();
+	int batchUpdateTokenOffLine(String appId);
 
 }

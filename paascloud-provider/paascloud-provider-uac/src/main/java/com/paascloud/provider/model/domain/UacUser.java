@@ -145,9 +145,4 @@ public class UacUser extends BaseEntity {
 	@Transient
 	private String groupName;
 	
-	/**
-	 * 小程序id
-	 */
-	@Column(name = "app_id")
-	private String appId;
 }

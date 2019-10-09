@@ -55,6 +55,7 @@ public class MallAuthRestController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "查询商品列表")
 	public Wrapper<PageInfo> queryProductList(@RequestBody ProductReqDto productReqDto) {
 		logger.info("getProductCategoryDtoByPid - 查询分类信息 productReqDto={}", productReqDto);
+		productReqDto.setAppId(getAppId());
 		return mdcProductCategoryQueryFeignApi.getProductList(productReqDto);
 	}
 

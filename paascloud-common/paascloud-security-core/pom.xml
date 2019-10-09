@@ -79,7 +79,7 @@
         </dependency>
         <dependency>
             <groupId>com.liuzm.paascloud.common</groupId>
-            <artifactId>paascloud-common-util</artifactId>
+            <artifactId>paascloud-common-core</artifactId>
         </dependency>
 	</dependencies>
 </project>

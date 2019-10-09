@@ -37,7 +37,8 @@ public class UacUserTokenFeignClient extends BaseController implements UacUserTo
 	@Override
 	@ApiOperation(httpMethod = "POST", value = "更新token离线状态")
 	public Wrapper<Integer> updateTokenOffLine() {
-		int result = uacUserTokenService.batchUpdateTokenOffLine();
+	    // :TODO appId怎么取？
+		int result = uacUserTokenService.batchUpdateTokenOffLine(getAppId());
 		return handleResult(result);
 	}
 }

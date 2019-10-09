@@ -1,7 +1,7 @@
 package com.paascloud.provider.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paascloud.DataSourceContextHolder;
+import com.paascloud.DataSourceMapHolder;
 import com.paascloud.ThreadLocalMap;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.core.utils.RequestUtil;
@@ -83,7 +83,7 @@ public class PcAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		SecurityUser principal = (SecurityUser) authentication.getPrincipal();
 		Object appIdObj = request.getSession().getAttribute(GlobalConstant.Sys.APP_ID);
 		if (null != appIdObj) {
-		    DataSourceContextHolder.put(GlobalConstant.Sys.APP_ID, (String) appIdObj);
+		    DataSourceMapHolder.put(GlobalConstant.Sys.APP_ID, (String) appIdObj);
 		}
 		//DataSourceHolder.setDataSource((String) appIdObj);
 		uacUserService.handlerLoginData(token, principal, request);

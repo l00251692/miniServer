@@ -34,10 +34,11 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 * Find by login name uac user.
 	 *
 	 * @param loginName the login name
+	 * @param appId the appId
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByLoginName(String loginName);
+	UacUser findByLoginName(String loginName, String appId);
 
 	/**
 	 * Find by mobile no uac user.
@@ -46,7 +47,7 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByMobileNo(@Param("mobileNo") String mobileNo);
+	UacUser findByMobileNo(@Param("mobileNo") String mobileNo, @Param("appId") String appId);
 
 	/**
 	 * Find by login name and login pwd uac user.
@@ -55,7 +56,7 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByLoginNameAndLoginPwd(Map<String, String> loginNamePwdMap);
+	UacUser findByLoginNameAndLoginPwd(Map<String, String> loginNamePwdMap, @Param("appId") String appId);
 
 	/**
 	 * Select user list list.
@@ -100,5 +101,5 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findUserInfoByLoginName(@Param("loginName") String loginName);
+	UacUser findUserInfoByLoginName(@Param("loginName") String loginName, @Param("appId") String appId);
 }

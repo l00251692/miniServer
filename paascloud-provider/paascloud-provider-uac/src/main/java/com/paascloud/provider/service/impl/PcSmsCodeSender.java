@@ -20,11 +20,12 @@ public class PcSmsCodeSender implements SmsCodeSender {
 	private SmsService smsService;
 
 	@Override
-	public void send(String mobile, String code, String ip) {
-		log.info("ip地址:{}向手机: {}发送短信验证码:{}", ip, mobile, code);
+	public void send(String mobile, String code, String ip, String appId) {
+		log.info("ip地址:{}向手机: {}发送短信验证码:{} appId:{}", ip, mobile, code, appId);
 		SmsMessage smsMessage = new SmsMessage();
 		smsMessage.setMobileNo(mobile);
 		smsMessage.setSmsCode(code);
+		smsMessage.setAppId(appId);
 		smsMessage.setSmsTemplateCode(AliyunSmsConstants.SmsTempletEnum.UAC_PC_GLOBAL_TEMPLATE.getTempletCode());
 		smsService.sendSmsCode(smsMessage, ip);
 	}

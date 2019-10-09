@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class DatasourceAttributes {
+    
+    private String appId;
 
 	private String name;
 	

@@ -119,6 +119,9 @@ public class MqMessageData {
 	 */
 	@Column(name = "update_time")
 	private Date updateTime;
+	
+	@Column(name = "app_id")
+	private String appId;
 
 	/**
 	 * 是否删除 -0 未删除 -1 已删除
@@ -131,11 +134,12 @@ public class MqMessageData {
 	@Transient
 	private String producerGroup;
 
-	public MqMessageData(final String msgBody, final String topic, final String tag, final String key) {
+	public MqMessageData(final String msgBody, final String topic, final String tag, final String key, final String appId) {
 		this.messageBody = msgBody;
 		this.messageTopic = topic;
 		this.messageTag = tag;
 		this.messageKey = key;
+		this.appId = appId;
 	}
 
 	/**
@@ -155,6 +159,7 @@ public class MqMessageData {
 		tpcMqMessageDto.setDelayLevel(this.delayLevel);
 		tpcMqMessageDto.setOrderType(this.orderType);
 		tpcMqMessageDto.setProducerGroup(this.producerGroup);
+		tpcMqMessageDto.setAppId(this.appId);
 		return tpcMqMessageDto;
 	}
 }

@@ -247,20 +247,20 @@ public class AuthRestController extends BaseController {
 		boolean result = false;
 		//开始校验
 		if (UacApiConstant.Valid.LOGIN_NAME.equals(type)) {
-			result = uacUserService.checkLoginName(validValue);
+			result = uacUserService.checkLoginName(validValue, getAppId());
 			if (!result) {
 				message = "用户名已存在";
 			}
 		}
 		if (UacApiConstant.Valid.EMAIL.equals(type)) {
-			result = uacUserService.checkEmail(validValue);
+			result = uacUserService.checkEmail(validValue, getAppId());
 			if (!result) {
 				message = "邮箱已存在";
 			}
 		}
 
 		if (UacApiConstant.Valid.MOBILE_NO.equals(type)) {
-			result = uacUserService.checkMobileNo(validValue);
+			result = uacUserService.checkMobileNo(validValue, getAppId());
 			if (!result) {
 				message = "手机号码已存在";
 			}
@@ -281,7 +281,7 @@ public class AuthRestController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "重置密码-邮箱-提交")
 	public Wrapper<String> submitResetPwdEmail(@RequestParam("email") String email) {
 		logger.info("重置密码-邮箱-提交, email={}", email);
-		emailService.submitResetPwdEmail(email);
+		emailService.submitResetPwdEmail(email, getAppId());
 		return WrapMapper.ok();
 	}
 
@@ -298,7 +298,7 @@ public class AuthRestController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "重置密码-手机-提交")
 	public Wrapper<String> submitResetPwdPhone(@RequestParam("mobile") String mobile, HttpServletResponse response) {
 		logger.info("重置密码-手机-提交, mobile={}", mobile);
-		String token = smsService.submitResetPwdPhone(mobile, response);
+		String token = smsService.submitResetPwdPhone(mobile, getAppId(), response);
 		return WrapMapper.ok(token);
 	}
 
@@ -338,10 +338,10 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@GetMapping(value = "/activeUser/{activeUserToken}")
+	@GetMapping(value = "/activeUser/{activeUserToken}/{appId}")
 	@ApiOperation(httpMethod = "POST", value = "激活用户")
 	public Wrapper activeUser(@PathVariable String activeUserToken) {
-		uacUserService.activeUser(activeUserToken);
+		uacUserService.activeUser(activeUserToken, getAppId());
 		return WrapMapper.ok("激活成功");
 	}
 

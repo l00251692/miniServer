@@ -40,7 +40,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByLoginName(String loginName);
+	UacUser findByLoginName(String loginName, String appId);
 
 	/**
 	 * 根据手机号查询用户信息.
@@ -49,7 +49,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByMobileNo(String mobileNo);
+	UacUser findByMobileNo(String mobileNo, String appId);
 
 	/**
 	 * 校验用户是否合法
@@ -205,28 +205,31 @@ public interface UacUserService extends IService<UacUser> {
 	 * 校验登录名是否存在.
 	 *
 	 * @param loginName the login name
+	 * @param appId 
 	 *
 	 * @return the boolean
 	 */
-	boolean checkLoginName(String loginName);
+	boolean checkLoginName(String loginName, String appId);
 
 	/**
 	 * 校验邮箱是否存在.
 	 *
 	 * @param loginName the login name
+	 * @param appId 
 	 *
 	 * @return the boolean
 	 */
-	boolean checkEmail(String loginName);
+	boolean checkEmail(String loginName, String appId);
 
 	/**
 	 * 校验手机号是否存在.
 	 *
 	 * @param validValue the valid value
+	 * @param appId 
 	 *
 	 * @return the boolean
 	 */
-	boolean checkMobileNo(String validValue);
+	boolean checkMobileNo(String validValue, String appId);
 
 	/**
 	 * 根据邮箱和登录名查询用户数量.
@@ -236,7 +239,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @return the int
 	 */
-	int countUserByLoginNameAndEmail(String loginName, String email);
+	int countUserByLoginNameAndEmail(String loginName, String email, String appId);
 
 	/**
 	 * 重置密码.
@@ -285,7 +288,7 @@ public interface UacUserService extends IService<UacUser> {
 	 *
 	 * @param activeUserToken the active user token
 	 */
-	void activeUser(String activeUserToken);
+	void activeUser(String activeUserToken, String appId);
 
 	/**
 	 * 获取用户拥有的所有权限编码.
@@ -309,8 +312,9 @@ public interface UacUserService extends IService<UacUser> {
 	 * Find user info by login name uac user.
 	 *
 	 * @param loginName the login name
+	 * @param appId the appId
 	 *
 	 * @return the uac user
 	 */
-	UacUser findUserInfoByLoginName(String loginName);
+	UacUser findUserInfoByLoginName(String loginName, String appId);
 }

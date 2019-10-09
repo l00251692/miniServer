@@ -63,6 +63,6 @@ public class SmsProducer {
 		String topic = AliyunMqTopicConstants.MqTopicEnum.SEND_SMS_TOPIC.getTopic();
 		String tag = AliyunMqTopicConstants.MqTagEnum.REGISTER_USER_AUTH_CODE.getTag();
 		String key = RedisKeyUtil.createMqKey(topic, tag, smsMessage.getMobileNo(), msgBody);
-		return new MqMessageData(msgBody, topic, tag, key);
+		return new MqMessageData(msgBody, topic, tag, key, smsMessage.getAppId());
 	}
 }

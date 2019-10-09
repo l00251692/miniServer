@@ -13,7 +13,8 @@ public interface SmsCodeSender {
 	 * @param mobile the mobile
 	 * @param code   the code
 	 * @param ip     the ip
+	 * @param appId     the appId
 	 */
-	void send(String mobile, String code, String ip);
+	void send(String mobile, String code, String ip, String appId);
 
 }

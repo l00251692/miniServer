@@ -53,6 +53,7 @@ public class EmailController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "发送注册短信验证码")
 	public Wrapper<String> sendRestEmailCode(@RequestBody SendEmailMessage sendEmailMessage) {
 		LoginAuthDto loginAuthDto = this.getLoginAuthDto();
+		sendEmailMessage.setAppId(loginAuthDto.getAppId());
 		emailService.sendEmailCode(sendEmailMessage, loginAuthDto.getLoginName());
 		return WrapMapper.ok();
 	}

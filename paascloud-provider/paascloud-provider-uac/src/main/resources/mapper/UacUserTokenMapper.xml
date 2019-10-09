@@ -29,6 +29,7 @@
 		<result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
 		<result column="group_id" property="groupId" jdbcType="BIGINT" />
 		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, version, pid, login_name, user_name, user_id, login_ip,
@@ -36,7 +37,7 @@
 		refresh_token, access_token_validity, refresh_token_validity, status, creator,
 		creator_id,
 		created_time, last_operator, last_operator_id, update_time, os, browser,
-		login_time, group_id, group_name
+		login_time, group_id, group_name, app_id
 	</sql>
 	<select id="selectTokenList" resultType="com.paascloud.provider.model.domain.UacUserToken">
 
@@ -61,10 +62,14 @@
 		<if test="userName != null and userName != ''">
 			and user_name LIKE concat(#{userName}, '%')
 		</if>
+		<if test="appId != null and appId != ''">
+            and app_id = #{appId,jdbcType=VARCHAR}
+        </if>
 	</select>
 	<select id="listOffLineTokenId" resultType="java.lang.Long">
 		SELECT id FROM pc_uac_user_token WHERE TIMESTAMPDIFF(SECOND, created_time,
-		NOW()) > access_token_validity AND status in (0,10);
+		NOW()) > access_token_validity AND status in (0,10)
+		and app_id = #{appId,jdbcType=VARCHAR};
 	</select>
 
 	<update id="batchUpdateTokenOffLine">
@@ -74,5 +79,6 @@
 			open="(" close=")" separator=",">
 			#{item}
 		</foreach>
+		and app_id = #{appId,jdbcType=VARCHAR}
 	</update>
 </mapper>

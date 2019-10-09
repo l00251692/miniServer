@@ -69,4 +69,6 @@ public class TpcMqMessageDto implements Serializable {
 	 * 顺序类型, 0有序 1无序
 	 */
 	private int orderType;
+	
+	private String appId;
 }

@@ -75,6 +75,12 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
+	
+	/**
+     * appId
+     */
+    @Column(name = "app_id")
+    private String appId;
 
 	@Transient
 	private Integer pageNum;
@@ -113,5 +119,6 @@ public class BaseEntity implements Serializable {
 		this.lastOperatorId = user.getUserId();
 		this.lastOperator = user.getUserName() == null ? user.getLoginName() : user.getUserName();
 		this.updateTime = new Date();
+		this.appId = user.getAppId();
 	}
 }

@@ -64,6 +64,7 @@ public class UacUserMainController extends BaseController {
 	public Wrapper<PageInfo> queryUserListWithPage(@ApiParam(name = "role", value = "角色信息") @RequestBody UacUser uacUser) {
 
 		logger.info("查询用户列表uacUser={}", uacUser);
+		uacUser.setAppId(getAppId());
 		PageInfo pageInfo = uacUserService.queryUserListWithPage(uacUser);
 		return WrapMapper.ok(pageInfo);
 	}
@@ -255,7 +256,7 @@ public class UacUserMainController extends BaseController {
 	public SecurityUser user() {
 		String loginName = SecurityUtils.getCurrentLoginName();
 		logger.info("{}", loginName);
-		UacUser user = uacUserService.findByLoginName(loginName);
+		UacUser user = uacUserService.findByLoginName(loginName, getAppId());
 		return user == null ? null : new SecurityUser(user.getId().toString(), user.getLoginName(), user.getLoginPwd(), user.getUserName(), user.getGroupId(), user.getGroupName());
 	}
 

@@ -137,9 +137,6 @@
 			<if test="updateTime != null">
 				update_time = #{updateTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="appId != null">
-                app_id = #{appId,jdbcType=VARCHAR},
-            </if>
 		</set>
 	</sql>
 	<sql id="Base_Where_Condition">
@@ -227,6 +224,7 @@
 		update pc_uac_user
 		<include refid="Base_Set_Condition" />
 		where id = #{id,jdbcType=BIGINT}
+        and  app_id = #{appId,jdbcType=VARCHAR}
 	</update>
 
 	<select id="findByLoginName" resultMap="BaseResultMap">
@@ -236,6 +234,7 @@
 		pc_uac_user u
 		WHERE
 		u.login_name=#{loginName,jdbcType=VARCHAR}
+		and u.app_id=#{appId,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findByMobileNo" resultMap="BaseResultMap">
@@ -245,6 +244,7 @@
 		pc_uac_user u
 		WHERE
 		u.mobile_no=#{mobileNo,jdbcType=VARCHAR}
+		u.app_id=#{appId,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findByLoginNameAndLoginPwd" parameterType="java.util.Map"
@@ -254,8 +254,9 @@
 		FROM
 		pc_uac_user u
 		WHERE
-		u.login_name = #{loginName,jdbcType=VARCHAR} AND u.login_pwd =
-		#{loginPwd,jdbcType=VARCHAR}
+		u.login_name = #{loginName,jdbcType=VARCHAR} 
+		AND u.login_pwd = #{loginPwd,jdbcType=VARCHAR}
+		AND u.app_id = #{appId,jdbcType=VARCHAR}
 	</select>
 	<select id="selectUserList" parameterType="uacUser" resultType="uacUser">
 		SELECT
@@ -305,5 +306,6 @@
 		LEFT JOIN pc_uac_group_user gu on u.id = gu.user_id
 		LEFT JOIN pc_uac_group g on gu.group_id = g.id
 		WHERE u.login_name = #{loginName}
+		and u.app_id = #{appId}
 	</select>
 </mapper>

@@ -37,6 +37,7 @@ import com.paascloud.wrapper.Wrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +75,10 @@ public class TpcMqMessageServiceImpl extends BaseService<TpcMqMessage> implement
 		}
 
 		Date now = new Date();
-		TpcMqMessage message = new ModelMapper().map(messageDto, TpcMqMessage.class);
+		ModelMapper modelMapper = new ModelMapper();
+		modelMapper.getConfiguration().setFullTypeMatchingRequired(true);
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		TpcMqMessage message = modelMapper.map(messageDto, TpcMqMessage.class);
 		message.setMessageStatus(MqSendStatusEnum.WAIT_SEND.sendStatus());
 		message.setUpdateTime(now);
 		message.setCreatedTime(now);

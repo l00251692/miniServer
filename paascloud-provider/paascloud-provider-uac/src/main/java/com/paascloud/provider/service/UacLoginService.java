@@ -25,9 +25,10 @@ public interface UacLoginService {
 	 * Login after login resp dto.
 	 *
 	 * @param applicationId the application id
+	 * @param appId 
 	 *
 	 * @return the login resp dto
 	 */
-	LoginRespDto loginAfter(Long applicationId);
+	LoginRespDto loginAfter(Long applicationId, String appId);
 
 }

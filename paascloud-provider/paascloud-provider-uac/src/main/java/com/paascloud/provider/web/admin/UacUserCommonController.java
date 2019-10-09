@@ -63,7 +63,7 @@ public class UacUserCommonController extends BaseController {
 	public Wrapper<UserVo> queryUserInfo(@PathVariable String loginName) {
 		logger.info("根据userId查询用户详细信息");
 		UserVo userVo = new UserVo();
-		UacUser uacUser = uacUserService.findByLoginName(loginName);
+		UacUser uacUser = uacUserService.findByLoginName(loginName, getAppId());
 		uacUser = uacUserService.findUserInfoByUserId(uacUser.getId().toString());
 		List<UacRole> roleList = uacRoleService.findAllRoleInfoByUserId(uacUser.getId());
 		List<MenuVo> authTree = uacRoleService.getOwnAuthTree(uacUser.getId().toString());
@@ -196,8 +196,9 @@ public class UacUserCommonController extends BaseController {
 		String newPassword = checkNewPasswordDto.getNewPassword();
 		UacUser uacUser = new UacUser();
 		uacUser.setLoginName(loginName);
+		uacUser.setAppId(getAppId());
 		int result = 0;
-		UacUser user = uacUserService.findByLoginName(loginName);
+		UacUser user = uacUserService.findByLoginName(loginName, getAppId());
 		if (user == null) {
 			logger.error("找不到用户. loginName={}", loginName);
 		} else {

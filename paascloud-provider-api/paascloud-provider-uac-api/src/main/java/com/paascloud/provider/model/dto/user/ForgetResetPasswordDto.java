@@ -36,4 +36,6 @@ public class ForgetResetPasswordDto implements Serializable {
 	private String emailCode;
 	@ApiModelProperty(value = "token")
 	private String forgetToken;
+	@ApiModelProperty(value = "appId")
+    private String appId;
 }

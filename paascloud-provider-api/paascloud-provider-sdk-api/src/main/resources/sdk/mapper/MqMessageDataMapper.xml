@@ -22,6 +22,7 @@
 			jdbcType="BIGINT" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="yn" property="yn" jdbcType="INTEGER" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs"
 		type="com.paascloud.provider.model.domain.MqMessageData" extends="BaseResultMap">
@@ -43,7 +44,8 @@
 		${alias}.last_operator,
 		${alias}.last_operator_id,
 		${alias}.update_time,
-		${alias}.yn
+		${alias}.yn,
+		${alias}.app_id
 	</sql>
 	<sql id="Blob_Column_List">
 		message_body

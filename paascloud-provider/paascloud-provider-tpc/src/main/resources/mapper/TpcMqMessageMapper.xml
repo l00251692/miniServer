@@ -21,6 +21,7 @@
 		<result column="next_exe_time" property="nextExeTime" jdbcType="INTEGER" />
 		<result column="yn" property="yn" jdbcType="INTEGER" />
 		<result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs"
 		type="com.paascloud.provider.model.domain.TpcMqMessage" extends="BaseResultMap">
@@ -47,7 +48,8 @@
 		${alias}.creator_id,
 		${alias}.created_time,
 		${alias}.last_operator,
-		${alias}.last_operator_id
+		${alias}.last_operator_id,
+		${alias}.app_id
 	</sql>
 	<sql id="Blob_Column_List">
 		${alias}.message_body

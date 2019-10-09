@@ -17,11 +17,12 @@ public class DefaultSmsCodeSender implements SmsCodeSender {
 	 * @param mobile the mobile
 	 * @param code   the code
 	 * @param ip     the ip
+	 * @param appId     the appId
 	 */
 	@Override
-	public void send(String mobile, String code, String ip) {
+	public void send(String mobile, String code, String ip, String appId) {
 		log.warn("请配置真实的短信验证码发送器(SmsCodeSender)");
-		log.info("向手机" + mobile + "发送短信验证码" + code + "ip:" + ip);
+		log.info("向手机" + mobile + "发送短信验证码" + code + "ip:" + ip + "appId:" + appId);
 	}
 
 }

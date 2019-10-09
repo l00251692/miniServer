@@ -23,8 +23,9 @@ public interface EmailService {
 	 * 重置密码发送邮件.
 	 *
 	 * @param email the email
+	 * @param appId 
 	 */
-	void submitResetPwdEmail(String email);
+	void submitResetPwdEmail(String email, String appId);
 
 	/**
 	 * 发送验证码

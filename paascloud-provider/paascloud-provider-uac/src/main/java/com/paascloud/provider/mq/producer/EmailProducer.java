@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.paascloud.RedisKeyUtil;
 import com.paascloud.base.constant.AliyunMqTopicConstants;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.enums.ErrorCodeEnum;
 import com.paascloud.provider.model.domain.MqMessageData;
 import com.paascloud.provider.model.dto.PcSendEmailRequest;
@@ -69,6 +70,6 @@ public class EmailProducer {
 		String topic = tagEnum.getTopic();
 		String tag = tagEnum.getTag();
 		String key = RedisKeyUtil.createMqKey(topic, tag, emailSet.toString(), msgBody);
-		return new MqMessageData(msgBody, topic, tag, key);
+		return new MqMessageData(msgBody, topic, tag, key, String.valueOf(param.get(GlobalConstant.Sys.APP_ID)));
 	}
 }

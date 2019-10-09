@@ -181,4 +181,29 @@ public class RequestUtil {
         } 
         return newPath;
     }
+    
+    public static String getAppId(HttpServletRequest request) {
+        String appId = getAppId(request.getRequestURI());
+        if (null == appId) {
+            appId = request.getHeader("appId");
+        }
+        return appId;
+    }
+
+    /**
+     * @param appId
+     * @return
+     */
+    public static String buildAppId(String appId) {
+        return "/appId" + appId;
+    }
+    
+    public static String removeAppId(String url) {
+        int appIdIndex = url.lastIndexOf("/appId");
+        String retUrl = url;
+        if (appIdIndex > -1) {
+            retUrl = retUrl.substring(0, appIdIndex);
+        }
+        return retUrl;
+    }
 }

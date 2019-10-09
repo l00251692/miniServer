@@ -1,7 +1,7 @@
 package com.paascloud.provider.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.paascloud.DataSourceContextHolder;
+import com.paascloud.DataSourceMapHolder;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.config.properties.DatasourceAttributes;
 import com.paascloud.config.properties.PaascloudProperties;
@@ -25,6 +25,10 @@ public class DynamicDataSource extends AbstractDataSource {
 	private Map<String, DataSource> dataSourceMap = new WeakHashMap<String, DataSource>();
 	
 	private String defaultDataSourceName;
+	
+	public void setDefaultDataSourceName(String defaultDataSourceName) {
+	    this.defaultDataSourceName = defaultDataSourceName;
+	}
 
 	
 	public void setDsProperties(PaascloudProperties paascloudProperties) {
@@ -32,7 +36,6 @@ public class DynamicDataSource extends AbstractDataSource {
         log.info("DynamicDataSource: paascloudProperties is starting");
         
         DatasourceAttributes druid[] = paascloudProperties.getDatabase().getDruid();
-        defaultDataSourceName = paascloudProperties.getDatabase().getDefaultName4Uac();
            
         for (DatasourceAttributes iterator : druid) { 
         	
@@ -40,7 +43,7 @@ public class DynamicDataSource extends AbstractDataSource {
         	{ 
         		log.info("******************************************set dynamic database:");
         		DataSource dataSource = druidDataSource(paascloudProperties, iterator);
-        		dataSourceMap.put(iterator.getName(),dataSource);
+        		dataSourceMap.put(iterator.getAppId(),dataSource);
         	}
         }
 	}
@@ -82,11 +85,18 @@ public class DynamicDataSource extends AbstractDataSource {
         return datasource;
     }
     
+    /**
+           * 每个应用配置defaultDataSourceName，根据appId获取不到单独的数据源配置时，都采用各应用的defaultDataSourceName对应的数据源配置
+           * 比如uac的defaultDataSourceName为paascloud_uac,如没特殊配置，都用appId=paascloud_uac（key），name=paascloud_uac的数据源
+           * 
+     * @param no
+     * @return
+     */
     @Override
 	public Connection getConnection() throws SQLException {
 		String currentName = DataSourceHolder.getDataSource();
 		if (null == currentName) {
-		    currentName = (String) DataSourceContextHolder.get(GlobalConstant.Sys.APP_ID);
+		    currentName = (String) DataSourceMapHolder.get(GlobalConstant.Sys.APP_ID);
 		}
 		
 		if (null == currentName) {
@@ -95,7 +105,11 @@ public class DynamicDataSource extends AbstractDataSource {
 		
 		DataSource currentDataSource = dataSourceMap.get(currentName);
 		if(currentDataSource == null) {
-			throw new SQLException("there is no datasource configuration for the organization with name " + currentName);
+		    currentDataSource = dataSourceMap.get(defaultDataSourceName);
+		    if (currentDataSource == null) {
+		        throw new SQLException("there is no datasource configuration for the organization with name " + currentName);
+		    }
+			
 		}
 		return currentDataSource.getConnection();
 	}

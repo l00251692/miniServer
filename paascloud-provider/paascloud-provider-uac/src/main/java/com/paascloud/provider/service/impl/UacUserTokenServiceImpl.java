@@ -170,9 +170,10 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 		// 更新本次token数据
 		UserTokenDto tokenDto = this.getByAccessToken(accessToken);
 		tokenDto.setStatus(UacUserTokenStatusEnum.ON_REFRESH.getStatus());
-		UacUser uacUser = uacUserService.findUserInfoByLoginName(loginName);
+		UacUser uacUser = uacUserService.findUserInfoByLoginName(loginName, RequestUtil.getAppId(request));
 
-		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId().toString(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getGroupId(), uacUser.getGroupName());
+		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId().toString(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getAppId(), 
+		        uacUser.getGroupId(), uacUser.getGroupName());
 		this.updateUacUserToken(tokenDto, loginAuthDto);
 		// 创建刷新token
 		this.saveUserToken(accessTokenNew, refreshTokenNew, loginAuthDto, request);
@@ -180,14 +181,15 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 	}
 
 	@Override
-	public int batchUpdateTokenOffLine() {
-		List<Long> idList = uacUserTokenMapper.listOffLineTokenId();
+	public int batchUpdateTokenOffLine(String appId) {
+		List<Long> idList = uacUserTokenMapper.listOffLineTokenId(appId);
 		if (PublicUtil.isEmpty(idList)) {
 			return 1;
 		}
 		Map<String, Object> map = Maps.newHashMap();
 		map.put("status", 20);
 		map.put("tokenIdList", idList);
+		map.put("appId", appId);
 		return uacUserTokenMapper.batchUpdateTokenOffLine(map);
 	}
 }

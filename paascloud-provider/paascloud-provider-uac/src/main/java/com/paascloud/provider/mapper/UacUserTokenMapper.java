@@ -50,5 +50,5 @@ public interface UacUserTokenMapper extends MyMapper<UacUserToken> {
 	 *
 	 * @return the list
 	 */
-	List<Long> listOffLineTokenId();
+	List<Long> listOffLineTokenId(String appId);
 }

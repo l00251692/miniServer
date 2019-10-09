@@ -2,6 +2,7 @@ package com.paascloud.security.core.validate.code.sms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paascloud.RedisKeyUtil;
+import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.security.core.SecurityResult;
 import com.paascloud.security.core.properties.SecurityConstants;
 import com.paascloud.security.core.properties.SecurityProperties;
@@ -81,7 +82,7 @@ public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode
 		// 统一处理短信流量
 		try {
 			this.checkSendSmsCount(mobile, ipAddr);
-			smsCodeSender.send(mobile, validateCode.getCode(), ipAddr);
+			smsCodeSender.send(mobile, validateCode.getCode(), ipAddr, RequestUtil.getAppId(request.getRequest()));
 		} catch (ValidateCodeException e) {
 			log.error("校验短信数量, e={}", e.getMessage(), e);
 			result = SecurityResult.error(e.getMessage(), false);

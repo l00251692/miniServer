@@ -101,15 +101,15 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UacUser findByLoginName(String loginName) {
-		logger.info("findByLoginName - 根据用户名查询用户信息. loginName={}", loginName);
+	public UacUser findByLoginName(String loginName, String appId) {
+		logger.info("findByLoginName - 根据用户名查询用户信息. loginName={}, appId={}", loginName, appId);
 
-		return uacUserMapper.findByLoginName(loginName);
+		return uacUserMapper.findByLoginName(loginName, appId);
 	}
 
 	@Override
-	public UacUser findByMobileNo(String mobileNo) {
-		return uacUserMapper.findByMobileNo(mobileNo);
+	public UacUser findByMobileNo(String mobileNo, String appId) {
+		return uacUserMapper.findByMobileNo(mobileNo, appId);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		loginNamePwdMap.put("loginName", loginReqDto.getLoginName());
 		loginNamePwdMap.put("loginPwd", loginReqDto.getLoginPwd());
 
-		UacUser uacUser = uacUserMapper.findByLoginNameAndLoginPwd(loginNamePwdMap);
+		UacUser uacUser = uacUserMapper.findByLoginNameAndLoginPwd(loginNamePwdMap, loginReqDto.getAppId());
 		if (PublicUtil.isEmpty(uacUser)) {
 			logger.info("用户【" + loginReqDto.getLoginName() + "】密码认证失败");
 			throw new UacBizException(ErrorCodeEnum.UAC10011002, loginReqDto.getLoginName());
@@ -318,6 +318,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		final UacUser updateUser = new UacUser();
 		//updateUser.setId(operUserId);
 		updateUser.setUpdateInfo(authResDto);
+		updateUser.setAppId(user.getAppId());
 		uacUserMapper.updateUacUser(updateUser);
 
 		if (PublicUtil.isEmpty(roleIdList)) {
@@ -445,7 +446,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		Preconditions.checkArgument(newPassword.equals(confirmPwd), "两次密码不一致, 请重新输入！");
 
 
-		UacUser user = uacUserMapper.findByLoginName(loginName);
+		UacUser user = uacUserMapper.findByLoginName(loginName, authResDto.getAppId());
 		if (PublicUtil.isEmpty(user)) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011002, loginName);
 		}
@@ -540,8 +541,9 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", registerDto.getLoginName());
 		param.put("email", registerDto.getEmail());
-		param.put("activeUserUrl", activeUserUrl + activeToken);
+		param.put("activeUserUrl", activeUserUrl + activeToken + RequestUtil.buildAppId(registerDto.getAppId()));
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
+		param.put(GlobalConstant.Sys.APP_ID, registerDto.getAppId());
 
 		Set<String> to = Sets.newHashSet();
 		to.add(registerDto.getEmail());
@@ -552,11 +554,12 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public boolean checkLoginName(String loginName) {
+	public boolean checkLoginName(String loginName, String appId) {
 		Preconditions.checkArgument(!StringUtils.isEmpty(loginName), ErrorCodeEnum.UAC10011007.msg());
 
 		UacUser uacUser = new UacUser();
 		uacUser.setLoginName(loginName);
+		uacUser.setAppId(appId);
 		int result = 1;
 		try {
 			result = uacUserMapper.selectCount(uacUser);
@@ -568,11 +571,12 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public boolean checkEmail(String email) {
+	public boolean checkEmail(String email, String appId) {
 		Preconditions.checkArgument(!StringUtils.isEmpty(email), "email不能为空");
 
 		UacUser uacUser = new UacUser();
 		uacUser.setEmail(email);
+		uacUser.setAppId(appId);
 		int result = 1;
 		try {
 			result = uacUserMapper.selectCount(uacUser);
@@ -584,11 +588,12 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public boolean checkMobileNo(String mobileNo) {
+	public boolean checkMobileNo(String mobileNo, String appId) {
 		Preconditions.checkArgument(!StringUtils.isEmpty(mobileNo), "手机号码不能为空");
 
 		UacUser uacUser = new UacUser();
 		uacUser.setMobileNo(mobileNo);
+		uacUser.setAppId(appId);
 		int result = 1;
 		try {
 			result = uacUserMapper.selectCount(uacUser);
@@ -600,13 +605,14 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public int countUserByLoginNameAndEmail(String loginName, String email) {
+	public int countUserByLoginNameAndEmail(String loginName, String email, String appId) {
 		Preconditions.checkArgument(!StringUtils.isEmpty(loginName), ErrorCodeEnum.UAC10011007.msg());
 		Preconditions.checkArgument(!StringUtils.isEmpty(email), ErrorCodeEnum.UAC10011018.msg());
 
 		UacUser uacUser = new UacUser();
 		uacUser.setLoginName(loginName);
 		uacUser.setEmail(email);
+		uacUser.setAppId(appId);
 
 		return uacUserMapper.selectCount(uacUser);
 	}
@@ -616,7 +622,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		this.validateEmailResetPwd(forgetResetPasswordDto);
 		String loginName = forgetResetPasswordDto.getLoginName();
 
-		UacUser user = this.findByLoginName(loginName);
+		UacUser user = this.findByLoginName(loginName, forgetResetPasswordDto.getAppId());
 		UacUser uacUser = new UacUser();
 		uacUser.setLoginPwd(Md5Util.encrypt(forgetResetPasswordDto.getLoginPwd()));
 		uacUser.setId(user.getId());
@@ -666,11 +672,13 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		update.setLoginPwd(Md5Util.encrypt(newLoginPwd));
 		short isChangedPwd = 0;
 		update.setIsChangedPwd(isChangedPwd);
+		update.setAppId(loginAuthDto.getAppId());
 
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", uacUser.getLoginName());
 		param.put("newLoginPwd", newLoginPwd);
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
+		param.put(GlobalConstant.Sys.APP_ID, loginAuthDto.getAppId());
 
 		Set<String> to = Sets.newHashSet();
 		to.add(uacUser.getEmail());
@@ -702,6 +710,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		LoginAuthDto loginAuthDto = new LoginAuthDto();
 		loginAuthDto.setUserName(uacUser.getUserName());
 		loginAuthDto.setLoginName(uacUser.getLoginName());
+		loginAuthDto.setAppId(uacUser.getAppId());
 		//loginAuthDto.setUserId(uacUser.getId());
 
 		UacUser update = new UacUser();
@@ -749,7 +758,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	}
 
 	@Override
-	public void activeUser(String activeUserToken) {
+	public void activeUser(String activeUserToken, String appId) {
 		Preconditions.checkArgument(!StringUtils.isEmpty(activeUserToken), "激活用户失败");
 
 		String activeUserKey = RedisKeyUtil.getActiveUserKey(activeUserToken);
@@ -762,6 +771,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		// 修改用户状态, 绑定访客角色
 		UacUser uacUser = new UacUser();
 		uacUser.setEmail(email);
+		uacUser.setAppId(appId);
 
 		uacUser = uacUserMapper.selectOne(uacUser);
 		if (uacUser == null) {
@@ -776,6 +786,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		//loginAuthDto.setUserId(uacUser.getId());
 		loginAuthDto.setUserName(uacUser.getLoginName());
 		loginAuthDto.setLoginName(uacUser.getLoginName());
+		loginAuthDto.setAppId(uacUser.getAppId());
 		update.setUpdateInfo(loginAuthDto);
 
 		UacUser user = this.queryByUserId(uacUser.getId().toString());
@@ -783,6 +794,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", user.getLoginName());
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
+		param.put(GlobalConstant.Sys.APP_ID, uacUser.getAppId());
 
 		Set<String> to = Sets.newHashSet();
 		to.add(user.getEmail());
@@ -823,7 +835,8 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		//uacUser.setId(userId);
 		uacUser.setLastLoginTime(new Date());
 		uacUser.setLastLoginLocation(remoteLocation);
-		LoginAuthDto loginAuthDto = new LoginAuthDto(userId, principal.getLoginName(), principal.getNickName(), principal.getGroupId(), principal.getGroupName());
+		LoginAuthDto loginAuthDto = new LoginAuthDto(userId, principal.getLoginName(), principal.getNickName(), RequestUtil.getAppId(request),
+		        principal.getGroupId(), principal.getGroupName());
 		// 记录token日志
 		String accessToken = token.getValue();
 		String refreshToken = token.getRefreshToken().getValue();
@@ -852,8 +865,8 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	}
 
 	@Override
-	public UacUser findUserInfoByLoginName(final String loginName) {
-		return uacUserMapper.findUserInfoByLoginName(loginName);
+	public UacUser findUserInfoByLoginName(final String loginName, String appId) {
+		return uacUserMapper.findUserInfoByLoginName(loginName, appId);
 	}
 
 	private void validateEmailResetPwd(ForgetResetPasswordDto forgetResetPasswordDto) {
@@ -880,7 +893,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 			throw new UacBizException(ErrorCodeEnum.UAC10011031);
 		}
 
-		int count = this.countUserByLoginNameAndEmail(loginName, email);
+		int count = this.countUserByLoginNameAndEmail(loginName, email, forgetResetPasswordDto.getAppId());
 		// 校验token
 		if (count < 1) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011032, loginName, email);
@@ -960,6 +973,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		Preconditions.checkArgument(registerDto.getLoginPwd().equals(registerDto.getConfirmPwd()), "两次密码不一致");
 
 		UacUser uacUser = new UacUser();
+		uacUser.setAppId(registerDto.getAppId());
 		uacUser.setLoginName(registerDto.getLoginName());
 		int count = uacUserMapper.selectCount(uacUser);
 		if (count > 0) {
@@ -967,6 +981,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		}
 
 		uacUser = new UacUser();
+		uacUser.setAppId(registerDto.getAppId());
 		uacUser.setMobileNo(registerDto.getMobileNo());
 		count = uacUserMapper.selectCount(uacUser);
 		if (count > 0) {
@@ -974,6 +989,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		}
 
 		uacUser = new UacUser();
+		uacUser.setAppId(registerDto.getAppId());
 		uacUser.setEmail(registerDto.getEmail());
 		count = uacUserMapper.selectCount(uacUser);
 		if (count > 0) {

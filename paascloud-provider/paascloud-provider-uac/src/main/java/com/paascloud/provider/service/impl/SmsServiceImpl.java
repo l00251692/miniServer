@@ -58,13 +58,13 @@ public class SmsServiceImpl implements SmsService {
 	}
 
 	@Override
-	public String submitResetPwdPhone(String mobile, HttpServletResponse response) {
+	public String submitResetPwdPhone(String mobile, String appId, HttpServletResponse response) {
 		Preconditions.checkArgument(StringUtils.isNotEmpty(mobile), "手机号码不能为空");
 		Preconditions.checkArgument(PubUtils.isMobileNumber(mobile), "手机号码格式不正确");
 
 		String resetPwdKey = PubUtils.uuid() + UniqueIdGenerator.generateId();
 
-		UacUser user = uacUserService.findByMobileNo(mobile);
+		UacUser user = uacUserService.findByMobileNo(mobile, appId);
 		redisTemplate.opsForValue().set(RedisKeyUtil.getResetPwdTokenKey(resetPwdKey), user, 10, TimeUnit.MINUTES);
 		CookieUtil.setCookie("PASSCLOUD_PAAS_resetPwdKey", resetPwdKey, 10 * 60, response);
 		return resetPwdKey;

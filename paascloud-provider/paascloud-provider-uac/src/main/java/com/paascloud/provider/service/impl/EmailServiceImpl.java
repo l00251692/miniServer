@@ -8,6 +8,7 @@ import com.paascloud.PubUtils;
 import com.paascloud.RandomUtil;
 import com.paascloud.RedisKeyUtil;
 import com.paascloud.base.constant.AliyunMqTopicConstants;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.enums.ErrorCodeEnum;
 import com.paascloud.core.generator.UniqueIdGenerator;
 import com.paascloud.provider.manager.UserManager;
@@ -59,12 +60,13 @@ public class EmailServiceImpl implements EmailService {
 	private static final String IV_STR = "0#86gzOcsv1bXyIx";
 
 	@Override
-	public void submitResetPwdEmail(String email) {
+	public void submitResetPwdEmail(String email, String appId) {
 		Preconditions.checkArgument(StringUtils.isNotEmpty(email), ErrorCodeEnum.UAC10011018.msg());
 
 		// 获取用户名
 		UacUser uacUser = new UacUser();
 		uacUser.setEmail(email);
+		uacUser.setAppId(appId);
 		uacUser = uacUserService.selectOne(uacUser);
 		if (uacUser == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011004, email);
@@ -78,6 +80,7 @@ public class EmailServiceImpl implements EmailService {
 		param.put("email", email);
 		param.put("resetPwdUrl", resetPwdUrl + resetPwdKey);
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
+		param.put(GlobalConstant.Sys.APP_ID, appId);
 
 		Set<String> to = Sets.newHashSet();
 		to.add(email);
@@ -116,6 +119,7 @@ public class EmailServiceImpl implements EmailService {
 		param.put("email", email);
 		param.put("emailCode", emailCode);
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
+		param.put(GlobalConstant.Sys.APP_ID, sendEmailMessage.getAppId());
 
 		Set<String> to = Sets.newHashSet();
 		to.add(email);

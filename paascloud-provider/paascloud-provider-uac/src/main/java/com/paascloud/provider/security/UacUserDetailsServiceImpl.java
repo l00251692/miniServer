@@ -1,5 +1,7 @@
 package com.paascloud.provider.security;
 
+import com.paascloud.DataSourceMapHolder;
+import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.core.config.DataSourceHolder;
 import com.paascloud.provider.model.domain.UacUser;
 import com.paascloud.provider.service.UacUserService;
@@ -34,8 +36,7 @@ public class UacUserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		Collection<GrantedAuthority> grantedAuthorities;
-		DataSourceHolder.setDataSource("exampleId1234");
-		UacUser user = uacUserService.findByLoginName(username);
+		UacUser user = uacUserService.findByLoginName(username, String.valueOf(DataSourceMapHolder.get(GlobalConstant.Sys.APP_ID)));
 		if (user == null) {
 			throw new BadCredentialsException("用户名不存在或者密码错误");
 		}

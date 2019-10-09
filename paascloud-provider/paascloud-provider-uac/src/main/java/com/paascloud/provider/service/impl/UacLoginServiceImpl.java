@@ -49,7 +49,7 @@ public class UacLoginServiceImpl implements UacLoginService {
 	private UacMenuService uacMenuService;
 
 	@Override
-	public LoginRespDto loginAfter(Long applicationId) {
+	public LoginRespDto loginAfter(Long applicationId, String appId) {
 		LoginRespDto loginRespDto = new LoginRespDto();
 		String loginName = SecurityUtils.getCurrentLoginName();
 		if (StringUtils.isEmpty(loginName)) {
@@ -57,7 +57,7 @@ public class UacLoginServiceImpl implements UacLoginService {
 			Preconditions.checkArgument(StringUtils.isNotEmpty(loginName), "操作超时, 请重新登录");
 		}
 
-		UacUser uacUser = uacUserService.findByLoginName(loginName);
+		UacUser uacUser = uacUserService.findByLoginName(loginName, appId);
 		if (PublicUtil.isEmpty(uacUser)) {
 			log.info("找不到用户信息 loginName={}", loginName);
 			throw new UacBizException(ErrorCodeEnum.UAC10011002, loginName);

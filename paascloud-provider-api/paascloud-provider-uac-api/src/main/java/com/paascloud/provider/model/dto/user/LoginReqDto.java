@@ -49,6 +49,9 @@ public class LoginReqDto implements Serializable {
 
 	@ApiModelProperty(value = "系统ID")
 	private Long applicationId;
+	
+	@ApiModelProperty(value = "appID")
+	private String appId;
 
 }
   

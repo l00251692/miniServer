@@ -43,6 +43,8 @@ public class SendEmailMessage implements Serializable {
 	 * 邮件模板Code
 	 */
 	private String emailTemplateCode;
+	
+	private String appId;
 
 	/**
 	 * Instantiates a new Send email message.

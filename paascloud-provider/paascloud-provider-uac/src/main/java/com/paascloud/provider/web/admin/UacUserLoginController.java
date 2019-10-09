@@ -65,7 +65,7 @@ public class UacUserLoginController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "登录成功获取用户菜单")
 	public Wrapper<LoginRespDto> loginAfter(@PathVariable Long applicationId) {
 		logger.info("登录成功获取用户菜单. applicationId={}", applicationId);
-		LoginRespDto result = uacLoginService.loginAfter(applicationId);
+		LoginRespDto result = uacLoginService.loginAfter(applicationId, getAppId());
 		return WrapMapper.ok(result);
 	}
 

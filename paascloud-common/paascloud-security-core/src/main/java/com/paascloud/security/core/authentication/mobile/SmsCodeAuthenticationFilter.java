@@ -1,5 +1,8 @@
 package com.paascloud.security.core.authentication.mobile;
 
+import com.paascloud.DataSourceMapHolder;
+import com.paascloud.base.constant.GlobalConstant;
+import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.security.core.properties.SecurityConstants;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -53,6 +56,8 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
         if (postOnly && !POST.equals(request.getMethod())) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
+        
+        DataSourceMapHolder.put(GlobalConstant.Sys.APP_ID, RequestUtil.getAppId(request));
 
         String mobile = obtainMobile(request);
 

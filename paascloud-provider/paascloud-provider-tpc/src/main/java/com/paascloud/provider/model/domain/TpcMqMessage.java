@@ -133,6 +133,12 @@ public class TpcMqMessage implements Serializable {
 	 */
 	@Column(name = "update_time")
 	private Date updateTime;
+	
+	/**
+     * appId
+     */
+    @Column(name = "app_id")
+    private String appId;
 
 	@Transient
 	private List<Integer> preStatusList;
