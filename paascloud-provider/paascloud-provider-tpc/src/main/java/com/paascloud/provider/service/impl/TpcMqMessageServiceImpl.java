@@ -35,6 +35,8 @@ import com.paascloud.provider.service.*;
 import com.paascloud.wrapper.WrapMapper;
 import com.paascloud.wrapper.Wrapper;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -216,7 +218,10 @@ public class TpcMqMessageServiceImpl extends BaseService<TpcMqMessage> implement
 
 	@Override
 	public void handleWaitingConfirmMessage(final List<String> deleteKeyList, final List<String> resendKeyList) {
-		tpcMqMessageMapper.batchDeleteMessage(deleteKeyList);
+		if (CollectionUtils.isNotEmpty(deleteKeyList)) {
+		    tpcMqMessageMapper.batchDeleteMessage(deleteKeyList);
+		}
+	    
 		for (final String messageKey : resendKeyList) {
 			this.confirmAndSendMessage(messageKey);
 		}

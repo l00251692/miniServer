@@ -425,7 +425,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public UacUser queryByUserId(String userId) {
 		logger.info("queryByUserId - 根据用户查询用户信息接口. userId={}", userId);
-		UacUser uacUser = uacUserMapper.selectByPrimaryKey(userId);
+		UacUser uacUser = uacUserMapper.selectByPrimaryKey(Long.valueOf(userId));
 		if (PublicUtil.isNotEmpty(uacUser)) {
 			uacUser.setLoginPwd("");
 		}
@@ -541,7 +541,8 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", registerDto.getLoginName());
 		param.put("email", registerDto.getEmail());
-		param.put("activeUserUrl", activeUserUrl + activeToken + RequestUtil.buildAppId(registerDto.getAppId()));
+		// :TODO url需要加上是否走定制路由参数
+		param.put("activeUserUrl", activeUserUrl + activeToken + RequestUtil.buildParamAppId(registerDto.getAppId()));
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
 		param.put(GlobalConstant.Sys.APP_ID, registerDto.getAppId());
 

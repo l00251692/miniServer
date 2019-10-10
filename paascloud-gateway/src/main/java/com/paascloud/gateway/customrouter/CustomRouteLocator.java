@@ -90,10 +90,10 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         String appId = RequestUtil.getAppId(targetPath);
         HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
         if (null == appId && null != request) {
-            appId = request.getHeader("appId");
+            appId = RequestUtil.getAppId(request);
         }
         String location = route.getLocation();
-        if (null != appId && StringUtils.isNotEmpty(request.getHeader("customRouter"))) {
+        if (null != appId && RequestUtil.isCustomRouter(request)) {
             location += "-" + appId;
         }
         return new Route(route.getId(), targetPath, location, prefix,

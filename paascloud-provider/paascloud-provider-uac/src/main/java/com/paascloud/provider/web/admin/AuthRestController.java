@@ -338,7 +338,7 @@ public class AuthRestController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@GetMapping(value = "/activeUser/{activeUserToken}/{appId}")
+	@GetMapping(value = "/activeUser/{activeUserToken}")
 	@ApiOperation(httpMethod = "POST", value = "激活用户")
 	public Wrapper activeUser(@PathVariable String activeUserToken) {
 		uacUserService.activeUser(activeUserToken, getAppId());

@@ -24,8 +24,6 @@ import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.wrapper.WrapMapper;
 import com.paascloud.wrapper.Wrapper;
 
-import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -111,10 +109,8 @@ public class BaseController {
 	}
 
 	protected String getAppId() {
-	    String appId = RequestUtil.getAppId(request.getRequestURI());
-	    if (null == appId) {
-	        appId = request.getHeader("appId");
-	    }
+	    String appId = RequestUtil.getAppId(request);
+	    
 	    DataSourceHolder.setDataSource(appId);
 	    return appId;
 	}

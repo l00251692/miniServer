@@ -156,7 +156,7 @@ public class RequestUtil {
 	        return null;
 	    }
 	    
-        int appIdIndex = path.lastIndexOf("/appId");
+        int appIdIndex = path.lastIndexOf(GlobalConstant.Sys.APP_ID_WITH_SLASH);
         String appId = null;
         if (appIdIndex > -1) {
             appId = path.substring(appIdIndex + 6);
@@ -185,7 +185,10 @@ public class RequestUtil {
     public static String getAppId(HttpServletRequest request) {
         String appId = getAppId(request.getRequestURI());
         if (null == appId) {
-            appId = request.getHeader("appId");
+            appId = request.getParameter(GlobalConstant.Sys.APP_ID);
+            if (null == appId) {
+                appId = request.getHeader(GlobalConstant.Sys.APP_ID);
+            }
         }
         return appId;
     }
@@ -195,15 +198,37 @@ public class RequestUtil {
      * @return
      */
     public static String buildAppId(String appId) {
-        return "/appId" + appId;
+        return GlobalConstant.Sys.APP_ID_WITH_SLASH + appId;
+    }
+    
+    public static String buildParamAppId(String appId) {
+        return "?appId=" + appId;
     }
     
     public static String removeAppId(String url) {
-        int appIdIndex = url.lastIndexOf("/appId");
+        int appIdIndex = url.lastIndexOf(GlobalConstant.Sys.APP_ID_WITH_SLASH);
         String retUrl = url;
         if (appIdIndex > -1) {
             retUrl = retUrl.substring(0, appIdIndex);
         }
         return retUrl;
+    }
+    
+    /**
+           * 是否自定义路由
+     * @param request
+     * @return
+     */
+    public static boolean isCustomRouter(HttpServletRequest request) {
+        String customRouter = request.getParameter(GlobalConstant.Sys.CUSTOM_ROUTER);
+        if (StringUtils.isNotEmpty(customRouter)) {
+            return Boolean.valueOf(customRouter);
+        }
+        
+        customRouter = request.getHeader(GlobalConstant.Sys.CUSTOM_ROUTER);
+        if (StringUtils.isNotEmpty(customRouter)) {
+            return Boolean.valueOf(customRouter);
+        }
+        return false;
     }
 }

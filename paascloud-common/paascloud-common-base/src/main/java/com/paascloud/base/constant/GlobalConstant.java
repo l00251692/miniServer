@@ -90,7 +90,14 @@ public class GlobalConstant {
 		/**
 		 * 小程序id
 		 */
-		public static final String APP_ID = "APP_ID";
+		public static final String APP_ID = "appId";
+		
+		public static final String APP_ID_WITH_SLASH = "/appId";
+		
+		/**
+		 * 定制路由
+		 */
+		public static final String CUSTOM_ROUTER = "customRouter";
 
 		/**
 		 * 超级管理员的用户ID
