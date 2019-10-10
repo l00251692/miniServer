@@ -1,5 +1,8 @@
 package com.paascloud.security.core.validate.code;
 
+import com.paascloud.DataSourceMapHolder;
+import com.paascloud.base.constant.GlobalConstant;
+import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.security.core.properties.SecurityConstants;
 import com.paascloud.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
@@ -107,6 +110,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 			try {
 				validateCodeProcessorHolder.findValidateCodeProcessor(type).validate(new ServletWebRequest(request, response));
 				logger.info("验证码校验通过");
+				
+				DataSourceMapHolder.put(GlobalConstant.Sys.APP_ID, RequestUtil.getAppId(request));
 			} catch (ValidateCodeException exception) {
 				authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
 				return;

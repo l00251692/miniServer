@@ -29,6 +29,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -69,7 +70,7 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 	public void saveUserToken(String accessToken, String refreshToken, LoginAuthDto loginAuthDto, HttpServletRequest request) {
 		// 获取登录时间
 		String userId = loginAuthDto.getUserId();
-		UacUser uacUser = uacUserService.selectByKey(userId);
+		UacUser uacUser = uacUserService.selectByKey(Long.valueOf(userId));
 		final UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 		//获取客户端操作系统
 		final String os = userAgent.getOperatingSystem().getName();
@@ -95,14 +96,15 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 		uacUserToken.setRefreshToken(refreshToken);
 		uacUserToken.setRefreshTokenValidity(refreshTokenValiditySeconds);
 		uacUserToken.setStatus(UacUserTokenStatusEnum.ON_LINE.getStatus());
-		//uacUserToken.setUserId(userId);
+		uacUserToken.setUserId(Long.valueOf(userId));
 		uacUserToken.setUserName(loginAuthDto.getUserName());
 		uacUserToken.setUpdateInfo(loginAuthDto);
 		uacUserToken.setGroupId(loginAuthDto.getGroupId());
 		uacUserToken.setGroupName(loginAuthDto.getGroupName());
 		uacUserToken.setId(generateId());
 		uacUserTokenMapper.insertSelective(uacUserToken);
-		UserTokenDto userTokenDto = new ModelMapper().map(uacUserToken, UserTokenDto.class);
+		UserTokenDto userTokenDto = new UserTokenDto();
+		BeanUtils.copyProperties(uacUserToken, userTokenDto);
 		// 存入redis数据库
 		updateRedisUserToken(accessToken, accessTokenValidateSeconds, userTokenDto);
 	}

@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.Collection;
 
 /**
@@ -36,6 +38,7 @@ public class UacUserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		Collection<GrantedAuthority> grantedAuthorities;
+		
 		UacUser user = uacUserService.findByLoginName(username, String.valueOf(DataSourceMapHolder.get(GlobalConstant.Sys.APP_ID)));
 		if (user == null) {
 			throw new BadCredentialsException("用户名不存在或者密码错误");

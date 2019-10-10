@@ -11,6 +11,7 @@ import com.paascloud.base.constant.AliyunMqTopicConstants;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.enums.ErrorCodeEnum;
 import com.paascloud.core.generator.UniqueIdGenerator;
+import com.paascloud.core.utils.RequestUtil;
 import com.paascloud.provider.manager.UserManager;
 import com.paascloud.provider.model.domain.MqMessageData;
 import com.paascloud.provider.model.domain.UacUser;
@@ -78,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", uacUser.getLoginName());
 		param.put("email", email);
-		param.put("resetPwdUrl", resetPwdUrl + resetPwdKey);
+		param.put("resetPwdUrl", resetPwdUrl + resetPwdKey + RequestUtil.buildParamAppId(appId, true));
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
 		param.put(GlobalConstant.Sys.APP_ID, appId);
 

@@ -542,7 +542,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		param.put("loginName", registerDto.getLoginName());
 		param.put("email", registerDto.getEmail());
 		// :TODO url需要加上是否走定制路由参数
-		param.put("activeUserUrl", activeUserUrl + activeToken + RequestUtil.buildParamAppId(registerDto.getAppId()));
+		param.put("activeUserUrl", activeUserUrl + activeToken + RequestUtil.buildParamAppId(registerDto.getAppId(), false));
 		param.put("dateTime", DateUtil.formatDateTime(new Date()));
 		param.put(GlobalConstant.Sys.APP_ID, registerDto.getAppId());
 
@@ -833,7 +833,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		UacUser uacUser = new UacUser();
 		String userId = principal.getUserId();
 		uacUser.setLastLoginIp(remoteAddr);
-		//uacUser.setId(userId);
+		uacUser.setId(Long.valueOf(userId));
 		uacUser.setLastLoginTime(new Date());
 		uacUser.setLastLoginLocation(remoteLocation);
 		LoginAuthDto loginAuthDto = new LoginAuthDto(userId, principal.getLoginName(), principal.getNickName(), RequestUtil.getAppId(request),

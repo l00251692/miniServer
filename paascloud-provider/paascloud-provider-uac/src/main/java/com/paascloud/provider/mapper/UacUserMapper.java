@@ -38,7 +38,7 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser findByLoginName(String loginName, String appId);
+	UacUser findByLoginName(@Param("loginName") String loginName, @Param("appId") String appId);
 
 	/**
 	 * Find by mobile no uac user.

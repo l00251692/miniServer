@@ -232,9 +232,8 @@
 		<include refid="Base_Column_List" />
 		from
 		pc_uac_user u
-		WHERE
-		u.login_name=#{loginName,jdbcType=VARCHAR}
-		and u.app_id=#{appId,jdbcType=VARCHAR}
+		WHERE u.login_name = #{loginName,jdbcType=VARCHAR}
+        and u.app_id = #{appId,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findByMobileNo" resultMap="BaseResultMap">
@@ -242,9 +241,9 @@
 		<include refid="Base_Column_List" />
 		from
 		pc_uac_user u
-		WHERE
-		u.mobile_no=#{mobileNo,jdbcType=VARCHAR}
-		u.app_id=#{appId,jdbcType=VARCHAR}
+		WHERE 1=1
+		and u.mobile_no=#{mobileNo,jdbcType=VARCHAR}
+		and u.app_id=#{appId,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findByLoginNameAndLoginPwd" parameterType="java.util.Map"

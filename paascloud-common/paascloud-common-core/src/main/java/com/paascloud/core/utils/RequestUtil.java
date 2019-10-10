@@ -201,8 +201,13 @@ public class RequestUtil {
         return GlobalConstant.Sys.APP_ID_WITH_SLASH + appId;
     }
     
-    public static String buildParamAppId(String appId) {
-        return "?appId=" + appId;
+    public static String buildParamAppId(String appId, boolean append) {
+        if (append) {
+            return "&appId=" + appId;
+        } else {
+            return "?appId=" + appId;
+        }
+        
     }
     
     public static String removeAppId(String url) {

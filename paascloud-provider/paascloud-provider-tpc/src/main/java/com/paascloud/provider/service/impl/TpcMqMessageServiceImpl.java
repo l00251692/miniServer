@@ -112,7 +112,10 @@ public class TpcMqMessageServiceImpl extends BaseService<TpcMqMessage> implement
 		}
 
 		Date now = new Date();
-		TpcMqMessage message = new ModelMapper().map(tpcMqMessageDto, TpcMqMessage.class);
+		ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setFullTypeMatchingRequired(true);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		TpcMqMessage message = modelMapper.map(tpcMqMessageDto, TpcMqMessage.class);
 		message.setMessageStatus(MqSendStatusEnum.SENDING.sendStatus());
 		message.setId(generateId());
 		message.setUpdateTime(now);
