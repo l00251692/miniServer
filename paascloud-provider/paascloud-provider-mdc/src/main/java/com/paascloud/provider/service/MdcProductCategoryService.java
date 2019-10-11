@@ -68,7 +68,7 @@ public interface MdcProductCategoryService extends IService<MdcProductCategory> 
 	 *
 	 * @return the category tree list
 	 */
-	List<MdcCategoryVo> getCategoryTreeList();
+	List<MdcCategoryVo> getCategoryTreeList(String appId);
 
 	/**
 	 * 根据ID获取商品分类信息.

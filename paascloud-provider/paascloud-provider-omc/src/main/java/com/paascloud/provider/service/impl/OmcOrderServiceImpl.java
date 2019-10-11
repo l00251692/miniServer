@@ -78,7 +78,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public OrderVo createOrderDoc(LoginAuthDto loginAuthDto, Long shippingId) {
-		String userId = loginAuthDto.getUserId();
+	    Long userId = loginAuthDto.getUserId();
 		//从购物车中获取数据
 		List<OmcCart> cartList = omcCartMapper.selectCheckedCartByUserId(userId);
 		if (CollectionUtils.isEmpty(cartList)) {
@@ -125,7 +125,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 
 	@Override
 	public int cancelOrderDoc(LoginAuthDto loginAuthDto, String orderNo) {
-		String userId = loginAuthDto.getUserId();
+	    Long userId = loginAuthDto.getUserId();
 		OmcOrder order = omcOrderMapper.selectByUserIdAndOrderNo(userId, orderNo);
 		if (order == null) {
 			logger.error("该用户此订单不存在, userId={}, orderNo={}", userId, orderNo);
@@ -142,7 +142,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	}
 
 	@Override
-	public PageInfo queryUserOrderListWithPage(String userId, BaseQuery baseQuery) {
+	public PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery) {
 		PageHelper.startPage(baseQuery.getPageNum(), baseQuery.getPageSize());
 		List<OmcOrder> orderList = omcOrderMapper.selectByUserId(userId);
 		List<OrderVo> orderVoList = assembleOrderVoList(orderList, userId);
@@ -150,7 +150,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	}
 
 	@Override
-	public boolean queryOrderPayStatus(String userId, String orderNo) {
+	public boolean queryOrderPayStatus(Long userId, String orderNo) {
 		OmcOrder order = omcOrderMapper.selectByUserIdAndOrderNo(userId, orderNo);
 		if (order == null) {
 			throw new OmcBizException(ErrorCodeEnum.OMC10031003);
@@ -166,7 +166,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	}
 
 	@Override
-	public OmcOrder queryByUserIdAndOrderNo(String userId, String orderNo) {
+	public OmcOrder queryByUserIdAndOrderNo(Long userId, String orderNo) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 		Preconditions.checkArgument(StringUtils.isNotEmpty(orderNo), "订单号不能为空");
 
@@ -184,7 +184,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	}
 
 	@Override
-	public OrderDto queryOrderDtoByUserIdAndOrderNo(String userId, String orderNo) {
+	public OrderDto queryOrderDtoByUserIdAndOrderNo(Long userId, String orderNo) {
 		OmcOrder omcOrder = this.queryByUserIdAndOrderNo(userId, orderNo);
 		if (omcOrder == null) {
 			throw new OmcBizException(ErrorCodeEnum.OMC10031005, orderNo);
@@ -201,7 +201,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 		return payment;
 	}
 
-	private OmcOrder assembleOrder(String userId, Long shippingId, BigDecimal payment) {
+	private OmcOrder assembleOrder(Long userId, Long shippingId, BigDecimal payment) {
 		OmcOrder order = new OmcOrder();
 		long orderNo = this.generateOrderNo();
 		order.setOrderNo(String.valueOf(orderNo));
@@ -314,7 +314,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 		}
 	}
 
-	private List<OrderVo> assembleOrderVoList(List<OmcOrder> orderList, String userId) {
+	private List<OrderVo> assembleOrderVoList(List<OmcOrder> orderList, Long userId) {
 		List<OrderVo> orderVoList = Lists.newArrayList();
 		for (OmcOrder order : orderList) {
 			List<OmcOrderDetail> orderItemList;
@@ -330,7 +330,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 	}
 
 	@Override
-	public OrderVo getOrderDetail(String userId, String orderNo) {
+	public OrderVo getOrderDetail(Long userId, String orderNo) {
 		logger.info("获取订单明细, userId={}, orderNo={}", userId, orderNo);
 		OmcOrder order = omcOrderMapper.selectByUserIdAndOrderNo(userId, orderNo);
 		if (null == order) {
@@ -358,7 +358,7 @@ public class OmcOrderServiceImpl extends BaseService<OmcOrder> implements OmcOrd
 		return new PageInfo<>(orderList);
 	}
 	
-	public OmcOrderSummary getOrderSummary(String userId){
+	public OmcOrderSummary getOrderSummary(Long userId){
 		return omcOrderMapper.getOrderSummary(userId);
 	}
 

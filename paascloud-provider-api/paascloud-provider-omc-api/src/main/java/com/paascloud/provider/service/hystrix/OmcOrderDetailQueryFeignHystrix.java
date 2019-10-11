@@ -27,7 +27,7 @@ import java.util.List;
 public class OmcOrderDetailQueryFeignHystrix implements OmcOrderDetailQueryFeignApi {
 
 	@Override
-	public Wrapper<List<OrderDetailDto>> getListByOrderNoUserId(final String orderNo, final String userId) {
+	public Wrapper<List<OrderDetailDto>> getListByOrderNoUserId(final String orderNo, final Long userId) {
 		return null;
 	}
 }

@@ -97,7 +97,7 @@ public class UacGroupMainController extends BaseController {
 	@PostMapping(value = "/getTree")
 	@ApiOperation(httpMethod = "POST", value = "获取菜单树")
 	public Wrapper<List<MenuVo>> getTree() {
-		String userId = super.getLoginAuthDto().getUserId();
+	    Long userId = super.getLoginAuthDto().getUserId();
 		List<MenuVo> tree = uacGroupService.getGroupTreeListByUserId(userId);
 		return WrapMapper.ok(tree);
 	}

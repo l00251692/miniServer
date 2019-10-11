@@ -74,7 +74,7 @@ public interface UacGroupService extends IService<UacGroup> {
 	 *
 	 * @return the list
 	 */
-	List<MenuVo> getGroupTreeListByUserId(String userId);
+	List<MenuVo> getGroupTreeListByUserId(Long userId);
 
 	/**
 	 * Gets group bind user dto.
@@ -84,7 +84,7 @@ public interface UacGroupService extends IService<UacGroup> {
 	 *
 	 * @return the group bind user dto
 	 */
-	GroupBindUserDto getGroupBindUserDto(Long groupId, String userId);
+	GroupBindUserDto getGroupBindUserDto(Long groupId, Long userId);
 
 	/**
 	 * Bind uac user 4 group int.

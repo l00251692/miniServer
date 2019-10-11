@@ -32,4 +32,6 @@ public class ProductReqDto extends BaseQuery {
 	private Long categoryId;
 	@ApiModelProperty(value = "关键词")
 	private String keyword;
+	@ApiModelProperty(value = "appId")
+    private String appId;
 }

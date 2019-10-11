@@ -30,7 +30,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the int
 	 */
-	int deleteByUserId(String userId);
+	int deleteByUserId(Long userId);
 
 	/**
 	 * 根据用户ID查询绑定的角色ID列表.
@@ -39,7 +39,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the list
 	 */
-	List<UacRoleUser> queryByUserId(String userId);
+	List<UacRoleUser> queryByUserId(Long userId);
 
 	/**
 	 * 用户是否绑定该角色.
@@ -49,7 +49,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the by user id and role id
 	 */
-	UacRoleUser getByUserIdAndRoleId(String userId, Long roleId);
+	UacRoleUser getByUserIdAndRoleId(Long userId, Long roleId);
 
 	/**
 	 * 保存用户角色中间表信息.
@@ -59,7 +59,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the int
 	 */
-	int saveRoleUser(String userId, Long roleId);
+	int saveRoleUser(Long userId, Long roleId);
 
 	/**
 	 * 根据角色信息查询用户ID集合.
@@ -86,7 +86,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the list
 	 */
-	List<String> listSuperUser(Long superManagerRoleId);
+	List<Long> listSuperUser(Long superManagerRoleId);
 
 	/**
 	 * Delete exclude super mng.
@@ -103,7 +103,7 @@ public interface UacRoleUserService extends IService<UacRoleUser> {
 	 *
 	 * @return the list
 	 */
-	List<UacRoleUser> listByUserId(String userId);
+	List<UacRoleUser> listByUserId(Long userId);
 
 	/**
 	 * 根据角色ID集合解除关联关系.

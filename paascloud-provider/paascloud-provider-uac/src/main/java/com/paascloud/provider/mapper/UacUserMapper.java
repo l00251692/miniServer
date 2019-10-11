@@ -74,7 +74,7 @@ public interface UacUserMapper extends MyMapper<UacUser> {
 	 *
 	 * @return the uac user
 	 */
-	UacUser selectUserInfoByUserId(String userId);
+	UacUser selectUserInfoByUserId(Long userId);
 
 	/**
 	 * Update uac user int.

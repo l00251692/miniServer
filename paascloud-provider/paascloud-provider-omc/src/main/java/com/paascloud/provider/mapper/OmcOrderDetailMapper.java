@@ -36,7 +36,7 @@ public interface OmcOrderDetailMapper extends MyMapper<OmcOrderDetail> {
 	 *
 	 * @return the list by order no user id
 	 */
-	List<OmcOrderDetail> getListByOrderNoUserId(@Param("orderNo") String orderNo, @Param("userId") String userId);
+	List<OmcOrderDetail> getListByOrderNoUserId(@Param("orderNo") String orderNo, @Param("userId") Long userId);
 
 	/**
 	 * Gets list by order no.

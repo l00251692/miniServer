@@ -12,6 +12,7 @@
 package com.paascloud.provider.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.paascloud.DataSourceMapHolder;
 import com.paascloud.ThreadLocalMap;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.dto.LoginAuthDto;
@@ -72,7 +73,9 @@ public class GlobalExceptionLogDto {
 	/**
 	 * 创建人ID
 	 */
-	private String creatorId;
+	private Long creatorId;
+	
+	private String appId;
 
 	/**
 	 * 创建时间
@@ -110,11 +113,12 @@ public class GlobalExceptionLogDto {
 		}
 
 		if (loginAuthDto == null) {
-			loginAuthDto = new LoginAuthDto("-1L", "SYSTEM_TASK", "系统任务");
+			loginAuthDto = new LoginAuthDto(-1L, "SYSTEM_TASK", "系统任务", String.valueOf(DataSourceMapHolder.get(GlobalConstant.Sys.APP_ID)));
 		}
 		this.creatorId = loginAuthDto.getUserId();
 		this.creator = loginAuthDto.getUserName();
 		this.applicationName = applicationName;
+		this.appId = loginAuthDto.getAppId();
 		return this;
 	}
 }

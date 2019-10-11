@@ -39,6 +39,6 @@ public class GroupBindUserDto implements Serializable {
 	 * 已经绑定的用户集合
 	 */
 	@ApiModelProperty(value = "已经绑定的用户集合")
-	private Set<String> alreadyBindUserIdSet;
+	private Set<Long> alreadyBindUserIdSet;
 
 }

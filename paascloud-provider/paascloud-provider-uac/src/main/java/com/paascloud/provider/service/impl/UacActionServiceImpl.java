@@ -126,7 +126,7 @@ public class UacActionServiceImpl extends BaseService<UacAction> implements UacA
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<MenuVo> getOwnAuthList(String userId) {
+	public List<MenuVo> getOwnAuthList(Long userId) {
 		return uacActionMapper.getOwnAuthList(userId);
 	}
 
@@ -140,7 +140,7 @@ public class UacActionServiceImpl extends BaseService<UacAction> implements UacA
 	}
 
 	@Override
-	public List<UacAction> getOwnActionListByUserId(String userId) {
+	public List<UacAction> getOwnActionListByUserId(Long userId) {
 		if (userId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}

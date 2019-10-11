@@ -33,7 +33,7 @@ public class OmcShipping extends BaseEntity {
 	 * 用户id
 	 */
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	/**
 	 * 收货姓名

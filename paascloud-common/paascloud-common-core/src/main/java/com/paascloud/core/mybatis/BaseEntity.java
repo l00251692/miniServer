@@ -46,7 +46,7 @@ public class BaseEntity implements Serializable {
 	 * 创建人ID
 	 */
 	@Column(name = "creator_id")
-	private String creatorId;
+	private Long creatorId;
 
 	/**
 	 * 创建时间
@@ -66,7 +66,7 @@ public class BaseEntity implements Serializable {
 	 * 最后操作人ID
 	 */
 	@Column(name = "last_operator_id")
-	private String lastOperatorId;
+	private Long lastOperatorId;
 
 	/**
 	 * 更新时间

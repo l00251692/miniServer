@@ -45,7 +45,7 @@ public interface UacLogService extends IService<UacLog> {
 	 *
 	 * @return the list
 	 */
-	List<UacLog> selectUserLogListByUserId(String userId);
+	List<UacLog> selectUserLogListByUserId(Long userId);
 
 	/**
 	 * Save operation log integer.

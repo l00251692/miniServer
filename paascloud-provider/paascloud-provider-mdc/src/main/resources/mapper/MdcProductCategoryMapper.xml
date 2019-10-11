@@ -70,6 +70,7 @@
 		</include>
 		from
 		pc_mdc_product_category category
+		where category.app_id = #{appId}
 	</select>
 	
 	<select id="queryProductCategoryListWithPage" parameterType="com.paascloud.provider.model.domain.MdcProductCategory"
@@ -80,6 +81,7 @@
         </include>
         from pc_mdc_product_category category
         where 1 = 1
+        and app_id = #{appId}
         <include refid="Base_OrderBy_Condition"></include>
         
     </select>

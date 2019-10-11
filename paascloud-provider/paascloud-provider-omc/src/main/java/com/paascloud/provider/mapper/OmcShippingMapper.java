@@ -36,7 +36,7 @@ public interface OmcShippingMapper extends MyMapper<OmcShipping> {
 	 *
 	 * @return the int
 	 */
-	int deleteByShippingIdUserId(@Param("userId") String userId, @Param("shippingId") Integer shippingId);
+	int deleteByShippingIdUserId(@Param("userId") Long userId, @Param("shippingId") Integer shippingId);
 
 	/**
 	 * Select by shipping id user id omc shipping.
@@ -46,7 +46,7 @@ public interface OmcShippingMapper extends MyMapper<OmcShipping> {
 	 *
 	 * @return the omc shipping
 	 */
-	OmcShipping selectByShippingIdUserId(@Param("userId") String userId, @Param("shippingId") Long shippingId);
+	OmcShipping selectByShippingIdUserId(@Param("userId") Long userId, @Param("shippingId") Long shippingId);
 
 	/**
 	 * Select by user id list.
@@ -55,7 +55,7 @@ public interface OmcShippingMapper extends MyMapper<OmcShipping> {
 	 *
 	 * @return the list
 	 */
-	List<OmcShipping> selectByUserId(@Param("userId") String userId);
+	List<OmcShipping> selectByUserId(@Param("userId") Long userId);
 
 	/**
 	 * Select default address by user id omc shipping.
@@ -64,5 +64,5 @@ public interface OmcShippingMapper extends MyMapper<OmcShipping> {
 	 *
 	 * @return the omc shipping
 	 */
-	OmcShipping selectDefaultAddressByUserId(String userId);
+	OmcShipping selectDefaultAddressByUserId(Long userId);
 }

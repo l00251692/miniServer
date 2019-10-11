@@ -35,10 +35,11 @@ public interface MdcProductService extends IService<MdcProduct> {
 	 * @param productName    the product name
 	 * @param categoryIdList the category id list
 	 * @param orderBy        the order by
+	 * @param appId        the appId
 	 *
 	 * @return the list
 	 */
-	List<MdcProduct> selectByNameAndCategoryIds(String productName, List<Long> categoryIdList, String orderBy);
+	List<MdcProduct> selectByNameAndCategoryIds(String productName, List<Long> categoryIdList, String orderBy, String appId);
 
 	/**
 	 * 根据商品ID查询商品详细信息.

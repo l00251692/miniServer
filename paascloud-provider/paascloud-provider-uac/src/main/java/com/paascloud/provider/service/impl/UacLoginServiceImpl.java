@@ -64,7 +64,7 @@ public class UacLoginServiceImpl implements UacLoginService {
 		}
 
 		LoginAuthDto loginAuthDto = this.getLoginAuthDto(uacUser);
-		List<MenuVo> menuVoList = uacMenuService.getMenuVoList(uacUser.getId().toString(), applicationId);
+		List<MenuVo> menuVoList = uacMenuService.getMenuVoList(uacUser.getId(), applicationId);
 		if (PublicUtil.isNotEmpty(menuVoList) && UacConstant.MENU_ROOT.equals(menuVoList.get(0).getMenuCode())) {
 			menuVoList = menuVoList.get(0).getSubMenu();
 		}
@@ -75,7 +75,7 @@ public class UacLoginServiceImpl implements UacLoginService {
 
 	private LoginAuthDto getLoginAuthDto(UacUser uacUser) {
 		LoginAuthDto loginAuthDto = new LoginAuthDto();
-		loginAuthDto.setUserId(uacUser.getId().toString());
+		loginAuthDto.setUserId(uacUser.getId());
 		loginAuthDto.setUserName(uacUser.getUserName());
 		loginAuthDto.setLoginName(uacUser.getLoginName());
 		return loginAuthDto;

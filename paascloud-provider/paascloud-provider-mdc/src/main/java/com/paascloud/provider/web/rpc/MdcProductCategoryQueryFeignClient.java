@@ -122,7 +122,8 @@ public class MdcProductCategoryQueryFeignClient extends BaseService<MdcProductCa
 
 		PageHelper.startPage(pageNum, pageSize);
 		//排序处理
-		List<MdcProduct> productList = mdcProductService.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword, PublicUtil.isEmpty(categoryIdList) ? null : categoryIdList, orderBy);
+		List<MdcProduct> productList = mdcProductService.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword, 
+		        PublicUtil.isEmpty(categoryIdList) ? null : categoryIdList, orderBy, productReqDto.getAppId());
 
 		List<ProductDto> productListVoList = Lists.newArrayList();
 		for (MdcProduct product : productList) {

@@ -6,7 +6,7 @@
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="version" property="version" jdbcType="INTEGER" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="shipping_id" property="shippingId" jdbcType="BIGINT" />
 		<result column="payment" property="payment" jdbcType="DECIMAL" />
 		<result column="payment_type" property="paymentType" jdbcType="INTEGER" />
@@ -32,7 +32,7 @@
 	</resultMap>
 	
 	<resultMap id="SummaryMap" type="com.paascloud.provider.model.domain.OmcOrderSummary">
-		<id column="user_id" property="userId" jdbcType="VARCHAR" />
+		<id column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="cancel" property="cancel" jdbcType="INTEGER" />
 		<result column="unpaid" property="unpaid" jdbcType="INTEGER" />
 		<result column="unship" property="unship" jdbcType="DECIMAL" />

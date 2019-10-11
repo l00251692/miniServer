@@ -51,7 +51,7 @@ public class UacLogServiceImpl extends BaseService<UacLog> implements UacLogServ
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<UacLog> selectUserLogListByUserId(String userId) {
+	public List<UacLog> selectUserLogListByUserId(Long userId) {
 		return uacLogMapper.selectUserLogListByUserId(userId);
 	}
 

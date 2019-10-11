@@ -69,8 +69,8 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 	@Override
 	public void saveUserToken(String accessToken, String refreshToken, LoginAuthDto loginAuthDto, HttpServletRequest request) {
 		// 获取登录时间
-		String userId = loginAuthDto.getUserId();
-		UacUser uacUser = uacUserService.selectByKey(Long.valueOf(userId));
+	    Long userId = loginAuthDto.getUserId();
+		UacUser uacUser = uacUserService.selectByKey(userId);
 		final UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 		//获取客户端操作系统
 		final String os = userAgent.getOperatingSystem().getName();
@@ -174,7 +174,7 @@ public class UacUserTokenServiceImpl extends BaseService<UacUserToken> implement
 		tokenDto.setStatus(UacUserTokenStatusEnum.ON_REFRESH.getStatus());
 		UacUser uacUser = uacUserService.findUserInfoByLoginName(loginName, RequestUtil.getAppId(request));
 
-		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId().toString(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getAppId(), 
+		LoginAuthDto loginAuthDto = new LoginAuthDto(uacUser.getId(), uacUser.getLoginName(), uacUser.getUserName(), uacUser.getAppId(), 
 		        uacUser.getGroupId(), uacUser.getGroupName());
 		this.updateUacUserToken(tokenDto, loginAuthDto);
 		// 创建刷新token

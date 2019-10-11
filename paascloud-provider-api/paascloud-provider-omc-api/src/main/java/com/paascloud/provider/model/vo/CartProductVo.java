@@ -26,7 +26,7 @@ public class CartProductVo implements Serializable {
 
 	private static final long serialVersionUID = 975884590599516501L;
 	private Long id;
-	private String userId;
+	private Long userId;
 	private Long productId;
 	/**
 	 * 购物车中此商品的数量

@@ -76,6 +76,7 @@ public class MdcProductMainController extends BaseController {
 		logger.info("分页查询商品列表, mdcProduct={}", mdcProduct);
 		PageHelper.startPage(mdcProduct.getPageNum(), mdcProduct.getPageSize());
 		mdcProduct.setOrderBy("update_time desc");
+		mdcProduct.setAppId(getAppId());
 		List<ProductVo> productVoList = mdcProductService.queryProductListWithPage(mdcProduct);
 		
 		fillUpProductVo(productVoList);

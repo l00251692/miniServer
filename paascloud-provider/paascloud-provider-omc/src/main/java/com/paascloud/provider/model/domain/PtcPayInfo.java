@@ -33,7 +33,7 @@ public class PtcPayInfo extends BaseEntity {
 	 * 用户id
 	 */
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	/**
 	 * 订单号

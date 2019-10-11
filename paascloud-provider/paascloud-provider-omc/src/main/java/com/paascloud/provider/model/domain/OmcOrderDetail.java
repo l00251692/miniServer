@@ -37,7 +37,7 @@ public class OmcOrderDetail extends BaseEntity {
 	private String detailNo;
 
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	@Column(name = "order_no")
 	private String orderNo;

@@ -21,7 +21,7 @@ public class UacGroupUserServiceImpl extends BaseService<UacGroupUser> implement
 	private UacGroupUserMapper uacGroupUserMapper;
 
 	@Override
-	public UacGroupUser queryByUserId(String userId) {
+	public UacGroupUser queryByUserId(Long userId) {
 		return uacGroupUserMapper.getByUserId(userId);
 	}
 
@@ -31,12 +31,12 @@ public class UacGroupUserServiceImpl extends BaseService<UacGroupUser> implement
 	}
 
 	@Override
-	public List<UacGroup> getGroupListByUserId(String userId) {
+	public List<UacGroup> getGroupListByUserId(Long userId) {
 		return uacGroupUserMapper.selectGroupListByUserId(userId);
 	}
 
 	@Override
-	public void saveUserGroup(String userId, Long groupId) {
+	public void saveUserGroup(Long userId, Long groupId) {
 		UacGroupUser groupUser = new UacGroupUser();
 		groupUser.setUserId(userId);
 		groupUser.setGroupId(groupId);

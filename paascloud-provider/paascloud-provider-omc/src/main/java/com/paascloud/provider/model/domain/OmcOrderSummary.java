@@ -16,7 +16,7 @@ public class OmcOrderSummary extends BaseEntity {
 
 	private static final long serialVersionUID = 6763112370762865905L;
 	
-	private String userId;
+	private Long userId;
 	
 	private Integer cancel;
 	

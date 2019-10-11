@@ -57,7 +57,7 @@ public class MdcProductCategoryMainController extends BaseController {
 	@PostMapping(value = "/getTree")
 	@ApiOperation(httpMethod = "POST", value = "获取商品分类树")
 	public Wrapper<List<MdcCategoryVo>> queryCategoryTreeList() {
-		List<MdcCategoryVo> categoryVoList = mdcProductCategoryService.getCategoryTreeList();
+		List<MdcCategoryVo> categoryVoList = mdcProductCategoryService.getCategoryTreeList(getAppId());
 		return WrapMapper.ok(categoryVoList);
 	}
 
@@ -175,6 +175,7 @@ public class MdcProductCategoryMainController extends BaseController {
 	    query.setPageSize(pageSize);
 	    PageHelper.startPage(query.getPageNum(), query.getPageSize());
 	    query.setOrderBy("update_time desc");
+	    query.setAppId(getAppId());
         
 	    List<MdcProductCategory> categoryVoList = mdcProductCategoryService.getProductCategoryListWithPage(query);
 	    return WrapMapper.ok(new PageInfo<>(categoryVoList));

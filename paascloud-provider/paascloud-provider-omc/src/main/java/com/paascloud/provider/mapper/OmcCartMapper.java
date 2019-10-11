@@ -34,7 +34,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int selectUnCheckedCartProductCountByUserId(String userId);
+	int selectUnCheckedCartProductCountByUserId(Long userId);
 
 	/**
 	 * Select by product id and user id omc cart.
@@ -44,7 +44,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the omc cart
 	 */
-	OmcCart selectByProductIdAndUserId(@Param("productId") Long productId, @Param("userId") String userId);
+	OmcCart selectByProductIdAndUserId(@Param("productId") Long productId, @Param("userId") Long userId);
 
 	/**
 	 * Delete by user id product ids int.
@@ -54,7 +54,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int deleteByUserIdProductIds(@Param("userId") String userId, @Param("productIdList") List<String> productIdList);
+	int deleteByUserIdProductIds(@Param("userId") Long userId, @Param("productIdList") List<String> productIdList);
 
 	/**
 	 * Checked or unchecked product int.
@@ -65,7 +65,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int checkedOrUncheckedProduct(@Param("userId") String userId, @Param("productId") Long productId, @Param("checked") int checked);
+	int checkedOrUncheckedProduct(@Param("userId") Long userId, @Param("productId") Long productId, @Param("checked") int checked);
 
 	/**
 	 * Select cart product count int.
@@ -74,7 +74,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the int
 	 */
-	int selectCartProductCount(String userId);
+	int selectCartProductCount(Long userId);
 
 	/**
 	 * Select checked cart by user id list.
@@ -83,7 +83,7 @@ public interface OmcCartMapper extends MyMapper<OmcCart> {
 	 *
 	 * @return the list
 	 */
-	List<OmcCart> selectCheckedCartByUserId(String userId);
+	List<OmcCart> selectCheckedCartByUserId(Long userId);
 
 	/**
 	 * Batch delete cart int.

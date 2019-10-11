@@ -45,5 +45,5 @@ public interface OmcOrderQueryFeignApi {
 	 * @return the wrapper
 	 */
 	@PostMapping(value = "/api/order/queryByUserIdAndOrderNo/{userId}/{orderNo}")
-	Wrapper<OrderDto> queryByUserIdAndOrderNo(@PathVariable("userId") String userId, @PathVariable("orderNo") String orderNo);
+	Wrapper<OrderDto> queryByUserIdAndOrderNo(@PathVariable("userId") Long userId, @PathVariable("orderNo") String orderNo);
 }

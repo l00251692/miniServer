@@ -46,7 +46,7 @@ public interface UacRoleUserMapper extends MyMapper<UacRoleUser> {
 	 *
 	 * @return the by user id and role id
 	 */
-	UacRoleUser getByUserIdAndRoleId(@Param("userId") String userId, @Param("roleId") Long roleId);
+	UacRoleUser getByUserIdAndRoleId(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
 	/**
 	 * List by user id list.
@@ -55,7 +55,7 @@ public interface UacRoleUserMapper extends MyMapper<UacRoleUser> {
 	 *
 	 * @return the list
 	 */
-	List<UacRoleUser> listByUserId(@Param("userId") String userId);
+	List<UacRoleUser> listByUserId(@Param("userId") Long userId);
 
 	/**
 	 * List by role id list.
@@ -73,7 +73,7 @@ public interface UacRoleUserMapper extends MyMapper<UacRoleUser> {
 	 *
 	 * @return the list
 	 */
-	List<String> listSuperUser(@Param("roleId") Long roleId);
+	List<Long> listSuperUser(@Param("roleId") Long roleId);
 
 	/**
 	 * List by role id list list.

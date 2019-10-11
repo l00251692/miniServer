@@ -16,6 +16,7 @@ import com.paascloud.provider.model.domain.MdcProductCategory;
 import com.paascloud.provider.model.dto.ProductCategoryDto;
 import com.paascloud.provider.model.vo.MdcCategoryVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public interface MdcProductCategoryMapper extends MyMapper<MdcProductCategory> {
 	 *
 	 * @return the list
 	 */
-	List<MdcCategoryVo> listCategoryVo();
+	List<MdcCategoryVo> listCategoryVo(@Param("appId") String appId);
 
     /**
      * @param mdcProductCategory

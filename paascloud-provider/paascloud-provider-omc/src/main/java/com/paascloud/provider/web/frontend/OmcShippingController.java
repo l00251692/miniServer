@@ -70,7 +70,7 @@ public class OmcShippingController extends BaseController {
 	@PostMapping("/deleteShipping/{shippingId}")
 	@ApiOperation(httpMethod = "POST", value = "删除收货人地址")
 	public Wrapper deleteShipping(@PathVariable Integer shippingId) {
-		String userId = getLoginAuthDto().getUserId();
+	    Long userId = getLoginAuthDto().getUserId();
 		logger.info("deleteShipping - 删除收货人地址. userId={}, shippingId={}", userId, shippingId);
 		int result = omcShippingService.deleteShipping(userId, shippingId);
 		return handleResult(result);
@@ -116,9 +116,9 @@ public class OmcShippingController extends BaseController {
 	@PostMapping("/selectShippingById/{shippingId}")
 	@ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
 	public Wrapper<OmcShipping> selectShippingById(@PathVariable Long shippingId) {
-		String userId = getLoginAuthDto().getUserId();
+	    Long userId = getLoginAuthDto().getUserId();
 		logger.info("selectShippingById - 根据Id查询收货人地址. userId={}, shippingId={}", userId, shippingId);
-		OmcShipping omcShipping = omcShippingService.selectByShippingIdUserId(userId.toString(), shippingId);
+		OmcShipping omcShipping = omcShippingService.selectByShippingIdUserId(userId, shippingId);
 		return WrapMapper.ok(omcShipping);
 	}
 
@@ -132,7 +132,7 @@ public class OmcShippingController extends BaseController {
 	@PostMapping("queryUserShippingListWithPage")
 	@ApiOperation(httpMethod = "POST", value = "分页查询当前用户收货人地址列表")
 	public Wrapper<PageInfo> queryUserShippingListWithPage(@RequestBody OmcShipping shipping) {
-		String userId = getLoginAuthDto().getUserId();
+	    Long userId = getLoginAuthDto().getUserId();
 		logger.info("queryUserShippingListWithPage - 分页查询当前用户收货人地址列表.userId={} shipping={}", userId, shipping);
 		PageInfo pageInfo = omcShippingService.queryListWithPageByUserId(userId, shipping.getPageNum(), shipping.getPageSize());
 		return WrapMapper.ok(pageInfo);
@@ -160,20 +160,20 @@ public class OmcShippingController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping("/wx/list")
-	@ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
-	public Wrapper selectShippingById(@PathVariable String userId) {
-		
-		HashMap<Object, Object> result = new  HashMap<>();
-
-		DataSourceHolder.setDataSource(getAppId());
-		List<OmcShipping> omcShipping = omcShippingService.selectByUserId(userId);
-		
-		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
-		result.put(GlobalConstant.DATA, omcShipping);
-		
-		return WrapMapper.ok(result);
-	}
+//	@PostMapping("/wx/list")
+//	@ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
+//	public Wrapper selectShippingById(@PathVariable String userId) {
+//		
+//		HashMap<Object, Object> result = new  HashMap<>();
+//
+//		DataSourceHolder.setDataSource(getAppId());
+//		List<OmcShipping> omcShipping = omcShippingService.selectByUserId(userId);
+//		
+//		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
+//		result.put(GlobalConstant.DATA, omcShipping);
+//		
+//		return WrapMapper.ok(result);
+//	}
 	
 	/**
 	 * 根据Id查询收货人地址.
@@ -182,20 +182,20 @@ public class OmcShippingController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping("/wx/detail")
-	@ApiOperation(httpMethod = "POST", value = "根据addressId和userId查询地址")
-	public Wrapper getAddressDetail(@PathVariable Long id, @PathVariable String userId) {
-		
-		HashMap<Object, Object> result = new  HashMap<>();
-
-		DataSourceHolder.setDataSource(getAppId());
-		OmcShipping omcShipping = omcShippingService.selectByShippingIdUserId(userId, id);
-		
-		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
-		result.put(GlobalConstant.DATA, omcShipping);
-		
-		return WrapMapper.ok(result);
-	}
+//	@PostMapping("/wx/detail")
+//	@ApiOperation(httpMethod = "POST", value = "根据addressId和userId查询地址")
+//	public Wrapper getAddressDetail(@PathVariable Long id, @PathVariable String userId) {
+//		
+//		HashMap<Object, Object> result = new  HashMap<>();
+//
+//		DataSourceHolder.setDataSource(getAppId());
+//		OmcShipping omcShipping = omcShippingService.selectByShippingIdUserId(userId, id);
+//		
+//		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
+//		result.put(GlobalConstant.DATA, omcShipping);
+//		
+//		return WrapMapper.ok(result);
+//	}
 	
 	/**
 	 * 根据Id查询收货人地址.
@@ -204,35 +204,35 @@ public class OmcShippingController extends BaseController {
 	 *
 	 * @return the wrapper
 	 */
-	@PostMapping("/wx/save")
-	@ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
-	public Wrapper saveShippingById(@PathVariable Long id, @PathVariable String userId, @PathVariable String name,
-			@PathVariable String mobile, @PathVariable String province, @PathVariable String city, @PathVariable String area,
-			@PathVariable String address, @PathVariable Integer isDefault) {
-		
-		HashMap<Object, Object> result = new  HashMap<>();
-		
-		OmcShipping omcShipping = new OmcShipping();
-		omcShipping.setId(id);
-		omcShipping.setUserId(userId);
-		omcShipping.setReceiverName(name);
-		omcShipping.setReceiverMobileNo(mobile);
-		omcShipping.setProvinceName(province);
-		omcShipping.setCityName(city);
-		omcShipping.setDistrictName(area);
-		omcShipping.setDetailAddress(address);
-		omcShipping.setDefaultAddress(isDefault);
-		
-		DataSourceHolder.setDataSource(getAppId());
-
-		
-		int flag = omcShippingService.saveShipping(getLoginAuthDto(), omcShipping);
-
-		
-		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
-		result.put(GlobalConstant.DATA, flag);
-		
-		return WrapMapper.ok(result);
-	}
+//	@PostMapping("/wx/save")
+//	@ApiOperation(httpMethod = "POST", value = "根据Id查询收货人地址")
+//	public Wrapper saveShippingById(@PathVariable Long id, @PathVariable String userId, @PathVariable String name,
+//			@PathVariable String mobile, @PathVariable String province, @PathVariable String city, @PathVariable String area,
+//			@PathVariable String address, @PathVariable Integer isDefault) {
+//		
+//		HashMap<Object, Object> result = new  HashMap<>();
+//		
+//		OmcShipping omcShipping = new OmcShipping();
+//		omcShipping.setId(id);
+//		omcShipping.setUserId(userId);
+//		omcShipping.setReceiverName(name);
+//		omcShipping.setReceiverMobileNo(mobile);
+//		omcShipping.setProvinceName(province);
+//		omcShipping.setCityName(city);
+//		omcShipping.setDistrictName(area);
+//		omcShipping.setDetailAddress(address);
+//		omcShipping.setDefaultAddress(isDefault);
+//		
+//		DataSourceHolder.setDataSource(getAppId());
+//
+//		
+//		int flag = omcShippingService.saveShipping(getLoginAuthDto(), omcShipping);
+//
+//		
+//		result.put(GlobalConstant.STATUS, GlobalConstant.SUCCESS);
+//		result.put(GlobalConstant.DATA, flag);
+//		
+//		return WrapMapper.ok(result);
+//	}
 
 }

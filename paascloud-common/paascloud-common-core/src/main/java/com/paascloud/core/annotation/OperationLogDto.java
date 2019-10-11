@@ -140,7 +140,7 @@ public class OperationLogDto implements Serializable {
 	/**
 	 * 创建人ID
 	 */
-	private String creatorId;
+	private Long creatorId;
 
 	/**
 	 * 创建时间
@@ -155,7 +155,7 @@ public class OperationLogDto implements Serializable {
 	/**
 	 * 最后操作人ID
 	 */
-	private String lastOperatorId;
+	private Long lastOperatorId;
 
 	/**
 	 * 更新时间

@@ -42,7 +42,7 @@ public interface OmcShippingService extends IService<OmcShipping> {
 	 *
 	 * @return the int
 	 */
-	int deleteShipping(String userId, Integer shippingId);
+	int deleteShipping(Long userId, Integer shippingId);
 
 	/**
 	 * 根据Id查询收货人地址.
@@ -52,7 +52,7 @@ public interface OmcShippingService extends IService<OmcShipping> {
 	 *
 	 * @return the omc shipping
 	 */
-	OmcShipping selectByShippingIdUserId(String userId, Long shippingId);
+	OmcShipping selectByShippingIdUserId(Long userId, Long shippingId);
 
 	/**
 	 * Query shipping list list.
@@ -81,7 +81,7 @@ public interface OmcShippingService extends IService<OmcShipping> {
 	 *
 	 * @return the page info
 	 */
-	PageInfo queryListWithPageByUserId(String userId, int pageNum, int pageSize);
+	PageInfo queryListWithPageByUserId(Long userId, int pageNum, int pageSize);
 
 	/**
 	 * Select by user id list.
@@ -90,7 +90,7 @@ public interface OmcShippingService extends IService<OmcShipping> {
 	 *
 	 * @return the list
 	 */
-	List<OmcShipping> selectByUserId(String userId);
+	List<OmcShipping> selectByUserId(Long userId);
 
 	/**
 	 * 设置默认收货地址.

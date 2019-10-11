@@ -139,7 +139,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<String> getUserPerms(String userId) {
+	public List<String> getUserPerms(Long userId) {
 		logger.info("获取用户权限列表userId={}", userId);
 
 		//1.获取所有菜单权限
@@ -175,13 +175,13 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	}
 
 	@Override
-	public int deleteUserById(String userId) {
+	public int deleteUserById(Long userId) {
 		return 0;
 	}
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UacUser findUserInfoByUserId(String userId) {
+	public UacUser findUserInfoByUserId(Long userId) {
 		return uacUserMapper.selectUserInfoByUserId(userId);
 	}
 
@@ -249,7 +249,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public List<UacLog> queryUserLogListWithUserId(String userId) {
+	public List<UacLog> queryUserLogListWithUserId(Long userId) {
 		if (PublicUtil.isEmpty(userId)) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}
@@ -258,7 +258,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	public int modifyUserStatusById(UacUser uacUser, LoginAuthDto authResDto) {
-		String loginUserId = authResDto.getUserId();
+	    Long loginUserId = authResDto.getUserId();
 		Long userId = uacUser.getId();
 		if (loginUserId.equals(userId)) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011023);
@@ -282,8 +282,8 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 			throw new IllegalArgumentException("参数不能为空");
 		}
 
-		String operUserId = bindUserRolesDto.getUserId();
-		String loginUserId = authResDto.getUserId();
+		Long operUserId = bindUserRolesDto.getUserId();
+		Long loginUserId = authResDto.getUserId();
 		List<Long> roleIdList = bindUserRolesDto.getRoleIdList();
 
 		if (null == operUserId) {
@@ -344,7 +344,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		// 返回的结果集
 		List<UserMenuDto> list = Lists.newArrayList();
 		List<MenuVo> menuList; // 该用户下所有的菜单集合
-		String userId = authResDto.getUserId();
+		Long userId = authResDto.getUserId();
 		List<Long> ownerMenuIdList = Lists.newArrayList();
 		Preconditions.checkArgument(!PubUtils.isNull(authResDto, userId), "无访问权限");
 
@@ -404,7 +404,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		// 1.2 判断越权操作(是否为该用户所属角色的菜单)
 		// 1.3 判断该记录是否为子节点,如果不是子节点则不允许操作
 		// 2 操作数据,先删除再插入, 这里主要考虑避免角色授权和用户修改角色要操作用户菜单中间表,在显示上做过滤,然后再操作中物理删除中间表信息,坐到数据一致性
-		String userId = authResDto.getUserId();
+	    Long userId = authResDto.getUserId();
 		List<UacUserMenu> uacUserMenuList = Lists.newArrayList();
 
 		UacUserMenu uacUserMenu = new UacUserMenu();
@@ -423,7 +423,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UacUser queryByUserId(String userId) {
+	public UacUser queryByUserId(Long userId) {
 		logger.info("queryByUserId - 根据用户查询用户信息接口. userId={}", userId);
 		UacUser uacUser = uacUserMapper.selectByPrimaryKey(Long.valueOf(userId));
 		if (PublicUtil.isNotEmpty(uacUser)) {
@@ -655,7 +655,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	}
 
 	@Override
-	public void resetLoginPwd(String userId, LoginAuthDto loginAuthDto) {
+	public void resetLoginPwd(Long userId, LoginAuthDto loginAuthDto) {
 		if (userId == null) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011001);
 		}
@@ -732,7 +732,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 
 	@Override
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public UserBindRoleVo getUserBindRoleDto(String userId) {
+	public UserBindRoleVo getUserBindRoleDto(Long userId) {
 		UserBindRoleVo userBindRoleVo = new UserBindRoleVo();
 		Set<Long> alreadyBindRoleIdSet = Sets.newHashSet();
 		UacUser uacUser = this.queryByUserId(userId);
@@ -790,7 +790,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		loginAuthDto.setAppId(uacUser.getAppId());
 		update.setUpdateInfo(loginAuthDto);
 
-		UacUser user = this.queryByUserId(uacUser.getId().toString());
+		UacUser user = this.queryByUserId(uacUser.getId());
 
 		Map<String, Object> param = Maps.newHashMap();
 		param.put("loginName", user.getLoginName());
@@ -806,7 +806,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 	}
 
 	@Override
-	public Collection<GrantedAuthority> loadUserAuthorities(String userId) {
+	public Collection<GrantedAuthority> loadUserAuthorities(Long userId) {
 
 		List<UacAction> ownAuthList = uacActionService.getOwnActionListByUserId(userId);
 		List<GrantedAuthority> authList = Lists.newArrayList();
@@ -831,7 +831,7 @@ public class UacUserServiceImpl extends BaseService<UacUser> implements UacUserS
 		final String requestURI = request.getRequestURI();
 
 		UacUser uacUser = new UacUser();
-		String userId = principal.getUserId();
+		Long userId = principal.getUserId();
 		uacUser.setLastLoginIp(remoteAddr);
 		uacUser.setId(Long.valueOf(userId));
 		uacUser.setLastLoginTime(new Date());

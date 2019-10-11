@@ -36,7 +36,7 @@ public interface UacMenuService extends IService<UacMenu> {
 	 *
 	 * @return the menu vo list by user id
 	 */
-	List<MenuVo> getMenuVoList(String userId, Long applicationId);
+	List<MenuVo> getMenuVoList(Long userId, Long applicationId);
 
 	/**
 	 * Save uac menu int.

@@ -35,7 +35,7 @@ public class OmcOrderDetailServiceImpl extends BaseService<OmcOrderDetail> imple
 	private OmcOrderDetailMapper omcOrderDetailMapper;
 
 	@Override
-	public List<OmcOrderDetail> getListByOrderNoUserId(String orderNo, String userId) {
+	public List<OmcOrderDetail> getListByOrderNoUserId(String orderNo, Long userId) {
 		Preconditions.checkArgument(userId != null, ErrorCodeEnum.UAC10011001.msg());
 		Preconditions.checkArgument(StringUtils.isNotEmpty(orderNo), "订单号不能为空");
 

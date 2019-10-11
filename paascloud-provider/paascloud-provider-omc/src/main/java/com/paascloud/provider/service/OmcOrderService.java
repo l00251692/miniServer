@@ -56,7 +56,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the page info
 	 */
-	PageInfo queryUserOrderListWithPage(String userId, BaseQuery baseQuery);
+	PageInfo queryUserOrderListWithPage(Long userId, BaseQuery baseQuery);
 
 	/**
 	 * 查询订单状态.
@@ -66,7 +66,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the boolean
 	 */
-	boolean queryOrderPayStatus(String userId, String orderNo);
+	boolean queryOrderPayStatus(Long userId, String orderNo);
 
 	/**
 	 * Query by order no omc order.
@@ -85,7 +85,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the omc order
 	 */
-	OmcOrder queryByUserIdAndOrderNo(String userId, String orderNo);
+	OmcOrder queryByUserIdAndOrderNo(Long userId, String orderNo);
 
 	/**
 	 * 根据订单号查询订单信息.
@@ -104,7 +104,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the order dto
 	 */
-	OrderDto queryOrderDtoByUserIdAndOrderNo(String userId, String orderNo);
+	OrderDto queryOrderDtoByUserIdAndOrderNo(Long userId, String orderNo);
 
 	/**
 	 * 查询用户订单详情.
@@ -114,7 +114,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 *
 	 * @return the order detail
 	 */
-	OrderVo getOrderDetail(String userId, String orderNo);
+	OrderVo getOrderDetail(Long userId, String orderNo);
 
 	/**
 	 * 查询订单详情.
@@ -134,7 +134,7 @@ public interface OmcOrderService extends IService<OmcOrder> {
 	 */
 	PageInfo queryOrderListWithPage(OrderPageQuery orderPageQuery);
 	
-	OmcOrderSummary getOrderSummary(String userId);
+	OmcOrderSummary getOrderSummary(Long userId);
 
     /**
      * @param orderNo

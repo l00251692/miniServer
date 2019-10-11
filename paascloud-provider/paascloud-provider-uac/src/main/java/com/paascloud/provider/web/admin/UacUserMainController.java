@@ -135,7 +135,7 @@ public class UacUserMainController extends BaseController {
 	@LogAnnotation
 	@PostMapping(value = "/deleteUserById/{userId}")
 	@ApiOperation(httpMethod = "POST", value = "通过Id删除用户")
-	public Wrapper<Integer> deleteUserById(@ApiParam(name = "userId", value = "用户ID") @PathVariable String userId) {
+	public Wrapper<Integer> deleteUserById(@ApiParam(name = "userId", value = "用户ID") @PathVariable Long userId) {
 		logger.info(" 通过Id删除用户 userId={}", userId);
 		int result = uacUserService.deleteUserById(userId);
 		return handleResult(result);
@@ -150,10 +150,10 @@ public class UacUserMainController extends BaseController {
 	 */
 	@PostMapping(value = "/getBindRole/{userId}")
 	@ApiOperation(httpMethod = "POST", value = "获取用户绑定角色页面数据")
-	public Wrapper<UserBindRoleVo> getBindRole(@ApiParam(name = "userId", value = "角色id") @PathVariable String userId) {
+	public Wrapper<UserBindRoleVo> getBindRole(@ApiParam(name = "userId", value = "角色id") @PathVariable Long userId) {
 		logger.info("获取用户绑定角色页面数据. userId={}", userId);
 		LoginAuthDto loginAuthDto = super.getLoginAuthDto();
-		String currentUserId = loginAuthDto.getUserId();
+		Long currentUserId = loginAuthDto.getUserId();
 		if (Objects.equals(userId, currentUserId)) {
 			throw new UacBizException(ErrorCodeEnum.UAC10011023);
 		}
@@ -224,7 +224,7 @@ public class UacUserMainController extends BaseController {
 	 */
 	@PostMapping(value = "/getUacUserById/{userId}")
 	@ApiOperation(httpMethod = "POST", value = "根据用户Id查询用户信息")
-	public Wrapper<UacUser> getUacUserById(@ApiParam(name = "userId", value = "用户ID") @PathVariable String userId) {
+	public Wrapper<UacUser> getUacUserById(@ApiParam(name = "userId", value = "用户ID") @PathVariable Long userId) {
 		logger.info("getUacUserById - 根据用户Id查询用户信息. userId={}", userId);
 		UacUser uacUser = uacUserService.queryByUserId(userId);
 		logger.info("getUacUserById - 根据用户Id查询用户信息. [OK] uacUser={}", uacUser);
@@ -241,7 +241,7 @@ public class UacUserMainController extends BaseController {
 	@LogAnnotation
 	@PostMapping(value = "/resetLoginPwd/{userId}")
 	@ApiOperation(httpMethod = "POST", value = "根据用户Id重置密码")
-	public Wrapper<UacUser> resetLoginPwd(@ApiParam(name = "userId", value = "用户ID") @PathVariable String userId) {
+	public Wrapper<UacUser> resetLoginPwd(@ApiParam(name = "userId", value = "用户ID") @PathVariable Long userId) {
 		logger.info("resetLoginPwd - 根据用户Id重置密码. userId={}", userId);
 		uacUserService.resetLoginPwd(userId, getLoginAuthDto());
 		return WrapMapper.ok();
@@ -257,7 +257,7 @@ public class UacUserMainController extends BaseController {
 		String loginName = SecurityUtils.getCurrentLoginName();
 		logger.info("{}", loginName);
 		UacUser user = uacUserService.findByLoginName(loginName, getAppId());
-		return user == null ? null : new SecurityUser(user.getId().toString(), user.getLoginName(), user.getLoginPwd(), user.getUserName(), user.getGroupId(), user.getGroupName());
+		return user == null ? null : new SecurityUser(user.getId(), user.getLoginName(), user.getLoginPwd(), user.getUserName(), user.getGroupId(), user.getGroupName());
 	}
 
 }

@@ -34,6 +34,7 @@
 		<result column="service_guarantee" property="serviceGuarantee" jdbcType="VARCHAR" />
 		<result column="note" property="note" jdbcType="LONGVARCHAR" />
 		<result column="preview_status" property="previewStatus" jdbcType="INTEGER" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_OrderBy_Condition">
 		<if test="orderBy != null and orderBy !=''">
@@ -68,7 +69,8 @@
 		detail_desc,
 		service_guarantee,
 		note,
-		preview_status
+		preview_status,
+		app_id
 	</sql>
 	<update id="updateProductStockById" parameterType="com.paascloud.provider.model.dto.ProductDto">
 		UPDATE
@@ -81,6 +83,7 @@
 		<include refid="Base_Column_List" />
 		from pc_mdc_product
 		where status = 1
+		and app_id = #{appId}
 		<if test="productName != null and productName !=''">
 			and name like concat('%', #{productName}, '%')
 		</if>
@@ -100,6 +103,7 @@
 		<include refid="Base_Column_List" />
 		from pc_mdc_product
 		where 1 = 1
+		and app_id = #{appId}
 		<if test="name != null and name !=''">
 			and name like concat('%', #{name}, '%')
 		</if>
@@ -142,5 +146,8 @@
                 close=")" collection="idList">
                 #{item}
             </foreach>
+        <if test="appId != null">
+           and app_id = #{appId},
+        </if>
     </update>
 </mapper>

@@ -48,4 +48,6 @@ public class ProductDto implements Serializable {
 	private String productCode;
 	@ApiModelProperty("变化的库存数量")
 	private Integer changeStock;
+	@ApiModelProperty("appId")
+    private String appId;
 }

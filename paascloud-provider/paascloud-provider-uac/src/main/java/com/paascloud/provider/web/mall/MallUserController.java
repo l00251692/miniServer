@@ -67,7 +67,7 @@ public class MallUserController extends BaseController {
 	@ApiOperation(httpMethod = "POST", value = "获取用户信息")
 	public Wrapper<UserInfoDto> getInformation() {
 		LoginAuthDto loginAuthDto = getLoginAuthDto();
-		String userId = loginAuthDto.getUserId();
+		Long userId = loginAuthDto.getUserId();
 		logger.info("queryUserInfo - 查询用户基本信息 userId={}", userId);
 		UacUser uacUser = uacUserService.queryByUserId(userId);
 		if (uacUser == null) {

@@ -76,8 +76,8 @@ public class MdcProductCategoryServiceImpl extends BaseService<MdcProductCategor
 	}
 
 	@Override
-	public List<MdcCategoryVo> getCategoryTreeList() {
-		List<MdcCategoryVo> list = mdcProductCategoryMapper.listCategoryVo();
+	public List<MdcCategoryVo> getCategoryTreeList(String appId) {
+		List<MdcCategoryVo> list = mdcProductCategoryMapper.listCategoryVo(appId);
 		return new TreeUtils().getChildTreeObjects(list, 0L);
 	}
 

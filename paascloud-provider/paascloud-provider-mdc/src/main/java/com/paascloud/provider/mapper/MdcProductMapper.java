@@ -36,12 +36,14 @@ public interface MdcProductMapper extends MyMapper<MdcProduct> {
 	 * @param productName    the product name
 	 * @param categoryIdList the category id list
 	 * @param orderBy        the order by
+	 * @param appId        the appId
 	 *
 	 * @return the list
 	 */
 	List<MdcProduct> selectByNameAndCategoryIds(@Param("productName") String productName,
 	                                            @Param("categoryIdList") List<Long> categoryIdList,
-	                                            @Param("orderBy") String orderBy);
+	                                            @Param("orderBy") String orderBy,
+	                                            @Param("appId") String appId);
 
 	/**
 	 * Update product stock by id int.

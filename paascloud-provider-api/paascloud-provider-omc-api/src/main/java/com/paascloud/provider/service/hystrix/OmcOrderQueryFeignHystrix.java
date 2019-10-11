@@ -31,7 +31,7 @@ public class OmcOrderQueryFeignHystrix implements OmcOrderQueryFeignApi {
 	}
 
 	@Override
-	public Wrapper<OrderDto> queryByUserIdAndOrderNo(final String userId, final String orderNo) {
+	public Wrapper<OrderDto> queryByUserIdAndOrderNo(final Long userId, final String orderNo) {
 		return null;
 	}
 }

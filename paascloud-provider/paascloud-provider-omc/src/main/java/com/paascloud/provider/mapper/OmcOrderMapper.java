@@ -38,7 +38,7 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 *
 	 * @return the omc order
 	 */
-	OmcOrder selectByUserIdAndOrderNo(@Param("userId") String userId, @Param("orderNo") String orderNo);
+	OmcOrder selectByUserIdAndOrderNo(@Param("userId") Long userId, @Param("orderNo") String orderNo);
 
 	/**
 	 * Select by order no omc order.
@@ -56,7 +56,7 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 *
 	 * @return the list
 	 */
-	List<OmcOrder> selectByUserId(String userId);
+	List<OmcOrder> selectByUserId(Long userId);
 
 	/**
 	 * Select all order list.
@@ -74,5 +74,5 @@ public interface OmcOrderMapper extends MyMapper<OmcOrder> {
 	 */
 	List<OrderDocVo> queryOrderListWithPage(OrderPageQuery orderPageQuery);
 	
-	OmcOrderSummary getOrderSummary(String userId);
+	OmcOrderSummary getOrderSummary(Long userId);
 }

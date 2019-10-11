@@ -72,8 +72,8 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 	private OpcRpcService opcRpcService;
 
 	@Override
-	public List<MdcProduct> selectByNameAndCategoryIds(String productName, List<Long> categoryIdList, String orderBy) {
-		return mdcProductMapper.selectByNameAndCategoryIds(productName, categoryIdList, orderBy);
+	public List<MdcProduct> selectByNameAndCategoryIds(String productName, List<Long> categoryIdList, String orderBy, String appId) {
+		return mdcProductMapper.selectByNameAndCategoryIds(productName, categoryIdList, orderBy, appId);
 	}
 
 	@Override
@@ -130,13 +130,13 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 
 		if (product.isNew() && PublicUtil.isNotEmpty(attachmentIdList)) {
 			product.setId(generateId());
-			mqMessageData = new MqMessageData(body, topic, tag, key);
+			mqMessageData = new MqMessageData(body, topic, tag, key, loginAuthDto.getAppId());
 			mdcProductManager.saveProduct(mqMessageData, product, true);
 		} else if (product.isNew() && PublicUtil.isEmpty(attachmentIdList)) {
 			product.setId(generateId());
 			mdcProductMapper.insertSelective(product);
 		} else {
-			mqMessageData = new MqMessageData(body, topic, tag, key);
+			mqMessageData = new MqMessageData(body, topic, tag, key, loginAuthDto.getAppId());
 			mdcProductManager.saveProduct(mqMessageData, product, false);
 		}
 	}
@@ -149,7 +149,7 @@ public class MdcProductServiceImpl extends BaseService<MdcProduct> implements Md
 			String topic = AliyunMqTopicConstants.MqTagEnum.DELETE_ATTACHMENT.getTopic();
 			String tag = AliyunMqTopicConstants.MqTagEnum.DELETE_ATTACHMENT.getTag();
 			String key = RedisKeyUtil.createMqKey(topic, tag, product.getProductSn(), body);
-			MqMessageData mqMessageData = new MqMessageData(body, topic, tag, key);
+			MqMessageData mqMessageData = new MqMessageData(body, topic, tag, key, product.getAppId());
 			mdcProductManager.deleteProduct(mqMessageData, id);
 		}
 	}

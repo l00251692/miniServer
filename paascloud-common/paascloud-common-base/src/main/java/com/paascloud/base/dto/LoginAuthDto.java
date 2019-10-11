@@ -26,7 +26,7 @@ import java.io.Serializable;
 public class LoginAuthDto implements Serializable {
 	private static final long serialVersionUID = -1137852221455042256L;
 	@ApiModelProperty(value = "用户ID")
-	private String userId;
+	private Long userId;
 	@ApiModelProperty(value = "登录名")
 	private String loginName;
 	@ApiModelProperty(value = "用户名")
@@ -41,14 +41,14 @@ public class LoginAuthDto implements Serializable {
 	public LoginAuthDto() {
 	}
 
-	public LoginAuthDto(String userId, String loginName, String userName, String appId) {
+	public LoginAuthDto(Long userId, String loginName, String userName, String appId) {
 		this.userId = userId;
 		this.loginName = loginName;
 		this.userName = userName;
 		this.appId = appId;
 	}
 
-	public LoginAuthDto(String userId, String loginName, String userName, String appId, Long groupId, String groupName) {
+	public LoginAuthDto(Long userId, String loginName, String userName, String appId, Long groupId, String groupName) {
 		this.userId = userId;
 		this.loginName = loginName;
 		this.userName = userName;

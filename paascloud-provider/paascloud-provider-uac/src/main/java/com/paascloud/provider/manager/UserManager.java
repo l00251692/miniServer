@@ -80,7 +80,7 @@ public class UserManager {
 		}
 
 		// 绑定一个访客角色默认值roleId=10000
-		final String userId = uacUser.getId().toString();
+		final Long userId = uacUser.getId();
 		Preconditions.checkArgument(userId != null, "用戶Id不能爲空");
 
 		final Long roleId = 10000L;

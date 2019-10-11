@@ -28,7 +28,7 @@
 		<result column="group_id" property="groupId" jdbcType="BIGINT" />
 		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
 		<result column="creator" property="creator" jdbcType="VARCHAR" />
-		<result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+		<result column="creator_id" property="creatorId" jdbcType="BIGINT" />
 		<result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
 		<result column="last_operator" property="lastOperator"
 			jdbcType="VARCHAR" />
@@ -139,7 +139,7 @@
 			AND creator = #{creator,jdbcType=VARCHAR}
 		</if>
 		<if test="creatorId != null and creatorId != ''">
-			AND creator_id = #{creatorId,jdbcType=VARCHAR}
+			AND creator_id = #{creatorId,jdbcType=BIGINT}
 		</if>
 		<if test="createdTime != null">
 			AND created_time = #{createdTime,jdbcType=TIMESTAMP}
@@ -220,7 +220,7 @@
 				creator = #{creator,jdbcType=VARCHAR},
 			</if>
 			<if test="creatorId != null">
-				creator_id = #{creatorId,jdbcType=VARCHAR},
+				creator_id = #{creatorId,jdbcType=BIGINT},
 			</if>
 			<if test="createdTime != null">
 				created_time = #{createdTime,jdbcType=TIMESTAMP},

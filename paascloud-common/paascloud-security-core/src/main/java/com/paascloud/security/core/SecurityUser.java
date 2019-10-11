@@ -29,7 +29,7 @@ public class SecurityUser implements UserDetails {
 
 	private Collection<GrantedAuthority> authorities;
 
-	private String userId;
+	private Long userId;
 
 	private String nickName;
 
@@ -43,7 +43,7 @@ public class SecurityUser implements UserDetails {
 
 	private String groupName;
 
-	public SecurityUser(String userId, String loginName, String loginPwd, String nickName, Long groupId, String groupName) {
+	public SecurityUser(Long userId, String loginName, String loginPwd, String nickName, Long groupId, String groupName) {
 		this.setUserId(userId);
 		this.setLoginName(loginName);
 		this.setLoginPwd(loginPwd);
@@ -52,7 +52,7 @@ public class SecurityUser implements UserDetails {
 		this.setGroupName(groupName);
 	}
 
-	public SecurityUser(String userId, String loginName, String loginPwd, String nickName, Long groupId, String groupName, String status, Collection<GrantedAuthority> grantedAuthorities) {
+	public SecurityUser(Long userId, String loginName, String loginPwd, String nickName, Long groupId, String groupName, String status, Collection<GrantedAuthority> grantedAuthorities) {
 		this.setUserId(userId);
 		this.setLoginName(loginName);
 		this.setLoginPwd(loginPwd);
@@ -98,11 +98,11 @@ public class SecurityUser implements UserDetails {
 		return StringUtils.equals(this.status, ENABLE);
 	}
 
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

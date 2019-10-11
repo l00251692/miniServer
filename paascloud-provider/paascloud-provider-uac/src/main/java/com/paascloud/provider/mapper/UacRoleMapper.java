@@ -82,5 +82,5 @@ public interface UacRoleMapper extends MyMapper<UacRole> {
 	 *
 	 * @return the list
 	 */
-	List<BindUserDto> selectAllNeedBindUser(@Param("superManagerRoleId") Long superManagerRoleId, @Param("currentUserId") String currentUserId);
+	List<BindUserDto> selectAllNeedBindUser(@Param("superManagerRoleId") Long superManagerRoleId, @Param("currentUserId") Long currentUserId);
 }

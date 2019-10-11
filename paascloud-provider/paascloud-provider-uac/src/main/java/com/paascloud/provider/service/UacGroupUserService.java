@@ -31,7 +31,7 @@ public interface UacGroupUserService extends IService<UacGroupUser> {
 	 *
 	 * @return the uac group user
 	 */
-	UacGroupUser queryByUserId(String userId);
+	UacGroupUser queryByUserId(Long userId);
 
 	/**
 	 * 根据userId和version修改
@@ -49,7 +49,7 @@ public interface UacGroupUserService extends IService<UacGroupUser> {
 	 *
 	 * @return the group list by user id
 	 */
-	List<UacGroup> getGroupListByUserId(String userId);
+	List<UacGroup> getGroupListByUserId(Long userId);
 
 	/**
 	 * Save user group.
@@ -57,5 +57,5 @@ public interface UacGroupUserService extends IService<UacGroupUser> {
 	 * @param id      the id
 	 * @param groupId the group id
 	 */
-	void saveUserGroup(String id, Long groupId);
+	void saveUserGroup(Long id, Long groupId);
 }

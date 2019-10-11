@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class OmcCartQueryFeignHystrix implements OmcCartQueryFeignApi {
 
 	@Override
-	public Wrapper<CartVo> getCartVo(final String userId) {
+	public Wrapper<CartVo> getCartVo(final Long userId) {
 		return null;
 	}
 }

@@ -39,5 +39,5 @@ public class UacGroupUser implements Serializable {
 	 * 菜单ID
 	 */
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 }

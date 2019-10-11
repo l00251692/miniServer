@@ -30,7 +30,7 @@ public class OmcCart extends BaseEntity {
 
 	private static final long serialVersionUID = 5333646386138778574L;
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	@Column(name = "product_id")
 	private Long productId;
