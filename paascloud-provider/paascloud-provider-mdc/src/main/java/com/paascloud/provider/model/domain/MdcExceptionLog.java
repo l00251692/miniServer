@@ -73,7 +73,7 @@ public class MdcExceptionLog {
 	 * 操作者id
 	 */
 	@Column(name = "creator_id")
-	private String creatorId;
+	private Long creatorId;
 
 	/**
 	 * 创建时间

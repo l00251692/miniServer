@@ -25,6 +25,7 @@ import com.paascloud.provider.model.factory.ChatRobotMsgFactory;
 import com.paascloud.provider.service.MdcExceptionLogService;
 import com.paascloud.provider.service.OpcRpcService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,9 @@ public class MdcExceptionLogServiceImpl extends BaseService<MdcExceptionLog> imp
 
 	@Override
 	public void saveAndSendExceptionLog(final GlobalExceptionLogDto exceptionLogDto) {
-		MdcExceptionLog exceptionLog = new ModelMapper().map(exceptionLogDto, MdcExceptionLog.class);
+	    MdcExceptionLog exceptionLog = new MdcExceptionLog();
+	    BeanUtils.copyProperties(exceptionLogDto, exceptionLog);
+		//MdcExceptionLog exceptionLog = new ModelMapper().map(exceptionLogDto, MdcExceptionLog.class);
 
 		exceptionLog.setId(generateId());
 		exceptionLog.setCreateTime(new Date());
