@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.paascloud.base.constant.GlobalConstant;
 import com.paascloud.base.exception.BusinessException;
+import com.paascloud.config.properties.PaascloudProperties;
 import com.paascloud.core.support.BaseController;
 import com.paascloud.provider.model.dto.attachment.OptAttachmentRespDto;
 import com.paascloud.provider.model.dto.oss.OptUploadFileReqDto;
@@ -28,6 +29,7 @@ import com.paascloud.wrapper.Wrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +50,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/file", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(value = "WEB - OptFileRest", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RefreshScope
 public class OpcFileController extends BaseController {
 
 	@Resource
@@ -55,8 +58,9 @@ public class OpcFileController extends BaseController {
 	@Resource
 	private OpcOssService opcOssService;
 	
-	private static final String OPEN_IMG_BUCKET = "open-img-bucket";
-
+	@Resource
+	PaascloudProperties paascloudProperties;
+	
 	/**
 	 * 上传文件.
 	 *
@@ -129,7 +133,7 @@ public class OpcFileController extends BaseController {
             
         }
         if (StringUtils.isEmpty(optUploadFileReqDto.getBucketName())) {
-            optUploadFileReqDto.setBucketName(OPEN_IMG_BUCKET);
+            optUploadFileReqDto.setBucketName(paascloudProperties.getQiniu().getOss().getOpenImgBucket());
         }
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -151,6 +155,12 @@ public class OpcFileController extends BaseController {
 		logger.info("queryAttachment -根据ID查询文件信息. id={}", id);
 
 		OptAttachmentRespDto optAttachmentRespDto = optAttachmentService.queryAttachmentById(id);
+		if (null != optAttachmentRespDto) {
+		    if (paascloudProperties.getQiniu().getOss().getOpenImgBucket().equalsIgnoreCase(optAttachmentRespDto.getBucketName())) {
+		        optAttachmentRespDto.setImgOpenUrl(paascloudProperties.getQiniu().getOss().getPublicHost() + optAttachmentRespDto.getPath() + optAttachmentRespDto.getName());
+		    }
+		}
+		
 		return WrapMapper.ok(optAttachmentRespDto);
 	}
 

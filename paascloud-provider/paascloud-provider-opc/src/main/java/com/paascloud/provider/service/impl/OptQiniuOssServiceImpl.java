@@ -65,8 +65,6 @@ public class OptQiniuOssServiceImpl implements OpcOssService {
 	@Resource
 	private StringRedisTemplate srt;
 
-	private static final String OPEN_IMG_BUCKET = "open-img-bucket";
-
 	@Override
 	@Retryable(value = Exception.class, backoff = @Backoff(delay = 5000, multiplier = 2))
 	public void deleteFile(String fileName, String bucketName) throws QiniuException {
@@ -148,7 +146,7 @@ public class OptQiniuOssServiceImpl implements OpcOssService {
 		}
 		String fileUrl;
 		// 获取图片路径
-		if (StringUtils.equals(OPEN_IMG_BUCKET, bucketName)) {
+		if (StringUtils.equals(paascloudProperties.getQiniu().getOss().getOpenImgBucket(), bucketName)) {
 			fileUrl = paascloudProperties.getQiniu().getOss().getPublicHost() + "/" + filePath + newFileName;
 		} else {
 			String domainUrl = paascloudProperties.getQiniu().getOss().getPrivateHost();

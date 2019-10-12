@@ -32,6 +32,8 @@ import com.paascloud.provider.service.OpcOssService;
 import com.paascloud.provider.utils.CheckFileUtil;
 import com.qiniu.common.QiniuException;
 import com.xiaoleilu.hutool.io.FileTypeUtil;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,7 +105,7 @@ public class OptAttachmentServiceImpl extends BaseService<OptAttachment> impleme
 		OptAttachmentReqDto optAttachmentReqDto = new OptAttachmentReqDto();
 		optAttachmentReqDto.setId(id);
 		List<OptAttachmentRespDto> optAttachmentRespDtos = optAttachmentMapper.queryAttachment(optAttachmentReqDto);
-		return optAttachmentRespDtos == null ? null : optAttachmentRespDtos.get(0);
+		return CollectionUtils.isEmpty(optAttachmentRespDtos) ? null : optAttachmentRespDtos.get(0);
 	}
 
 	@Override

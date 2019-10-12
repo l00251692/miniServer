@@ -34,5 +34,6 @@ public class QiniuProperties {
 		private String privateHost;
 		private String publicHost;
 		private Long fileMaxSize;
+		private String openImgBucket;
 	}
 }
